@@ -2,7 +2,7 @@ import type { Route } from '.react-router/types/app/routes/[locale]/+types/layou
 import { useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { BASE_URL } from '~/constants/api';
-import { type Role, useStore } from '~/stores/store';
+import { type Role, useStore } from '~/store';
 
 export async function loader({
   request,

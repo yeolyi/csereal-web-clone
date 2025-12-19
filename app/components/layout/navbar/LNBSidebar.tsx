@@ -1,0 +1,117 @@
+import { Link, useLocation } from 'react-router';
+import { navigationTree } from '~/constants/navigation';
+import { isAncestorNavItem, useActiveNavItem } from '~/hooks/useActiveNavItem';
+import { usePathWithoutLocale } from '~/hooks/usePathWithoutLocale';
+import { useStore } from '~/store';
+import DotEmpty from './assets/dot_empty.svg?react';
+import DotFill from './assets/dot_fill.svg?react';
+import SnuLogo from './assets/SNU_Logo.svg?react';
+import LNBMenuItem from './LNBMenuItem';
+
+export const NAVBAR_CLOSED_WIDTH_REM = 6.25;
+export const NAVBAR_EXPANDED_WIDTH_REM = 11;
+
+export default function LNBSidebar() {
+  const navbarState = useStore((s) => s.navbarState);
+  const expandNavbar = useStore((s) => s.expandNavbar);
+  const path = usePathWithoutLocale();
+
+  const isMain = path === '/';
+
+  // Expand navbar if: hovered, explicitly expanded, or on main page
+  const isExpanded = navbarState.type !== 'closed' || isMain;
+
+  return (
+    <nav
+      className={`no-scrollbar z-50 flex flex-col items-center overflow-scroll bg-[#323235] py-[2.88rem] transition-all duration-300 ease-in-out ${
+        isExpanded ? 'w-44' : 'w-25'
+      }`}
+      onMouseEnter={expandNavbar}
+      aria-label="주 네비게이션"
+    >
+      <Logo />
+      {isExpanded ? <NavList /> : <DotList />}
+    </nav>
+  );
+}
+
+function Logo() {
+  const location = useLocation();
+  const isEnglish = location.pathname.startsWith('/en');
+  const homePath = isEnglish ? '/en' : '/';
+
+  return (
+    <Link to={homePath} aria-label="메인으로 이동">
+      <SnuLogo
+        className="fill-white"
+        width="56"
+        height="58"
+        viewBox="0 0 45 47"
+      />
+    </Link>
+  );
+}
+
+function DotList() {
+  const activeItem = useActiveNavItem();
+
+  const isDotFilled = (item: (typeof navigationTree)[0]) => {
+    if (!activeItem) return false;
+    return isAncestorNavItem(item, activeItem) || item.path === activeItem.path;
+  };
+
+  const dotArr = navigationTree.map(isDotFilled);
+
+  const getDotMargin = (filled: boolean, idx: number) => {
+    if (dotArr[idx + 1]) return 'mb-[2.2rem]';
+    return filled ? 'mb-[2.2rem]' : 'mb-[2.7rem]';
+  };
+
+  return (
+    <div
+      className={`flex flex-col items-center ${
+        dotArr[0] ? 'mt-[2.7rem]' : 'mt-[3.38rem]'
+      }`}
+      role="presentation"
+      aria-hidden="true"
+    >
+      {dotArr.map((filled, idx) =>
+        filled ? (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static navigationTree array
+          <DotFill key={idx} className={getDotMargin(filled, idx)} />
+        ) : (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static navigationTree array
+          <DotEmpty key={idx} className={getDotMargin(filled, idx)} />
+        ),
+      )}
+    </div>
+  );
+}
+
+function NavList() {
+  const navbarState = useStore((s) => s.navbarState);
+  const activeItem = useActiveNavItem();
+  const hoverNavItem = useStore((s) => s.hoverNavItem);
+
+  const shouldHighlight = (item: (typeof navigationTree)[0]) => {
+    if (navbarState.type === 'hovered') {
+      return item.key === navbarState.navItem.key;
+    }
+    return activeItem ? isAncestorNavItem(item, activeItem) : false;
+  };
+
+  return (
+    <ul className="mx-12 mt-12 flex flex-col gap-9 text-center">
+      {navigationTree.map((item, i) => (
+        <LNBMenuItem
+          // biome-ignore lint/suspicious/noArrayIndexKey: static navigationTree array
+          key={i}
+          navItem={item}
+          highlight={shouldHighlight(item)}
+          variant="sidebar"
+          onHover={() => hoverNavItem(item)}
+        />
+      ))}
+    </ul>
+  );
+}

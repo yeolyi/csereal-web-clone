@@ -1,7 +1,17 @@
-import { layout, type RouteConfig, route } from '@react-router/dev/routes';
+import {
+  layout,
+  prefix,
+  type RouteConfig,
+  route,
+} from '@react-router/dev/routes';
 
 export default [
-  layout('routes/[locale]/layout.tsx', [
-    route(':locale', 'routes/[locale]/index.tsx'),
+  ...prefix('/:locale?', [
+    layout('routes/[locale]/layout.tsx', [
+      route('/', 'routes/[locale]/index.tsx'),
+      ...prefix('/about', [
+        route('/overview', 'routes/[locale]/about/overview.tsx'),
+      ]),
+    ]),
   ]),
 ] satisfies RouteConfig;
