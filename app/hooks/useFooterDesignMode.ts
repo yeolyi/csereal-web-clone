@@ -26,4 +26,5 @@ const darkModePages = [
   '/admissions',
   '/academics',
   '/reservations',
+  '/10-10-project',
 ];

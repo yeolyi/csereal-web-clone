@@ -31,7 +31,7 @@ const researchLinks = [
   { href: '/community/faculty-recruitment', title: '신임교수초빙' },
   { href: '/research/labs', title: '연구실 목록' },
   { href: '/research/top-conference-list', title: 'Top Conference List' },
-  { href: '/research/ten-ten-project', title: '10-10 Project' },
+  { href: '/10-10-project', title: '10-10 Project' },
 ] satisfies Links;
 
 const moreLinks = [

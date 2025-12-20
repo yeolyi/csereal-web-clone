@@ -30,28 +30,6 @@ export const navigationTree: NavItem[] = [
         key: '신임교수초빙',
         path: '/community/faculty-recruitment',
       },
-      {
-        key: '학생회',
-        path: '/community/council',
-        children: [
-          {
-            key: '학생회 소개',
-            path: '/community/council/intro',
-          },
-          {
-            key: '학생회 회의록',
-            path: '/community/council/meeting-minute',
-          },
-          {
-            key: '학생회칙 및 세칙',
-            path: '/community/council/rules',
-          },
-          {
-            key: '활동 보고',
-            path: '/community/council/report',
-          },
-        ],
-      },
     ],
   },
   {
