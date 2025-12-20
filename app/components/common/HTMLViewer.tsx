@@ -1,4 +1,4 @@
-import './suneditor-contents.css';
+import './assets/suneditor-contents.css';
 
 import { Autolinker } from 'autolinker';
 import useResponsive from '~/hooks/useResponsive';
