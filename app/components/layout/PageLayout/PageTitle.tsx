@@ -1,0 +1,112 @@
+import { Fragment } from 'react';
+import { Link, useLocation } from 'react-router';
+import { CurvedHorizontalNodeGray } from '~/components/common/Nodes';
+import { useLanguage } from '~/hooks/useLanguage';
+import type { BreadcrumbItem } from './index';
+
+interface PageTitleProps {
+  title?: string;
+  breadcrumb?: BreadcrumbItem[];
+  titleType: 'big' | 'small';
+  margin: string;
+}
+
+export default function PageTitle({
+  title,
+  breadcrumb,
+  titleType,
+  margin,
+}: PageTitleProps) {
+  const titleStyle =
+    titleType === 'big' ? 'text-2xl font-bold' : 'text-lg font-medium';
+
+  return (
+    <div className="px-5 pt-[54px] sm:px-25">
+      <div
+        className={`col-start-1 row-start-1 w-fit min-w-62.5 max-w-207.5 ${margin}`}
+      >
+        {breadcrumb && breadcrumb.length > 0 && (
+          <div className="mb-2 flex items-center justify-center gap-2">
+            <Breadcrumb items={breadcrumb} />
+            <CurvedHorizontalNodeGray />
+          </div>
+        )}
+        {title && (
+          <h3
+            className={`mr-25 ${titleStyle} break-keep text-[24px] tracking-wide text-white sm:text-[32px]`}
+          >
+            {title}
+          </h3>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
+  const { pathname } = useLocation();
+  const { localizedPath } = useLanguage();
+
+  return (
+    <ol className="flex items-center gap-0.5 text-neutral-300">
+      {items.map((item, i) => {
+        const isCurrent = item.path
+          ? pathname === localizedPath(item.path)
+          : false;
+
+        return (
+          <Fragment key={`${item.name}-${i}`}>
+            <li className="flex">
+              <LocationText
+                path={item.path}
+                name={item.name}
+                isCurrent={isCurrent}
+              />
+            </li>
+            {i !== items.length - 1 && (
+              <li className="text-xs material-symbols-outlined font-extralight">
+                arrow_forward_ios
+              </li>
+            )}
+          </Fragment>
+        );
+      })}
+    </ol>
+  );
+}
+
+interface LocationTextProps {
+  path?: string;
+  name: string;
+  isCurrent: boolean;
+}
+
+function LocationText({ path, name, isCurrent }: LocationTextProps) {
+  const { localizedPath } = useLanguage();
+  const textStyle = 'text-xs sm:text-md font-normal tracking-[.02em]';
+
+  if (isCurrent) {
+    return (
+      <button
+        type="button"
+        className={`${textStyle} hover:text-main-orange`}
+        onClick={() => window.location.reload()}
+      >
+        {name}
+      </button>
+    );
+  }
+
+  if (path) {
+    return (
+      <Link
+        to={localizedPath(path)}
+        className={`${textStyle} hover:text-main-orange`}
+      >
+        {name}
+      </Link>
+    );
+  }
+
+  return <span className={textStyle}>{name}</span>;
+}

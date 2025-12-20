@@ -1,7 +1,10 @@
+import type commonTranslations from '~/translations.json';
 import type { Locale } from '~/types/i18n';
-import type footerTranslations from './translations.json';
+import type footerOnlyTranslations from './translations.json';
 
-type TranslationKeys = keyof typeof footerTranslations;
+type FooterTranslations = typeof commonTranslations &
+  typeof footerOnlyTranslations;
+type TranslationKeys = keyof FooterTranslations;
 
 type Links = { href: string; title: TranslationKeys }[];
 

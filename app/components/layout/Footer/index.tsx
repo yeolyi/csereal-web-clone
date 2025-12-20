@@ -4,10 +4,13 @@ import {
   type LinkGroupProps,
 } from '~/components/layout/Footer/linkGroups';
 import { useLanguage } from '~/hooks/useLanguage';
+import commonTranslations from '~/translations.json';
 import useFooterDesignMode from '../../../hooks/useFooterDesignMode';
 import SnuEngineeringIcon from './assets/SNU_Engineering.svg?react';
 import SnuLogoWithText from './assets/SNU_Logo_with_Text.svg?react';
-import footerTranslations from './translations.json';
+import footerOnlyTranslations from './translations.json';
+
+const footerTranslations = { ...commonTranslations, ...footerOnlyTranslations };
 
 export default function Footer() {
   const mode = useFooterDesignMode();

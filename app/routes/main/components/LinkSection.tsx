@@ -1,11 +1,9 @@
 import { Link } from 'react-router';
 import { useLanguage } from '~/hooks/useLanguage';
+import commonTranslations from '~/translations.json';
 
 export default function LinkSection() {
-  const { t, localizedPath } = useLanguage({
-    바로가기: 'Quick Links',
-    학부: 'Undergraduate',
-  });
+  const { t, localizedPath } = useLanguage(commonTranslations);
 
   return (
     <div className="mx-6 mb-[7rem] mt-[60px] flex flex-col gap-[4rem] sm:mx-[7.81rem] sm:mb-[12rem] sm:mt-[90px] sm:flex-row sm:gap-[8rem]">

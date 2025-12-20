@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { useLanguage } from '~/hooks/useLanguage';
 import useResponsive from '~/hooks/useResponsive';
+import commonTranslations from '~/translations.json';
 import type { AllMainNotice } from '~/types/api/v2';
 import noticeGraphicImg from '../assets/noticeGraphic.png';
 
@@ -17,14 +18,7 @@ export default function NoticeSection({
 }) {
   const [tag, setTag] = useState<keyof AllMainNotice>('all');
   const isMobile = useResponsive();
-  const { t, localizedPath, locale } = useLanguage({
-    공지사항: 'Notice',
-    더보기: 'More',
-    전체: 'All',
-    장학: 'Scholarship',
-    학부: 'Undergraduate',
-    대학원: 'Graduate',
-  });
+  const { t, localizedPath, locale } = useLanguage(commonTranslations);
 
   return (
     <div className="relative mt-16 bg-[#212121] sm:mx-31 sm:mt-22 sm:h-112">

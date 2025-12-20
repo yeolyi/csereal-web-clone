@@ -2,7 +2,10 @@ import { Link } from 'react-router';
 import { StraightNode } from '~/components/common/Nodes';
 import type { NavItem } from '~/constants/navigation';
 import { useLanguage } from '~/hooks/useLanguage';
-import navbarTranslations from './translations.json';
+import commonTranslations from '~/translations.json';
+import leftNavTranslations from './translations.json';
+
+const navbarTranslations = { ...commonTranslations, ...leftNavTranslations };
 
 interface LNBMenuItemProps {
   navItem: NavItem;
