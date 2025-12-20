@@ -27,6 +27,7 @@ const getLocaleRoutes = (locale: Locale) => {
       route('/greetings', 'routes/about/greetings.tsx'),
       route('/history', 'routes/about/history.tsx'),
       route('/future-careers', 'routes/about/future-careers/index.tsx'),
+      route('/student-clubs', 'routes/about/student-clubs/index.tsx'),
     ]),
     ...prefix('/community', [route('/', 'routes/community/index.tsx')]),
     ...prefix('/people', [route('/', 'routes/people/index.tsx')]),

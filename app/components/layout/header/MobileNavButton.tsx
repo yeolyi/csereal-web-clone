@@ -1,4 +1,3 @@
-import { Button } from '~/components/ui/button';
 import { navigationTree } from '~/constants/navigation';
 import { useNavItem } from '~/hooks/useNavItem';
 import { useStore } from '~/store';
@@ -33,11 +32,10 @@ export default function MobileNavButton() {
   };
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
+    <button
+      type="button"
       onClick={toggleNav}
-      className="flex sm:hidden"
+      className="flex items-center justify-center sm:hidden"
       aria-label={isOpen ? '메뉴 닫기' : '메뉴 열기'}
     >
       {isOpen ? (
@@ -45,6 +43,6 @@ export default function MobileNavButton() {
       ) : (
         <MenuSVG />
       )}
-    </Button>
+    </button>
   );
 }

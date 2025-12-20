@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Button } from '~/components/ui/button';
 import type { NavItem } from '~/constants/navigation';
 import { navigationTree } from '~/constants/navigation';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -25,7 +24,6 @@ export default function MobileNavList() {
       <ul className="flex flex-col gap-9 text-center">
         {navigationTree.map((item, i) => (
           <li
-            // biome-ignore lint/suspicious/noArrayIndexKey: static nav tree
             key={i}
             className={`text-sm font-medium ${
               shouldHighlight(item) ? 'text-white' : 'text-neutral-500'
@@ -39,14 +37,9 @@ export default function MobileNavList() {
       </ul>
 
       <div className="mb-[40px] flex flex-col items-center text-sm font-medium text-neutral-500">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setSearch(true)}
-          aria-label="검색"
-        >
+        <button type="button" onClick={() => setSearch(true)} aria-label="검색">
           <SearchIcon />
-        </Button>
+        </button>
         <AuthButton />
         <LangButton />
       </div>
@@ -70,15 +63,14 @@ function SearchPage({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="absolute bottom-0 left-0 right-0 top-0 z-50 bg-[#1F2021]">
-      <Button
-        variant="ghost"
-        size="icon"
+      <button
+        type="button"
         onClick={onClose}
         className="absolute right-4 top-4 text-white"
         aria-label="검색 닫기"
       >
         <span className="material-symbols-rounded">close</span>
-      </Button>
+      </button>
       <div className="mx-[1.94rem] mt-9 flex items-center border-b border-neutral-400">
         <input
           value={text}
@@ -89,14 +81,9 @@ function SearchPage({ onClose }: { onClose: () => void }) {
           // biome-ignore lint/a11y/noAutofocus: 넣을거임
           autoFocus
         />
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={search}
-          aria-label="검색 실행"
-        >
+        <button type="button" onClick={search} aria-label="검색 실행">
           <SearchIcon />
-        </Button>
+        </button>
       </div>
     </div>
   );
@@ -111,14 +98,13 @@ function AuthButton() {
   const isLoggedIn = role !== undefined;
 
   return (
-    <Button
-      variant="ghost"
-      size="none"
+    <button
+      type="button"
       onClick={isLoggedIn ? logout : login}
       className="mt-6"
     >
       {isLoggedIn ? 'LOGOUT' : 'LOGIN'}
-    </Button>
+    </button>
   );
 }
 
@@ -127,14 +113,9 @@ function LangButton() {
   const { locale, changeLanguage } = useLanguage();
 
   return (
-    <Button
-      variant="ghost"
-      size="none"
-      onClick={changeLanguage}
-      className="mt-[0.62rem]"
-    >
+    <button type="button" onClick={changeLanguage} className="mt-[0.62rem]">
       {locale === 'ko' ? 'ENG' : '한국어'}
-    </Button>
+    </button>
   );
 }
 

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
-import { Button } from '~/components/ui/button';
-import { Input } from '~/components/ui/input';
 import { useLanguage } from '~/hooks/useLanguage';
 
 const translations = {
@@ -39,22 +37,20 @@ export default function HeaderSearchBar() {
         search();
       }}
     >
-      <Input
+      <input
         aria-label={t('통합검색')}
         type="text"
         id="search"
-        className="autofill-bg-neutral-200 h-auto w-full border-0 bg-transparent px-2 text-xs shadow-none outline-none focus-visible:ring-0"
+        className="autofill-bg-neutral-200 h-auto w-full border-0 bg-transparent px-2 text-xs shadow-none outline-none"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <Button
+      <button
         type="submit"
-        variant="iconButton"
-        size="none"
         className="material-symbols-rounded w-8 text-[1.25rem] text-neutral-800 hover:text-neutral-500"
       >
         search
-      </Button>
+      </button>
     </form>
   );
 }

@@ -1,7 +1,6 @@
 import { Link } from 'react-router';
 import LoginVisible from '~/components/common/LoginVisible';
 import HeaderSearchBar from '~/components/layout/Header/HeaderSearchBar';
-import { Button } from '~/components/ui/button';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useStore } from '~/store';
 
@@ -27,34 +26,41 @@ export default function HeaderRight() {
       <div className="flex items-center gap-3 text-sm font-normal text-white">
         {/* Admin menu - only for ROLE_STAFF */}
         <LoginVisible allow="ROLE_STAFF">
-          <Button variant="headerLink" size="none" asChild>
-            <Link to="/admin">{t('관리자 메뉴')}</Link>
-          </Button>
+          <Link to="/admin" className="hover:text-main-orange">
+            {t('관리자 메뉴')}
+          </Link>
           <Divider />
         </LoginVisible>
 
         {/* Login/Logout button */}
         {role ? (
-          <Button variant="headerLink" size="none" onClick={logout}>
+          <button
+            type="button"
+            onClick={logout}
+            className="hover:text-main-orange"
+          >
             {t('로그아웃')}
-          </Button>
+          </button>
         ) : (
-          <Button variant="headerLink" size="none" onClick={login}>
+          <button
+            type="button"
+            onClick={login}
+            className="hover:text-main-orange"
+          >
             {t('로그인')}
-          </Button>
+          </button>
         )}
 
         <Divider />
 
         {/* Language toggle */}
-        <Button
-          variant="headerLink"
-          size="none"
+        <button
+          type="button"
           onClick={changeLanguage}
-          className="tracking-[0.025rem]"
+          className="tracking-[0.025rem] hover:text-main-orange"
         >
           {isEnglish ? '한국어' : 'ENG'}
-        </Button>
+        </button>
       </div>
 
       {/* Search bar */}

@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from 'react-router';
 import Header from '~/components/layout/Header';
-import { Button } from '~/components/ui/button';
 import { useLanguage } from '~/hooks/useLanguage';
 
 export default function NotFound() {
@@ -18,9 +17,13 @@ export default function NotFound() {
         <p className="text-lg text-white">
           {t('존재하지 않는 경로입니다')}: {pathname}
         </p>
-        <Button variant="gray" onClick={() => navigate('/')}>
+        <button
+          type="button"
+          onClick={() => navigate('/')}
+          className="whitespace-nowrap rounded-[.0625rem] border border-neutral-200 bg-neutral-100 px-[.875rem] py-[.3125rem] text-md font-medium leading-[1.5rem] text-neutral-500 hover:bg-neutral-200"
+        >
           {t('메인으로 이동')}
-        </Button>
+        </button>
       </div>
     </>
   );
