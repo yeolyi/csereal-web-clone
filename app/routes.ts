@@ -24,6 +24,7 @@ const getLocaleRoutes = (locale: Locale) => {
     ...prefix('/about', [
       route('/', 'routes/about/index.tsx'),
       route('/overview', 'routes/about/overview.tsx'),
+      route('/greetings', 'routes/about/greetings.tsx'),
     ]),
     ...prefix('/community', [route('/', 'routes/community/index.tsx')]),
     ...prefix('/people', [route('/', 'routes/people/index.tsx')]),
