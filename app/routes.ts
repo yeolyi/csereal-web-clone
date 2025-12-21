@@ -38,6 +38,7 @@ const getLocaleRoutes = (locale: Locale) => {
       route('/notice/:id', 'routes/community/notice/$id.tsx'),
       route('/news', 'routes/community/news/index.tsx'),
       route('/news/:id', 'routes/community/news/$id.tsx'),
+      route('/faculty-recruitment', 'routes/community/faculty-recruitment.tsx'),
     ]),
     ...prefix('/people', [
       route('/', 'routes/people/index.tsx'),
@@ -48,7 +49,10 @@ const getLocaleRoutes = (locale: Locale) => {
       route('/staff', 'routes/people/staff/index.tsx'),
       route('/staff/:id', 'routes/people/staff/$id.tsx'),
     ]),
-    ...prefix('/research', [route('/', 'routes/research/index.tsx')]),
+    ...prefix('/research', [
+      route('/', 'routes/research/index.tsx'),
+      route('/groups', 'routes/research/groups/index.tsx'),
+    ]),
     ...prefix('/admissions', [
       route('/', 'routes/admissions/index.tsx'),
       ...prefix('/undergraduate', [

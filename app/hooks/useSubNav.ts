@@ -109,3 +109,22 @@ export const usePeopleSubNav = () => {
     ],
   };
 };
+
+export const useResearchSubNav = () => {
+  const { t } = useLanguage();
+
+  return {
+    title: t('연구·교육'),
+    titlePath: '/research',
+    items: [
+      { name: t('연구·교육 스트림'), path: '/research/groups', depth: 1 },
+      { name: t('연구 센터'), path: '/research/centers', depth: 1 },
+      { name: t('연구실 목록'), path: '/research/labs', depth: 1 },
+      {
+        name: t('Top Conference List'),
+        path: '/research/top-conference-list',
+        depth: 1,
+      },
+    ],
+  };
+};
