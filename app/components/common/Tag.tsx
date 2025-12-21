@@ -86,9 +86,14 @@ export function Tag({
 
   if (onClick && !onDelete) {
     return (
-      <Button variant="pill" onClick={onClick} disabled={disabled}>
+      <button
+        type="button"
+        className={className}
+        onClick={onClick}
+        disabled={disabled}
+      >
         {content}
-      </Button>
+      </button>
     );
   }
 

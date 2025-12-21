@@ -126,6 +126,10 @@ const { t, localizedPath } = useLanguage({
 - app.css에 @font-face 선언
 - Tailwind theme에 커스텀 font family 추가
 
+### 번역 파일
+- 번역은 모두 JSON 파일로 관리
+- `app/translations.json`에는 홈페이지 전역에서 사용하는 번역만 포함
+
 ### 반응형 디자인
 - @mui/material의 useMediaQuery → 커스텀 useResponsive 훅
 - window.matchMedia 또는 resize 이벤트 리스너 사용
