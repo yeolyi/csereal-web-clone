@@ -79,41 +79,34 @@ function findTopLevelItem(activeItem: NavItem): NavItem | null {
   return null;
 }
 
-// 전체 트리에서 parent를 찾는 함수
-function findParent(tree: NavItem[], childKey: string): NavItem | null {
-  for (const item of tree) {
-    if (item.children) {
-      // 직접 자식인지 확인
-      for (const child of item.children) {
-        if (child.key === childKey) {
-          return item;
-        }
-      }
-
-      // 재귀적으로 하위 트리 탐색
-      const found = findParent(item.children, childKey);
-      if (found) return found;
-    }
-  }
-  return null;
-}
-
 // Helper: Check if parentItem is an ancestor of childItem
 export function isAncestorNavItem(
   parentItem: NavItem,
   childItem: NavItem | null,
 ): boolean {
   if (!childItem) return false;
-  if (childItem.key === parentItem.key) return true;
 
-  // 전체 트리를 순회하면서 조상인지 확인
-  let current: NavItem | null = childItem;
-  while (current) {
-    const parent = findParent(navigationTree, current.key);
-    if (!parent) break;
-    if (parent.key === parentItem.key) return true;
-    current = parent;
+  // 중복 key가 있어도 참조 동일성으로 경로를 판별
+  const path = findPathToItem(navigationTree, childItem);
+  if (!path) return false;
+
+  // child 포함 경로 중에 parent가 있는지 확인
+  return path.some((item) => item === parentItem);
+}
+
+// 특정 항목까지의 경로(루트→타겟)를 찾음
+function findPathToItem(
+  items: NavItem[],
+  target: NavItem,
+  acc: NavItem[] = [],
+): NavItem[] | null {
+  for (const item of items) {
+    const newPath = [...acc, item];
+    if (item === target) return newPath;
+    if (item.children) {
+      const found = findPathToItem(item.children, target, newPath);
+      if (found) return found;
+    }
   }
-
-  return false;
+  return null;
 }

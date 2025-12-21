@@ -80,10 +80,8 @@ function DotList() {
     >
       {dotArr.map((filled, idx) =>
         filled ? (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static navigationTree array
           <DotFill key={idx} className={getDotMargin(filled, idx)} />
         ) : (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static navigationTree array
           <DotEmpty key={idx} className={getDotMargin(filled, idx)} />
         ),
       )}
@@ -107,7 +105,6 @@ function NavList() {
     <ul className="mx-12 mt-12 flex flex-col gap-9 text-center">
       {navigationTree.map((item, i) => (
         <LNBMenuItem
-          // biome-ignore lint/suspicious/noArrayIndexKey: static navigationTree array
           key={i}
           navItem={item}
           highlight={shouldHighlight(item)}
