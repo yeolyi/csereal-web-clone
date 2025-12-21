@@ -8,7 +8,7 @@ import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useAboutSubNav } from '~/hooks/useSubNav';
 import type { DirectionsResponse } from '~/types/api/v2/about/directions';
-import { findItemBySearchParam, replaceSpaceWithDash } from '~/utils/string';
+import { encodeParam, findItemBySearchParam } from '~/utils/string';
 import KakaoMap from './components/KakaoMap';
 
 export async function loader() {
@@ -41,7 +41,7 @@ export default function DirectionsPage({
 
   const selectionItems = directions.map((direction) => {
     const label = direction[locale]?.name ?? direction.ko.name;
-    const query = replaceSpaceWithDash(direction.en.name || direction.ko.name);
+    const query = encodeParam(direction.en.name || direction.ko.name);
     return {
       id: direction.ko.name,
       label,

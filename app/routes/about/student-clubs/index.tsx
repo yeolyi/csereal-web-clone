@@ -6,7 +6,7 @@ import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useAboutSubNav } from '~/hooks/useSubNav';
 import type { StudentClubsResponse } from '~/types/api/v2/about/student-clubs';
-import { findItemBySearchParam, replaceSpaceWithDash } from '~/utils/string';
+import { encodeParam, findItemBySearchParam } from '~/utils/string';
 import ClubDetails from './components/ClubDetails';
 
 export async function loader() {
@@ -35,7 +35,7 @@ export default function StudentClubsPage({
 
   const selectionItems = clubs.map((club) => {
     const label = club[locale]?.name ?? club.ko.name;
-    const query = replaceSpaceWithDash(club.en.name || club.ko.name);
+    const query = encodeParam(club.en.name || club.ko.name);
     return {
       id: club.ko.name,
       label,

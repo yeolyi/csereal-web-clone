@@ -29,20 +29,8 @@ export const getLocaleFromPathname = (pathname: string): 'en' | 'ko' => {
   return pathname.startsWith('/en') ? 'en' : 'ko';
 };
 
-/**
- * 문자열의 공백을 대시(-)로 변환합니다.
- * @param words - 변환할 문자열
- * @returns 공백이 대시로 변환된 문자열
- */
-export const replaceSpaceWithDash = (words: string) =>
-  words.replace(/\s+/g, '-');
-
-/**
- * 문자열의 대시(-)를 공백으로 변환합니다.
- * @param words - 변환할 문자열
- * @returns 대시가 공백으로 변환된 문자열
- */
-export const replaceDashWithSpace = (words: string) => words.replace(/-/g, ' ');
+export const encodeParam = (words: string) => words.replace(/\s+/g, '-');
+export const decodeParam = (words: string) => words.replace(/-/g, ' ');
 
 /**
  * 검색 파라미터를 사용하여 배열에서 항목을 찾습니다.
@@ -59,10 +47,10 @@ export const findItemBySearchParam = <T>(
   const defaultItem = items[0];
   if (!searchParam) return defaultItem;
 
-  const id = replaceDashWithSpace(searchParam);
+  const id = decodeParam(searchParam);
   const item = items.find((item) =>
     getItemIds(item)
-      .map((id) => replaceDashWithSpace(id))
+      .map((id) => decodeParam(id))
       .includes(id),
   );
   return item;

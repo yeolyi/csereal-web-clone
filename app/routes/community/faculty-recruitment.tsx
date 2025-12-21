@@ -1,7 +1,5 @@
 import type { Route } from '.react-router/types/app/routes/community/+types/faculty-recruitment';
-import Button from '~/components/common/Button';
 import HTMLViewer from '~/components/common/HTMLViewer';
-import LoginVisible from '~/components/common/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -17,7 +15,7 @@ export async function loader() {
 export default function FacultyRecruitmentPage({
   loaderData: data,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t } = useLanguage({
     신임교수초빙: 'Faculty Recruitment',
     편집: 'Edit',
   });

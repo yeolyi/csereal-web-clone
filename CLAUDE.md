@@ -8,6 +8,8 @@
 - 기존 코드를 현재 프로젝트의 적합한 위치에 복사
 - 현재 프로젝트의 컨벤션과 react-router에 맞게 기존 코드를 수정
 
+className에서 string interpolation보다 clsx를 선호. 특히 조건부 스타일이 있을 때. 
+
 현재는 create, edit 관련 기능은 따로 언급하지 않으면 마이그레이션하지 않음.
 
 Use react 19.

@@ -1,14 +1,17 @@
 import type { Route } from '.react-router/types/app/routes/research/groups/+types/index';
-import type { LoaderFunctionArgs } from 'react-router';
+import { Link, type LoaderFunctionArgs, useSearchParams } from 'react-router';
+import HTMLViewer from '~/components/common/HTMLViewer';
 import SelectionList from '~/components/common/SelectionList';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
-import useSelectionParam from '~/hooks/useSelectionParam';
 import { useResearchSubNav } from '~/hooks/useSubNav';
 import type { ResearchGroupsResponse } from '~/types/api/v2/research/groups';
-import { getLocaleFromPathname } from '~/utils/string';
-import ResearchGroupDetails from './components/ResearchGroupDetails';
+import {
+  encodeParam,
+  findItemBySearchParam,
+  getLocaleFromPathname,
+} from '~/utils/string';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -28,24 +31,29 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function ResearchGroupsPage({
   loaderData: groups,
 }: Route.ComponentProps) {
-  const { t } = useLanguage({
+  const { t, localizedPath } = useLanguage({
     '연구 스트림은 존재하지 않습니다.': 'Research stream does not exist.',
+    스트림: 'Stream',
+    연구실: 'Labs',
   });
   const subNav = useResearchSubNav();
+  const [searchParams] = useSearchParams();
 
-  const { selectedItem, getUrl } = useSelectionParam({
-    items: groups,
-    basePath: '/research/groups',
-    idKey: 'id',
-    labelKey: 'name',
-  });
+  const item =
+    findItemBySearchParam(
+      groups,
+      (group) => [group.name],
+      searchParams.get('selected') ?? undefined,
+    ) ?? groups[0];
 
-  const selectionItems = groups.map((group) => ({
+  const items = groups.map((group) => ({
     id: String(group.id),
     label: group.name,
-    href: getUrl(group),
-    selected: group.id === selectedItem?.id,
+    href: `/research/groups?selected=${encodeParam(group.name)}`,
+    selected: group.id === item?.id,
   }));
+
+  const labsPath = localizedPath('/research/labs');
 
   return (
     <PageLayout
@@ -59,9 +67,47 @@ export default function ResearchGroupsPage({
       padding="none"
     >
       <div className="px-7 sm:pl-[100px] sm:pr-[320px]">
-        <SelectionList items={selectionItems} />
+        <SelectionList items={items} />
       </div>
-      {selectedItem && <ResearchGroupDetails group={selectedItem} />}
+      {item && (
+        <div className="flex flex-col bg-neutral-100 px-7 pb-9 pt-8 sm:pb-[100px] sm:pl-[100px] sm:pr-[320px] sm:pt-[50px]">
+          <h2 className="mb-6 ml-1 whitespace-nowrap text-base font-bold leading-loose sm:mx-0 sm:mb-[18px] sm:text-[24px]">
+            {item.name} {t('스트림')}
+          </h2>
+          <div className="max-w-[780px] bg-white p-[18px] sm:p-[40px]">
+            <HTMLViewer html={item.description} />
+          </div>
+          {item.mainImageUrl && (
+            <div className="relative mt-10 aspect-2/1 w-[80%] max-w-[720px] self-end">
+              <img
+                src={item.mainImageUrl}
+                alt={`${item.name} 연구 스트림 사진`}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+          <div className="mt-10 sm:mx-0">
+            <h3 className="mb-1 whitespace-nowrap text-md font-bold leading-loose sm:py-1 sm:pl-2.5 sm:text-[20px]">
+              {t('연구실')}
+            </h3>
+            <ul>
+              {item.labs.map((lab) => (
+                <li key={lab.id} className="mb-0.5 w-fit whitespace-nowrap">
+                  <Link
+                    to={`${labsPath}/${lab.id}`}
+                    className="group flex h-7 items-center gap-2.5 sm:px-3"
+                  >
+                    <span className="h-2.5 w-2.5 rounded-full border border-main-orange duration-300 group-hover:bg-main-orange" />
+                    <span className="text-sm font-medium duration-300 group-hover:text-main-orange sm:text-md">
+                      {lab.name}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </PageLayout>
   );
 }
