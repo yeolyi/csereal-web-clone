@@ -4,3 +4,9 @@ export interface Guide {
   description: string;
   attachments: Attachment[];
 }
+
+export interface TimelineContent {
+  year: number;
+  description: string;
+  attachments: Attachment[];
+}
