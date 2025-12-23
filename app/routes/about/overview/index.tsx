@@ -1,15 +1,17 @@
-import type { Route } from '.react-router/types/app/routes/about/+types/overview';
+import type { Route } from '.react-router/types/app/routes/about/overview/+types/index';
 import Attachments from '~/components/common/Attachments';
+import Button from '~/components/common/Button';
 import ContentSection from '~/components/common/ContentSection';
 import HTMLViewer from '~/components/common/HTMLViewer';
+import LoginVisible from '~/components/common/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import commonTranslations from '~/translations.json';
 import type { AboutContent } from '~/types/api/v2/about/content';
 import { getLocaleFromPathname } from '~/utils/string';
-import brochure1 from './assets/brochure1.png';
-import brochure2 from './assets/brochure2.png';
+import brochure1 from '../assets/brochure1.png';
+import brochure2 from '../assets/brochure2.png';
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
@@ -26,7 +28,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export default function Overview({ loaderData }: Route.ComponentProps) {
   const { description, attachments, imageURL } = loaderData;
-  const { t } = useLanguage({
+  const { t, localizedPath } = useLanguage({
     ...commonTranslations,
     '학부 소개 책자': 'Department Brochure',
   });
@@ -56,6 +58,19 @@ export default function Overview({ loaderData }: Route.ComponentProps) {
       }}
     >
       <ContentSection tone="neutral" padding="overviewTop">
+        <LoginVisible allow="ROLE_STAFF">
+          <div className="mb-8 text-right">
+            <Button
+              as="link"
+              to={localizedPath('/about/overview/edit')}
+              variant="outline"
+              tone="neutral"
+              size="md"
+            >
+              편집
+            </Button>
+          </div>
+        </LoginVisible>
         <div className="flex flex-col-reverse items-start gap-6 sm:flex-row sm:gap-10">
           <div className="sm:w-[20rem] sm:grow">
             <HTMLViewer html={description} />

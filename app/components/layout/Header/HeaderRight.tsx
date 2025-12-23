@@ -15,10 +15,6 @@ function Divider() {
 }
 
 export default function HeaderRight() {
-  const role = useStore((s) => s.role);
-  const login = useStore((s) => s.login);
-  const logout = useStore((s) => s.logout);
-
   const { isEnglish, changeLanguage, t } = useLanguage(translations);
 
   return (
@@ -32,16 +28,7 @@ export default function HeaderRight() {
           <Divider />
         </LoginVisible>
 
-        {/* Login/Logout button */}
-        {role ? (
-          <Button variant="text" tone="inverse" size="sm" onClick={logout}>
-            {t('로그아웃')}
-          </Button>
-        ) : (
-          <Button variant="text" tone="inverse" size="sm" onClick={login}>
-            {t('로그인')}
-          </Button>
-        )}
+        {import.meta.env.DEV ? <DevLogin /> : <ProdLogin t={t} />}
 
         <Divider />
 
@@ -59,5 +46,66 @@ export default function HeaderRight() {
       {/* Search bar */}
       <HeaderSearchBar />
     </div>
+  );
+}
+
+function ProdLogin({ t }: { t: (key: '로그인' | '로그아웃') => string }) {
+  const role = useStore((s) => s.role);
+  const login = useStore((s) => s.login);
+  const logout = useStore((s) => s.logout);
+
+  return role ? (
+    <Button variant="text" tone="inverse" size="sm" onClick={logout}>
+      {t('로그아웃')}
+    </Button>
+  ) : (
+    <Button variant="text" tone="inverse" size="sm" onClick={login}>
+      {t('로그인')}
+    </Button>
+  );
+}
+
+function DevLogin() {
+  const role = useStore((s) => s.role);
+  const mockLogin = useStore((s) => s.mockLogin);
+  const mockLogout = useStore((s) => s.mockLogout);
+
+  if (role) {
+    return (
+      <Button variant="text" tone="inverse" size="sm" onClick={mockLogout}>
+        로그아웃
+      </Button>
+    );
+  }
+
+  return (
+    <>
+      <Button
+        variant="text"
+        tone="inverse"
+        size="sm"
+        onClick={() => mockLogin('ROLE_STAFF')}
+      >
+        STAFF
+      </Button>
+      <Divider />
+      <Button
+        variant="text"
+        tone="inverse"
+        size="sm"
+        onClick={() => mockLogin('ROLE_RESERVATION')}
+      >
+        RESERV
+      </Button>
+      <Divider />
+      <Button
+        variant="text"
+        tone="inverse"
+        size="sm"
+        onClick={() => mockLogin('ROLE_COUNCIL')}
+      >
+        COUNCIL
+      </Button>
+    </>
   );
 }
