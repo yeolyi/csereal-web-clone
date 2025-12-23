@@ -151,6 +151,136 @@ const { t, localizedPath } = useLanguage({
 - 태그 변경 시 즉시 query param 변경 (navigate 호출)
 - 검색 버튼 클릭 시에만 keyword query param 변경
 
+## Form 컴포넌트 시스템 (2025-12-23 마이그레이션)
+
+### 파일 구조
+```
+app/components/common/form/
+├── Form.tsx                  # 메인 복합 컴포넌트
+├── Action.tsx                # 저장/취소/삭제 버튼
+├── AlertModal.tsx            # 확인 모달
+├── GlobalModal.tsx           # 전역 모달 (zustand 연동)
+├── Fieldset.tsx              # 필드셋 (+ HTML/Image/File/Title 프리셋)
+├── Section.tsx               # 폼 섹션
+├── LanguagePicker.tsx        # 언어 선택 (ko/en)
+├── Text.tsx                  # 텍스트 입력
+├── TextArea.tsx              # 여러 줄 입력
+├── TextList.tsx              # 동적 텍스트 리스트
+├── Radio.tsx                 # 라디오 버튼 (form 통합)
+├── Checkbox.tsx              # 체크박스 (form 통합)
+├── Dropdown.tsx              # 드롭다운 (form 통합)
+├── Image.tsx                 # 이미지 업로드
+├── File.tsx                  # 파일 업로드
+└── html/
+    ├── HTMLEditor.tsx        # Suneditor 에디터
+    ├── HTMLEditorFallback.tsx
+    └── LazyHTMLEditor.tsx
+
+app/store/
+└── modal.ts                  # 모달 상태 관리 (zustand)
+
+app/types/
+└── form.ts                   # EditorFile, EditorImage 타입
+```
+
+### 기본 사용 패턴
+```typescript
+import { FormProvider, useForm } from 'react-hook-form';
+import Form from '~/components/common/form/Form';
+import Fieldset from '~/components/common/form/Fieldset';
+
+export default function MyEditor() {
+  const methods = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+      image: null,
+      attachments: [],
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  return (
+    <FormProvider {...methods}>
+      <Form>
+        <Fieldset.Title>
+          <Form.Text name="title" />
+        </Fieldset.Title>
+
+        <Fieldset.HTML>
+          <Form.HTML name="description" />
+        </Fieldset.HTML>
+
+        <Fieldset.Image>
+          <Form.Image name="image" />
+        </Fieldset.Image>
+
+        <Fieldset.File>
+          <Form.File name="attachments" />
+        </Fieldset.File>
+
+        <Form.Action
+          onCancel={() => router.back()}
+          onSubmit={methods.handleSubmit(onSubmit)}
+        />
+      </Form>
+    </FormProvider>
+  );
+}
+```
+
+### 모달 시스템 (zustand)
+```typescript
+import { useModalStore } from '~/store/modal';
+import AlertModal from '~/components/common/form/AlertModal';
+
+// 모달 열기
+const open = useModalStore((state) => state.open);
+open(<AlertModal message="확인하시겠습니까?" onConfirm={() => {}} />);
+
+// 모달 닫기
+const close = useModalStore((state) => state.close);
+close();
+```
+
+### 주요 타입
+```typescript
+// EditorFile: 로컬 파일 또는 업로드된 파일
+type EditorFile = LocalFile | UploadedFile;
+
+interface LocalFile {
+  type: 'LOCAL_FILE';
+  file: File;
+}
+
+interface UploadedFile {
+  type: 'UPLOADED_FILE';
+  file: { id: number; name: string; url: string; bytes: number };
+}
+
+// EditorImage: 로컬 이미지 또는 업로드된 이미지
+type EditorImage = LocalImage | UploadedImage | null;
+
+interface LocalImage {
+  type: 'LOCAL_IMAGE';
+  file: File;
+}
+
+interface UploadedImage {
+  type: 'UPLOADED_IMAGE';
+  url: string;
+}
+```
+
+### 주의사항
+- **Standalone 컴포넌트 유지**: `app/components/common/Checkbox.tsx`, `Dropdown.tsx`는 form과 별개로 유지됨
+- **모달**: GlobalModal을 `app/routes/layout.tsx`에 추가해야 함
+- **이미지 업로드**: Suneditor의 이미지 업로드는 `app/api/file.ts`의 `postImage` 사용
+- **FormData 인코딩**: Next.js 이슈였으므로 React Router에서는 불필요 (제거됨)
+
 ## 공용 컴포넌트 가이드 (기존 프로젝트 기준)
 
 ### 공용화 기준

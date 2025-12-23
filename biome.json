@@ -26,5 +26,8 @@
         "noArrayIndexKey": "off"
       }
     }
+  },
+  "files": {
+    "includes": ["**", "!suneditor.css", "!suneditor-contents.css"]
   }
 }

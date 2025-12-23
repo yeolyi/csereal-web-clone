@@ -49,18 +49,18 @@ export default async function fetchContent(
   };
 
   const fetchSeminar = async (keywordValue: string, localeValue: string) => {
-    // const searchParams = new URLSearchParams({
-    //   keyword: keywordValue,
-    //   pageNum: '1',
-    //   language: localeValue,
-    // });
+    const searchParams = new URLSearchParams({
+      keyword: keywordValue,
+      pageNum: '1',
+      language: localeValue,
+    });
 
-    // const response = await fetch(
-    //   `${BASE_URL}/v2/seminar?${searchParams.toString()}`,
-    // );
-    // if (!response.ok) throw new Error('Failed to fetch seminar data');
-    // return (await response.json()) as SeminarPreviewList;
-    return { total: 0, searchList: [] } satisfies SeminarPreviewList;
+    const response = await fetch(
+      `${BASE_URL}/v2/seminar?${searchParams.toString()}`,
+    );
+    if (!response.ok) throw new Error('Failed to fetch seminar data');
+    return (await response.json()) as SeminarPreviewList;
+    // return { total: 0, searchList: [] } satisfies SeminarPreviewList;
   };
 
   const [about, notice, news, seminar, member, research, admission, academics] =

@@ -11,9 +11,9 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://168.107.16.249.nip.io',
+        target: 'https://168.107.16.249.nip.io',
         changeOrigin: true,
-        secure: false,
+        secure: true,
       },
     },
   },

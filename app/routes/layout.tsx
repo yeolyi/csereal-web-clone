@@ -2,6 +2,7 @@ import type { Route } from '.react-router/types/app/routes/+types/layout';
 import { useEffect } from 'react';
 import { isRouteErrorResponse, Outlet, useNavigate } from 'react-router';
 import ErrorState from '~/components/common/ErrorState';
+import GlobalModal from '~/components/common/form/GlobalModal';
 import Header from '~/components/layout/Header';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -34,7 +35,12 @@ export default function Layout({ loaderData }: Route.ComponentProps) {
     useStore.setState({ role: loaderData });
   }, [loaderData]);
 
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <GlobalModal />
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

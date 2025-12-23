@@ -1,0 +1,106 @@
+import type { ChangeEventHandler, MouseEventHandler } from 'react';
+import { useEffect, useState } from 'react';
+import type { RegisterOptions } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
+
+import type { LocalImage, UploadedImage } from '~/types/form';
+
+interface Props {
+  name: string;
+  options?: RegisterOptions;
+}
+
+export default function ImagePicker({ name, options }: Props) {
+  const { register, setValue } = useFormContext();
+  register(name, options);
+  const file = useWatch({ name });
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    e.preventDefault();
+    if (!e.target.files || e.target.files.length === 0) return;
+    setValue(name, { type: 'LOCAL_IMAGE', file: e.target.files[0] });
+  };
+
+  return (
+    <>
+      <label className="mb-3 flex h-7.5 cursor-pointer items-center self-start rounded-sm border border-neutral-300 px-[.62rem] text-xs hover:bg-neutral-100">
+        {`이미지 ${file ? '변경' : '업로드'}`}
+        <input
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          className="hidden"
+          onChange={handleChange}
+        />
+      </label>
+      {file && (
+        <SelectedImageViewer
+          file={file}
+          removeFile={() => setValue(name, null)}
+        />
+      )}
+    </>
+  );
+}
+
+const IMAGE_WIDTH = 100;
+
+const SelectedImageViewer = ({
+  file,
+  removeFile,
+}: {
+  file: LocalImage | UploadedImage;
+  removeFile: () => void;
+}) => {
+  const [imageHeight, setImageHeight] = useState(45);
+
+  useEffect(() => {
+    if (!file || file.type !== 'LOCAL_IMAGE') return;
+    (async () => {
+      const bmp = await createImageBitmap(file.file);
+      setImageHeight(Math.round((IMAGE_WIDTH / bmp.width) * bmp.height));
+    })();
+  }, [file]);
+
+  if (file.type !== 'LOCAL_IMAGE') {
+    return (
+      <div className="flex w-fit items-end gap-2 border border-neutral-200 bg-neutral-50 p-2">
+        <img src={file.url} alt="선택된 이미지" width={100} height={100} />
+        <button
+          type="button"
+          className="text-xs underline"
+          onClick={removeFile}
+        >
+          삭제
+        </button>
+      </div>
+    );
+  }
+
+  const imageURL = URL.createObjectURL(file.file);
+  const fileSizeRounded = Math.floor(file.file.size / 100) / 10;
+  const handleDeleteBlob: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    removeFile();
+  };
+
+  return (
+    <div className="relative flex gap-3 self-start rounded-sm border border-neutral-200 bg-neutral-50 pb-2 pl-2 pr-4 pt-2">
+      <img
+        src={imageURL}
+        alt="선택된 이미지"
+        width={IMAGE_WIDTH}
+        height={imageHeight}
+      />
+      <div className="flex flex-col items-start justify-between">
+        <p className="text-xs">{`${file.file.name}(${fileSizeRounded}KB)`}</p>
+        <button
+          type="button"
+          className="text-xs underline"
+          onClick={handleDeleteBlob}
+        >
+          삭제
+        </button>
+      </div>
+    </div>
+  );
+};
