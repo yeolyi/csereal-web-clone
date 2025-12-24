@@ -21,7 +21,6 @@ export interface Notice {
   isPinned: boolean;
   isImportant: boolean;
   author: string;
-
   id: number;
   createdAt: string;
   modifiedAt: string;
@@ -35,10 +34,4 @@ export interface Notice {
     url: string;
     bytes: number;
   }[];
-}
-
-export interface PostSearchQueryParams {
-  pageNum?: string;
-  keyword?: string;
-  tag?: string[] | string;
 }

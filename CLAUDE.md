@@ -208,6 +208,7 @@ export default function MyEditor() {
       image: null,
       attachments: [],
     },
+    shouldFocusError: false,
   });
 
   const onSubmit = (data) => {
@@ -218,11 +219,21 @@ export default function MyEditor() {
     <FormProvider {...methods}>
       <Form>
         <Fieldset.Title>
-          <Form.Text name="title" />
+          <Form.Text
+            name="title"
+            options={{
+              required: { value: true, message: '제목을 입력해주세요.' },
+            }}
+          />
         </Fieldset.Title>
 
         <Fieldset.HTML>
-          <Form.HTML name="description" />
+          <Form.HTML
+            name="description"
+            options={{
+              required: { value: true, message: '내용을 입력해주세요.' },
+            }}
+          />
         </Fieldset.HTML>
 
         <Fieldset.Image>
@@ -339,6 +350,10 @@ Fieldset은 spacing과 titleSpacing을 variant로 관리:
   - Dialog: 일반 모달 (`app/components/common/Dialog.tsx`)
   - 각 컴포넌트에서 `useState`로 open 상태 관리 (zustand store 제거됨)
 - **이미지 업로드**: Suneditor의 이미지 업로드는 `app/api/file.ts`의 `postImage` 사용
+- **파일명 인코딩**: 기존 프로젝트의 `encodeFormDataFileName` 사용하지 않음. React Router v7에서는 한글 파일명 문제가 해결되어 불필요
+- **Form validation**:
+  - `useForm`에 항상 `shouldFocusError: false` 설정
+  - required 필드는 반드시 `options={{ required: { value: true, message: '메시지' } }}` 형식으로 에러 메시지 포함
 
 ## 공용 컴포넌트 가이드 (기존 프로젝트 기준)
 

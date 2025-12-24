@@ -1,10 +1,13 @@
 import type { Route } from '.react-router/types/app/routes/community/notice/+types/index';
 import type { LoaderFunctionArgs } from 'react-router';
 import { useSearchParams } from 'react-router';
+import Button from '~/components/common/Button';
+import LoginVisible from '~/components/common/LoginVisible';
 import Pagination from '~/components/common/Pagination';
 import SearchBox from '~/components/common/SearchBox';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
+import { NOTICE_TAGS } from '~/constants/tag';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useCommunitySubNav } from '~/hooks/useSubNav';
 import type { NoticePreview, NoticePreviewList } from '~/types/api/v2/notice';
@@ -14,22 +17,6 @@ import NoticeListRow, {
 } from './components/NoticeListRow';
 
 const POST_LIMIT = 20;
-
-const NOTICE_TAGS = [
-  '수업',
-  '장학',
-  '학사(학부)',
-  '학사(대학원)',
-  '다전공/전과',
-  '등록/복학/휴학/재입학',
-  '입학',
-  '졸업',
-  '채용정보',
-  '교환학생/유학',
-  '외부행사/프로그램',
-  '내부행사/프로그램',
-  'international',
-];
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -55,7 +42,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function NoticePage({ loaderData: data }: Route.ComponentProps) {
   const [searchParams] = useSearchParams();
-  const { t } = useLanguage({ 공지사항: 'Notice', 커뮤니티: 'Community' });
+  const { t, localizedPath } = useLanguage();
   const subNav = useCommunitySubNav();
 
   const pageNum = parseInt(searchParams.get('pageNum') || '1', 10);
@@ -66,7 +53,7 @@ export default function NoticePage({ loaderData: data }: Route.ComponentProps) {
       title={t('공지사항')}
       titleSize="xl"
       breadcrumb={[
-        { name: t('커뮤니티'), path: '/community' },
+        { name: t('소식'), path: '/community' },
         { name: t('공지사항'), path: '/community/notice' },
       ]}
       subNav={subNav}
@@ -74,6 +61,25 @@ export default function NoticePage({ loaderData: data }: Route.ComponentProps) {
       <SearchBox tags={NOTICE_TAGS} />
       <NoticeList posts={data.searchList} />
       <Pagination page={pageNum} totalPages={totalPages} />
+
+      <LoginVisible allow="ROLE_STAFF">
+        <div className="mx-2.5 mt-12 flex">
+          <div className="ml-auto flex gap-4">
+            <Button variant="solid" tone="brand" size="md">
+              편집
+            </Button>
+            <Button
+              variant="solid"
+              tone="inverse"
+              size="md"
+              as="link"
+              to={localizedPath('/community/notice/create')}
+            >
+              새 게시글
+            </Button>
+          </div>
+        </div>
+      </LoginVisible>
     </PageLayout>
   );
 }
