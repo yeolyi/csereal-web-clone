@@ -1,14 +1,15 @@
 import type { Route } from '.react-router/types/app/routes/about/+types/history';
 import type { LoaderFunctionArgs } from 'react-router';
+import Button from '~/components/common/Button';
 import ContentSection from '~/components/common/ContentSection';
 import HTMLViewer from '~/components/common/HTMLViewer';
+import LoginVisible from '~/components/common/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useAboutSubNav } from '~/hooks/useSubNav';
 import type { AboutContent } from '~/types/api/v2/about/content';
 import { getLocaleFromPathname } from '~/utils/string';
-import historyImage from './assets/history.png';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -23,7 +24,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function HistoryPage({ loaderData }: Route.ComponentProps) {
-  const { t } = useLanguage();
+  const { t, localizedPath } = useLanguage();
   const subNav = useAboutSubNav();
 
   return (
@@ -38,14 +39,29 @@ export default function HistoryPage({ loaderData }: Route.ComponentProps) {
       padding="none"
     >
       <ContentSection tone="white" padding="subNav">
+        <LoginVisible allow="ROLE_STAFF">
+          <div className="mb-8 text-right">
+            <Button
+              as="link"
+              to={localizedPath('/about/history/edit')}
+              variant="outline"
+              tone="neutral"
+              size="md"
+            >
+              편집
+            </Button>
+          </div>
+        </LoginVisible>
         <HTMLViewer
           html={loaderData.description}
-          image={{
-            src: historyImage,
-            width: 320,
-            height: 360,
-            mobileFullWidth: true,
-          }}
+          image={
+            loaderData.imageURL && {
+              src: loaderData.imageURL,
+              width: 320,
+              height: 360,
+              mobileFullWidth: true,
+            }
+          }
         />
       </ContentSection>
     </PageLayout>

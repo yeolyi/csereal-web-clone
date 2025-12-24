@@ -1,8 +1,8 @@
 import type { Route } from '.react-router/types/app/routes/+types/layout';
 import { useEffect } from 'react';
 import { isRouteErrorResponse, Outlet, useNavigate } from 'react-router';
+import { Toaster } from 'sonner';
 import ErrorState from '~/components/common/ErrorState';
-import GlobalModal from '~/components/common/form/GlobalModal';
 import Header from '~/components/layout/Header';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -38,7 +38,7 @@ export default function Layout({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <Outlet />
-      <GlobalModal />
+      <Toaster />
     </>
   );
 }

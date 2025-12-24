@@ -60,9 +60,10 @@ const TEXT_SIZE_CLASSES: Record<ButtonSize, string> = {
 
 const VARIANT_CLASSES: Record<ButtonVariant, Record<ButtonTone, string>> = {
   solid: {
-    brand: 'rounded-[.0625rem] bg-main-orange text-neutral-900',
+    brand: 'rounded-[.0625rem] bg-main-orange text-white',
     neutral: 'rounded-[.0625rem] bg-neutral-200 text-neutral-700',
-    inverse: 'rounded-[.0625rem] bg-neutral-900 text-white',
+    inverse:
+      'rounded-[.0625rem] bg-neutral-700 text-white hover:bg-neutral-500',
     muted: 'rounded-[.0625rem] bg-neutral-600 text-white',
     inherit: 'rounded-[.0625rem] bg-neutral-200 text-inherit',
   },

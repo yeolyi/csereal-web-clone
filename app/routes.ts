@@ -30,10 +30,29 @@ const getLocaleRoutes = (locale: Locale) => {
       route('/greetings', 'routes/about/greetings.tsx'),
       route('/history', 'routes/about/history.tsx'),
       route('/future-careers', 'routes/about/future-careers/index.tsx'),
+      route(
+        '/future-careers/description/edit',
+        'routes/about/future-careers/description/edit.tsx',
+      ),
+      route(
+        '/future-careers/stat/edit',
+        'routes/about/future-careers/stat/edit.tsx',
+      ),
+      route(
+        '/future-careers/stat/create',
+        'routes/about/future-careers/stat/create.tsx',
+      ),
       route('/student-clubs', 'routes/about/student-clubs/index.tsx'),
+      route('/student-clubs/create', 'routes/about/student-clubs/create.tsx'),
+      route('/student-clubs/edit', 'routes/about/student-clubs/edit.tsx'),
       route('/facilities', 'routes/about/facilities/index.tsx'),
+      route('/facilities/create', 'routes/about/facilities/create.tsx'),
+      route('/facilities/edit', 'routes/about/facilities/edit.tsx'),
       route('/contact', 'routes/about/contact.tsx'),
       route('/directions', 'routes/about/directions/index.tsx'),
+      route('/directions/edit', 'routes/about/directions/edit.tsx'),
+      // Dynamic route for overview/greetings/history/contact edit pages
+      route('/:type/edit', 'routes/about/$type/edit.tsx'),
     ]),
     ...prefix('/community', [
       route('/', 'routes/community/index.tsx'),

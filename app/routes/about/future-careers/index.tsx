@@ -1,7 +1,9 @@
 import type { Route } from '.react-router/types/app/routes/about/future-careers/+types/index';
 import type { LoaderFunctionArgs } from 'react-router';
+import Button from '~/components/common/Button';
 import ContentSection from '~/components/common/ContentSection';
 import HTMLViewer from '~/components/common/HTMLViewer';
+import LoginVisible from '~/components/common/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -26,7 +28,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function FutureCareersPage({
   loaderData: data,
 }: Route.ComponentProps) {
-  const { t } = useLanguage({
+  const { t, localizedPath } = useLanguage({
     '졸업생 진로': 'Career Paths',
   });
   const subNav = useAboutSubNav();
@@ -43,6 +45,19 @@ export default function FutureCareersPage({
       padding="none"
     >
       <ContentSection tone="white" padding="subNav">
+        <LoginVisible allow="ROLE_STAFF">
+          <div className="mb-8 text-right">
+            <Button
+              as="link"
+              to={localizedPath('/about/future-careers/description/edit')}
+              variant="outline"
+              tone="neutral"
+              size="md"
+            >
+              편집
+            </Button>
+          </div>
+        </LoginVisible>
         <HTMLViewer html={data.description} />
         <CareerStat stat={data.stat} />
         <CareerCompanies companies={data.companies} />

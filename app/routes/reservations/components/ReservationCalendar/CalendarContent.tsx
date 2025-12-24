@@ -41,7 +41,7 @@ export default function CalendarContent({
       <ReservationDetailModal
         reservationId={selectedReservationId}
         open={selectedReservationId !== null}
-        onClose={() => setSelectedReservationId(null)}
+        onOpenChange={(open) => !open && setSelectedReservationId(null)}
       />
     </>
   );

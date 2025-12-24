@@ -42,7 +42,7 @@ export const decodeParam = (words: string) => words.replace(/-/g, ' ');
 export const findItemBySearchParam = <T>(
   items: T[],
   getItemIds: (item: T) => string[],
-  searchParam?: string,
+  searchParam?: string | null,
 ): T | undefined => {
   const defaultItem = items[0];
   if (!searchParam) return defaultItem;
@@ -53,5 +53,5 @@ export const findItemBySearchParam = <T>(
       .map((id) => decodeParam(id))
       .includes(id),
   );
-  return item;
+  return item ?? defaultItem;
 };

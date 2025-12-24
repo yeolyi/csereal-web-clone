@@ -1,7 +1,9 @@
 import type { Route } from '.react-router/types/app/routes/about/+types/greetings';
 import type { LoaderFunctionArgs } from 'react-router';
+import Button from '~/components/common/Button';
 import ContentSection from '~/components/common/ContentSection';
 import HTMLViewer from '~/components/common/HTMLViewer';
+import LoginVisible from '~/components/common/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -22,7 +24,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function GreetingsPage({ loaderData }: Route.ComponentProps) {
-  const { t } = useLanguage();
+  const { t, localizedPath } = useLanguage();
   const subNav = useAboutSubNav();
 
   return (
@@ -36,24 +38,37 @@ export default function GreetingsPage({ loaderData }: Route.ComponentProps) {
       subNav={subNav}
       padding="none"
     >
-      <GreetingsContent data={loaderData} />
+      <ContentSection tone="white" padding="subNav">
+        <LoginVisible allow="ROLE_STAFF">
+          <div className="mb-8 text-right">
+            <Button
+              as="link"
+              to={localizedPath('/about/greetings/edit')}
+              variant="outline"
+              tone="neutral"
+              size="md"
+            >
+              편집
+            </Button>
+          </div>
+        </LoginVisible>
+        <GreetingsContent data={loaderData} />
+      </ContentSection>
     </PageLayout>
   );
 }
 
 function GreetingsContent({ data }: { data: AboutContent }) {
   return (
-    <ContentSection tone="white" padding="subNav">
-      <div className="flex flex-col-reverse items-start gap-6 sm:flex-row sm:gap-10">
-        <div className="sm:w-100 sm:grow">
-          <HTMLViewer html={data.description} />
-        </div>
-        {data.imageURL && (
-          <div>
-            <img src={data.imageURL} alt="학부장" width={212} height={280} />
-          </div>
-        )}
+    <div className="flex flex-col-reverse items-start gap-6 sm:flex-row sm:gap-10">
+      <div className="sm:w-100 sm:grow">
+        <HTMLViewer html={data.description} />
       </div>
-    </ContentSection>
+      {data.imageURL && (
+        <div>
+          <img src={data.imageURL} alt="학부장" width={212} height={280} />
+        </div>
+      )}
+    </div>
   );
 }

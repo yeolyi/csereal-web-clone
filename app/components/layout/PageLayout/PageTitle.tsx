@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import Button from '~/components/common/Button';
 import Node from '~/components/common/Nodes';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -101,6 +101,7 @@ interface LocationTextProps {
 
 function LocationText({ path, name, isCurrent }: LocationTextProps) {
   const { localizedPath } = useLanguage();
+  const navigate = useNavigate();
   const textStyle = 'text-xs sm:text-md font-normal tracking-[.02em]';
 
   if (isCurrent) {
@@ -109,7 +110,7 @@ function LocationText({ path, name, isCurrent }: LocationTextProps) {
         variant="text"
         tone="inherit"
         size="xs"
-        onClick={() => window.location.reload()}
+        onClick={() => navigate(0)}
       >
         {name}
       </Button>

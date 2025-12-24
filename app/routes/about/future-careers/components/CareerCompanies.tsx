@@ -1,11 +1,24 @@
-import { useLanguage } from '~/hooks/useLanguage';
-import type { Company } from '~/types/api/v2/about/future-careers';
+'use client';
 
-const TABLE_COLUMN_SIZE = [
+import { useReducer } from 'react';
+import { toast } from 'sonner';
+import Button from '~/components/common/Button';
+import LoginVisible from '~/components/common/LoginVisible';
+import { useLanguage } from '~/hooks/useLanguage';
+import {
+  CareerCompanyEditor,
+  type CareerCompanyFormData,
+  CompanyTableRow,
+} from '~/routes/about/future-careers/components/CompanyRow';
+import type { Company } from '~/types/api/v2/about/future-careers';
+import { fetchOk } from '~/utils/fetch';
+
+export const TABLE_COLUMN_SIZE = [
   'sm:w-[3rem]',
   'sm:w-[12.5rem]',
   'sm:w-80',
   'sm:w-20',
+  'sm:w-32',
 ];
 
 export default function CareerCompanies({
@@ -14,14 +27,51 @@ export default function CareerCompanies({
   companies: Company[];
 }) {
   const { t } = useLanguage({ '졸업생 창업 기업': 'Startup Companies' });
+  const [showCreateForm, toggleCreateForm] = useReducer((x) => !x, false);
+
+  const onCreate = async (content: CareerCompanyFormData) => {
+    try {
+      await fetchOk('/api/v2/about/future-careers/company', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(content),
+      });
+
+      toast.success('졸업생 창업 기업을 추가했습니다.');
+      toggleCreateForm();
+      window.location.reload();
+    } catch {
+      toast.error('추가에 실패했습니다.');
+    }
+  };
 
   return (
     <div className="mt-11 sm:max-w-fit">
-      <div className="mb-3">
+      <div className="mb-3 flex items-center justify-between gap-2">
         <h3 className="text-base font-bold">{t('졸업생 창업 기업')}</h3>
+        {/* UI가 과하게 깨지는 관계로 모바일 버전에서는 편집 X */}
+        <div className="hidden sm:block">
+          <LoginVisible allow="ROLE_STAFF">
+            <Button
+              variant="solid"
+              tone="brand"
+              size="md"
+              onClick={toggleCreateForm}
+              disabled={showCreateForm}
+            >
+              기업 추가
+            </Button>
+          </LoginVisible>
+        </div>
       </div>
       <div className="border-y border-neutral-200 text-sm font-normal">
         <CompanyTableHeader />
+        {showCreateForm && (
+          <CareerCompanyEditor
+            onCancel={toggleCreateForm}
+            onSubmit={onCreate}
+          />
+        )}
         <ol>
           {companies.map((company, index) => (
             <CompanyTableRow
@@ -50,40 +100,10 @@ function CompanyTableHeader() {
       <p className={`${TABLE_COLUMN_SIZE[1]} pl-2`}>{t('창업 기업명')}</p>
       <p className={`${TABLE_COLUMN_SIZE[2]} pl-2`}>{t('홈페이지')}</p>
       <p className={`${TABLE_COLUMN_SIZE[3]} pl-2`}>{t('창업연도')}</p>
+      {/* 표 본문과 UI 정렬을 맞추기 위함 */}
+      <LoginVisible allow="ROLE_STAFF">
+        <p className={`hidden shrink-0 sm:block ${TABLE_COLUMN_SIZE[4]}`} />
+      </LoginVisible>
     </div>
-  );
-}
-
-interface CompanyTableRowProps {
-  index: number;
-  company: Company;
-}
-
-function CompanyTableRow({ index, company }: CompanyTableRowProps) {
-  const { name, url, year } = company;
-
-  return (
-    <li className="grid grid-cols-[22px_auto_1fr] items-center gap-x-1 px-7 py-6 odd:bg-neutral-100 sm:flex sm:h-10 sm:gap-3 sm:p-0 sm:px-3">
-      <p className={`text-sm text-neutral-400 sm:pl-2 ${TABLE_COLUMN_SIZE[0]}`}>
-        {index}
-      </p>
-      <p
-        className={`text-md font-medium sm:pl-2 sm:text-sm sm:font-normal ${TABLE_COLUMN_SIZE[1]}`}
-      >
-        {name}
-      </p>
-      <a
-        className={`order-last col-span-2 col-start-2 w-fit text-xs text-link hover:underline sm:order-0 sm:mt-0 sm:pl-2
-          ${url && 'mt-1'} ${TABLE_COLUMN_SIZE[2]}`}
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {url}
-      </a>
-      <p className={`pl-2 text-sm text-neutral-400 ${TABLE_COLUMN_SIZE[3]}`}>
-        {year}
-      </p>
-    </li>
   );
 }

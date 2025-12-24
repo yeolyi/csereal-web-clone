@@ -1,26 +1,29 @@
 import type { Route } from '.react-router/types/app/routes/about/student-clubs/+types/index';
 import { useSearchParams } from 'react-router';
+import Button from '~/components/common/Button';
+import LoginVisible from '~/components/common/LoginVisible';
 import SelectionList from '~/components/common/SelectionList';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useAboutSubNav } from '~/hooks/useSubNav';
 import type { StudentClubsResponse } from '~/types/api/v2/about/student-clubs';
-import { encodeParam, findItemBySearchParam } from '~/utils/string';
+import { fetchJson } from '~/utils/fetch';
+import { findItemBySearchParam } from '~/utils/string';
 import ClubDetails from './components/ClubDetails';
 
 export async function loader() {
-  const response = await fetch(`${BASE_URL}/v2/about/student-clubs`);
-  if (!response.ok) throw new Error('Failed to fetch student clubs');
-
-  return (await response.json()) as StudentClubsResponse;
+  const response = await fetchJson<StudentClubsResponse>(
+    `${BASE_URL}/v2/about/student-clubs`,
+  );
+  return response;
 }
 
 export default function StudentClubsPage({
   loaderData: clubs,
 }: Route.ComponentProps) {
   const [searchParams] = useSearchParams();
-  const { t, locale } = useLanguage({
+  const { t, locale, localizedPath } = useLanguage({
     '학생 동아리': 'Student Clubs',
     '동아리 소개': 'Student Clubs',
     '학부 소개': 'About',
@@ -29,18 +32,17 @@ export default function StudentClubsPage({
 
   const selectedClub = findItemBySearchParam(
     clubs,
-    (item) => [item.en.name, item.ko.name],
-    searchParams.get('selected') ?? undefined,
+    (item) => [item.ko.id.toString()],
+    searchParams.get('selected'),
   );
 
   const selectionItems = clubs.map((club) => {
-    const label = club[locale]?.name ?? club.ko.name;
-    const query = encodeParam(club.en.name || club.ko.name);
+    const { id, name: label } = club[locale];
     return {
-      id: club.ko.name,
+      id: id.toString(),
       label,
-      href: `/about/student-clubs?selected=${query}`,
-      selected: club.ko.name === selectedClub?.ko.name,
+      href: `/about/student-clubs?selected=${id}`,
+      selected: id === selectedClub?.ko.id,
     };
   });
 
@@ -55,18 +57,22 @@ export default function StudentClubsPage({
       subNav={subNav}
       padding="noTop"
     >
-      <SelectionList items={selectionItems} />
+      <LoginVisible allow="ROLE_STAFF">
+        <div className="mt-11 text-right">
+          <Button
+            as="link"
+            to={localizedPath('/about/student-clubs/create')}
+            variant="solid"
+            tone="brand"
+            size="md"
+          >
+            동아리 추가
+          </Button>
+        </div>
+      </LoginVisible>
 
-      {selectedClub ? (
-        <ClubDetails club={selectedClub} locale={locale} />
-      ) : (
-        <p className="text-neutral-600">
-          <b>{searchParams.get('selected')}</b>
-          {locale === 'ko'
-            ? '은/는 존재하지 않는 동아리입니다.'
-            : ' is not a valid club.'}
-        </p>
-      )}
+      <SelectionList items={selectionItems} />
+      {selectedClub && <ClubDetails club={selectedClub} locale={locale} />}
     </PageLayout>
   );
 }

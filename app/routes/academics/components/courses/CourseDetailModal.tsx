@@ -1,4 +1,4 @@
-import Modal from '~/components/common/Modal';
+import Dialog from '~/components/common/Dialog';
 import { useLanguage } from '~/hooks/useLanguage';
 import { GRADE } from '~/types/academics';
 import type { Course } from '~/types/api/v2/academics/courses';
@@ -8,13 +8,13 @@ import translations from './translations.json';
 interface CourseDetailModalProps {
   course: Course | null;
   open: boolean;
-  onClose: () => void;
+  onOpenChange: (open: boolean) => void;
 }
 
 export default function CourseDetailModal({
   course,
   open,
-  onClose,
+  onOpenChange,
 }: CourseDetailModalProps) {
   const { t, locale } = useLanguage(translations);
   const language = locale === 'en' ? 'en' : 'ko';
@@ -22,7 +22,11 @@ export default function CourseDetailModal({
   if (!course) return null;
 
   return (
-    <Modal open={open} onClose={onClose} ariaLabel={t('교과목 상세')}>
+    <Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+      ariaLabel={t('교과목 상세')}
+    >
       <div className="flex flex-col gap-4">
         <CourseHeader
           name={course[language].name}
@@ -33,7 +37,7 @@ export default function CourseDetailModal({
         />
         <p className="text-md leading-loose">{course[language].description}</p>
       </div>
-    </Modal>
+    </Dialog>
   );
 }
 

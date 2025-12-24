@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Button from '~/components/common/Button';
 import Dropdown from '~/components/common/Dropdown';
+import LoginVisible from '~/components/common/LoginVisible';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { YearStat } from '~/types/api/v2/about/future-careers';
 
@@ -17,7 +19,7 @@ const CAREER_STAT_COLS = ['학부', '석사', '박사'];
 
 export default function CareerStat({ stat }: { stat: YearStat[] }) {
   const [idx, setIdx] = useState(0);
-  const { t } = useLanguage({
+  const { t, localizedPath } = useLanguage({
     '졸업생 진로 현황': 'Career Path Statistics',
   });
 
@@ -28,14 +30,38 @@ export default function CareerStat({ stat }: { stat: YearStat[] }) {
 
   return (
     <div className="mt-7 flex flex-col gap-3">
-      <div className="flex items-center gap-2">
-        <h3 className="text-base font-bold">{t('졸업생 진로 현황')}</h3>
-        <Dropdown
-          contents={stat.map((x) => x.year.toString())}
-          selectedIndex={idx}
-          onClick={setIdx}
-          height="h-9"
-        />
+      <div className="flex justify-between sm:w-[432px]">
+        <div className="flex items-center gap-2">
+          <h3 className="text-base font-bold">{t('졸업생 진로 현황')}</h3>
+          <Dropdown
+            contents={stat.map((x) => x.year.toString())}
+            selectedIndex={idx}
+            onClick={setIdx}
+            height="h-9"
+          />
+        </div>
+        <LoginVisible allow="ROLE_STAFF">
+          <div className="flex gap-3">
+            <Button
+              as="link"
+              to={localizedPath('/about/future-careers/stat/create')}
+              variant="solid"
+              tone="brand"
+              size="md"
+            >
+              연도 추가
+            </Button>
+            <Button
+              as="link"
+              to={localizedPath(`/about/future-careers/stat/edit?year=${year}`)}
+              variant="outline"
+              tone="neutral"
+              size="md"
+            >
+              편집
+            </Button>
+          </div>
+        </LoginVisible>
       </div>
 
       <div className="border-y border-neutral-300 text-xs font-normal sm:w-[432px]">

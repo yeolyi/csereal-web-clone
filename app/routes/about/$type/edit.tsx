@@ -1,6 +1,6 @@
 'use client';
 
-import type { Route } from '.react-router/types/app/routes/about/overview/+types/edit';
+import type { Route } from '.react-router/types/app/routes/about/$type/+types/edit';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -19,44 +19,54 @@ import { LOCALES } from '~/types/i18n';
 import { fetchJson, fetchOk } from '~/utils/fetch';
 import { FormData2, getDeleteIds } from '~/utils/form';
 
-interface OverviewFormData {
+interface AboutFormData {
   htmlKo: string;
   htmlEn: string;
   image: EditorImage;
   files: EditorFile[];
 }
 
-export async function loader() {
+const ABOUT_TYPES: Record<string, { title: string; endpoint: string }> = {
+  overview: { title: '학부 소개 편집', endpoint: 'overview' },
+  greetings: { title: '학부장 인사말 편집', endpoint: 'greetings' },
+  history: { title: '연혁 편집', endpoint: 'history' },
+  contact: { title: '연락처 편집', endpoint: 'contact' },
+};
+
+export async function loader({ params }: Route.LoaderArgs) {
+  const { type } = params;
+  const endpoint = ABOUT_TYPES[type].endpoint;
+
   const [koData, enData] = await Promise.all(
     LOCALES.map((locale) =>
       fetchJson<AboutContent>(
-        `${BASE_URL}/v2/about/overview?language=${locale}`,
+        `${BASE_URL}/v2/about/${endpoint}?language=${locale}`,
       ),
     ),
   );
 
-  return { koData, enData };
+  return { koData, enData, type };
 }
 
-export default function OverviewEdit({ loaderData }: Route.ComponentProps) {
-  const { koData, enData } = loaderData;
+export default function AboutEdit({ loaderData }: Route.ComponentProps) {
+  const { koData, enData, type } = loaderData;
   const navigate = useNavigate();
   const { locale } = useLanguage({});
   const [language, setLanguage] = useState<Language>('ko');
 
-  const defaultValues: OverviewFormData = {
+  const { title, endpoint } = ABOUT_TYPES[type];
+
+  const defaultValues: AboutFormData = {
     htmlKo: koData.description,
     htmlEn: enData.description,
     image: koData.imageURL && { type: 'UPLOADED_IMAGE', url: koData.imageURL },
-    files: koData.attachments.map(
-      (file): EditorFile => ({ type: 'UPLOADED_FILE', file }),
-    ),
+    files: koData.attachments.map((file) => ({ type: 'UPLOADED_FILE', file })),
   };
 
   const methods = useForm({ defaultValues });
 
   const onCancel = () => {
-    navigate(`/${locale}/about/overview`);
+    navigate(`/${locale}/about/${type}`);
   };
 
   const onSubmit = methods.handleSubmit(
@@ -74,13 +84,12 @@ export default function OverviewEdit({ loaderData }: Route.ComponentProps) {
       formData.appendIfLocal('newAttachments', files);
 
       try {
-        await fetchOk(`/api/v2/about/overview`, {
+        await fetchOk(`/api/v2/about/${endpoint}`, {
           method: 'PUT',
           body: formData,
         });
 
-        toast.success('학부 소개를 수정했습니다.');
-        navigate(`/${locale}/about/overview`);
+        navigate(`/${locale}/about/${type}`);
       } catch {
         toast.error('수정에 실패했습니다.');
       }
@@ -88,7 +97,7 @@ export default function OverviewEdit({ loaderData }: Route.ComponentProps) {
   );
 
   return (
-    <PageLayout title="학부 소개 편집" titleSize="xl" padding="default">
+    <PageLayout title={title} titleSize="xl" padding="default">
       <FormProvider {...methods}>
         <Form>
           <LanguagePicker onChange={setLanguage} selected={language} />

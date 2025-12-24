@@ -1,7 +1,9 @@
 import type { Route } from '.react-router/types/app/routes/about/+types/contact';
 import type { LoaderFunctionArgs } from 'react-router';
+import Button from '~/components/common/Button';
 import ContentSection from '~/components/common/ContentSection';
 import HTMLViewer from '~/components/common/HTMLViewer';
+import LoginVisible from '~/components/common/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -27,7 +29,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function ContactPage({
   loaderData: { description, imageURL },
 }: Route.ComponentProps) {
-  const { t } = useLanguage({ 연락처: 'Contact' });
+  const { t, localizedPath } = useLanguage({ 연락처: 'Contact' });
   const subNav = useAboutSubNav();
 
   return (
@@ -42,6 +44,19 @@ export default function ContactPage({
       padding="none"
     >
       <ContentSection tone="white" padding="subNav">
+        <LoginVisible allow="ROLE_STAFF">
+          <div className="mb-8 text-right">
+            <Button
+              as="link"
+              to={localizedPath('/about/contact/edit')}
+              variant="outline"
+              tone="neutral"
+              size="md"
+            >
+              편집
+            </Button>
+          </div>
+        </LoginVisible>
         <HTMLViewer
           html={description}
           image={

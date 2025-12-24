@@ -1,6 +1,8 @@
 import type { Route } from '.react-router/types/app/routes/about/directions/+types/index';
 import { Link, useSearchParams } from 'react-router';
+import Button from '~/components/common/Button';
 import HTMLViewer from '~/components/common/HTMLViewer';
+import LoginVisible from '~/components/common/LoginVisible';
 import SelectionList from '~/components/common/SelectionList';
 import footerTranslations from '~/components/layout/Footer/translations.json';
 import PageLayout from '~/components/layout/PageLayout';
@@ -87,9 +89,24 @@ export default function DirectionsPage({
 
       {selectedDirection && (
         <div>
-          <h4 className="mb-4 text-base font-semibold sm:text-2xl">
-            {selectedDirection[locale]?.name}
-          </h4>
+          <div className="mb-4 justify-between sm:flex">
+            <h4 className="text-base font-semibold sm:text-2xl">
+              {selectedDirection[locale]?.name}
+            </h4>
+            <LoginVisible allow="ROLE_STAFF">
+              <Button
+                as="link"
+                to={localizedPath(
+                  `/about/directions/edit?selected=${encodeParam(selectedDirection.en.name || selectedDirection.ko.name)}`,
+                )}
+                variant="outline"
+                tone="neutral"
+                size="md"
+              >
+                편집
+              </Button>
+            </LoginVisible>
+          </div>
           <HTMLViewer html={selectedDirection[locale]?.description} />
         </div>
       )}

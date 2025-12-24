@@ -1,5 +1,7 @@
 import type { Route } from '.react-router/types/app/routes/about/facilities/+types/index';
 import type { LoaderFunctionArgs } from 'react-router';
+import Button from '~/components/common/Button';
+import LoginVisible from '~/components/common/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
@@ -21,7 +23,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function FacilitiesPage({
   loaderData: facilities,
 }: Route.ComponentProps) {
-  const { t } = useLanguage({ '시설 안내': 'Facilities' });
+  const { t, localizedPath } = useLanguage({ '시설 안내': 'Facilities' });
   const subNav = useAboutSubNav();
 
   return (
@@ -34,6 +36,19 @@ export default function FacilitiesPage({
       ]}
       subNav={subNav}
     >
+      <LoginVisible allow="ROLE_STAFF">
+        <div className="mb-7 text-right">
+          <Button
+            as="link"
+            to={localizedPath('/about/facilities/create')}
+            variant="solid"
+            tone="brand"
+            size="md"
+          >
+            시설 추가
+          </Button>
+        </div>
+      </LoginVisible>
       <FacilitiesList facilities={facilities} />
     </PageLayout>
   );

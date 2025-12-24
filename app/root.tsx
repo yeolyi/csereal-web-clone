@@ -15,6 +15,7 @@ import MobileNav from '~/components/layout/MobileNav';
 import { useLanguage } from '~/hooks/useLanguage';
 
 import 'dayjs/locale/ko';
+import { Toaster } from 'sonner';
 
 // Loader for handling redirects
 export async function loader({ request }: Route.LoaderArgs) {
@@ -62,6 +63,7 @@ export default function App() {
         >
           <Outlet />
           <Footer />
+          <Toaster />
         </main>
         <ScrollRestoration />
         <Scripts />

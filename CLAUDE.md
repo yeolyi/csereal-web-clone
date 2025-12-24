@@ -85,6 +85,19 @@ export default function NewsDetailPage({
 - 동적 라우트: `.react-router/types/app/routes/[경로]/+types/$id`
   - 예: `app/routes/community/news/$id.tsx` → `'.react-router/types/app/routes/community/news/+types/$id'`
 
+**중요: app/routes.ts에 라우트 추가**:
+- 새 route 파일을 만든 후 **반드시** `app/routes.ts`에 라우트를 추가해야 타입이 생성됨
+- React Router는 `routes.ts`에 명시된 라우트만 타입을 생성하므로, 파일만 만들고 routes.ts에 추가하지 않으면 타입 에러 발생
+- Dynamic route는 specific routes 뒤에 선언해야 함 (specific routes가 먼저 매칭됨)
+- 예시:
+```typescript
+...prefix('/about', [
+  route('/overview', 'routes/about/overview/index.tsx'),
+  route('/overview/edit', 'routes/about/overview/edit.tsx'), // specific route
+  route('/:type/edit', 'routes/about/$type/edit.tsx'), // dynamic route는 마지막에
+]),
+```
+
 ### 번역 (i18n)
 - next-intl → useLanguage 훅 사용
 - 패턴:
@@ -157,9 +170,7 @@ const { t, localizedPath } = useLanguage({
 ```
 app/components/common/form/
 ├── Form.tsx                  # 메인 복합 컴포넌트
-├── Action.tsx                # 저장/취소/삭제 버튼
-├── AlertModal.tsx            # 확인 모달
-├── GlobalModal.tsx           # 전역 모달 (zustand 연동)
+├── Action.tsx                # 저장/취소/삭제 버튼 (Radix AlertDialog 사용)
 ├── Fieldset.tsx              # 필드셋 (+ HTML/Image/File/Title 프리셋)
 ├── Section.tsx               # 폼 섹션
 ├── LanguagePicker.tsx        # 언어 선택 (ko/en)
@@ -176,8 +187,8 @@ app/components/common/form/
     ├── HTMLEditorFallback.tsx
     └── LazyHTMLEditor.tsx
 
-app/store/
-└── modal.ts                  # 모달 상태 관리 (zustand)
+app/components/common/
+└── AlertDialog.tsx           # Radix UI 기반 확인 모달
 
 app/types/
 └── form.ts                   # EditorFile, EditorImage 타입
@@ -232,18 +243,33 @@ export default function MyEditor() {
 }
 ```
 
-### 모달 시스템 (zustand)
+### 모달 시스템 (Radix UI)
 ```typescript
-import { useModalStore } from '~/store/modal';
-import AlertModal from '~/components/common/form/AlertModal';
+import { useState } from 'react';
+import AlertDialog from '~/components/common/AlertDialog';
 
-// 모달 열기
-const open = useModalStore((state) => state.open);
-open(<AlertModal message="확인하시겠습니까?" onConfirm={() => {}} />);
+function MyComponent() {
+  const [showDialog, setShowDialog] = useState(false);
 
-// 모달 닫기
-const close = useModalStore((state) => state.close);
-close();
+  const handleConfirm = async () => {
+    // 확인 로직
+    setShowDialog(false);
+  };
+
+  return (
+    <>
+      <button onClick={() => setShowDialog(true)}>삭제</button>
+
+      <AlertDialog
+        open={showDialog}
+        onOpenChange={setShowDialog}
+        description="삭제하시겠습니까?"
+        confirmText="삭제"
+        onConfirm={handleConfirm}
+      />
+    </>
+  );
+}
 ```
 
 ### 주요 타입
@@ -275,11 +301,44 @@ interface UploadedImage {
 }
 ```
 
+### Fieldset spacing 시스템
+Fieldset은 spacing과 titleSpacing을 variant로 관리:
+
+**spacing**: 필드셋 하단 여백
+- '2.5': mb-2.5 (리스트 필드)
+- '4': mb-4
+- '5': mb-5
+- '6': mb-6 (기본값)
+- '8': mb-8 (제목 필드)
+- '10': mb-10 (HTML 필드)
+- '11': mb-11
+- '12': mb-12 (이미지 필드)
+
+**titleSpacing**: 타이틀 하단 여백
+- '1': mb-1
+- '2': mb-2 (기본값)
+- '3': mb-3 (첨부파일, 태그)
+
+**사용 예시**:
+```typescript
+<Fieldset title="시설명" spacing="8" required>
+  <Form.Text name="name" />
+</Fieldset>
+
+<Fieldset title="시설 설명" spacing="10" titleSpacing="2" required>
+  <Form.HTML name="description" />
+</Fieldset>
+```
+
+**프리셋**: `Fieldset.HTML`, `Fieldset.Image`, `Fieldset.File`, `Fieldset.Title`은 기본 spacing이 설정되어 있음
+
 ### 주의사항
 - **Standalone 컴포넌트 유지**: `app/components/common/Checkbox.tsx`, `Dropdown.tsx`는 form과 별개로 유지됨
-- **모달**: GlobalModal을 `app/routes/layout.tsx`에 추가해야 함
+- **모달**: Radix UI 기반으로 마이그레이션 완료
+  - AlertDialog: 확인/취소가 필요한 경우 (`app/components/common/AlertDialog.tsx`)
+  - Dialog: 일반 모달 (`app/components/common/Dialog.tsx`)
+  - 각 컴포넌트에서 `useState`로 open 상태 관리 (zustand store 제거됨)
 - **이미지 업로드**: Suneditor의 이미지 업로드는 `app/api/file.ts`의 `postImage` 사용
-- **FormData 인코딩**: Next.js 이슈였으므로 React Router에서는 불필요 (제거됨)
 
 ## 공용 컴포넌트 가이드 (기존 프로젝트 기준)
 

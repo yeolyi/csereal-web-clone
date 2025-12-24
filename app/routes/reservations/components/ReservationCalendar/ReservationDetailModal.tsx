@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import Modal from '~/components/common/Modal';
+import Dialog from '~/components/common/Dialog';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { Reservation } from '~/types/api/v2/reservation';
@@ -8,7 +8,7 @@ import type { Reservation } from '~/types/api/v2/reservation';
 interface ReservationDetailModalProps {
   reservationId: number | null;
   open: boolean;
-  onClose: () => void;
+  onOpenChange: (open: boolean) => void;
 }
 
 const translations = {
@@ -30,7 +30,7 @@ const translations = {
 export default function ReservationDetailModal({
   reservationId,
   open,
-  onClose,
+  onOpenChange,
 }: ReservationDetailModalProps) {
   const { t } = useLanguage(translations);
   const [reservation, setReservation] = useState<Reservation | null>(null);
@@ -53,7 +53,7 @@ export default function ReservationDetailModal({
   if (!open || reservationId === null) return null;
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <div className="min-w-[320px]">
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-xl font-bold text-neutral-800">
@@ -107,7 +107,7 @@ export default function ReservationDetailModal({
           </div>
         </div>
       </div>
-    </Modal>
+    </Dialog>
   );
 }
 

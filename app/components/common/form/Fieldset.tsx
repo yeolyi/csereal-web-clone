@@ -1,11 +1,31 @@
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
-interface FieldsetProps {
+type Spacing = '2.5' | '4' | '5' | '6' | '8' | '10' | '11' | '12';
+type TitleSpacing = '1' | '2' | '3';
+
+const SPACING_MAP: Record<Spacing, string> = {
+  '2.5': 'mb-2.5',
+  '4': 'mb-4',
+  '5': 'mb-5',
+  '6': 'mb-6',
+  '8': 'mb-8',
+  '10': 'mb-10',
+  '11': 'mb-11',
+  '12': 'mb-12',
+};
+
+const TITLE_SPACING_MAP: Record<TitleSpacing, string> = {
+  '1': 'mb-1',
+  '2': 'mb-2',
+  '3': 'mb-3',
+};
+
+export interface FieldsetProps {
   title: string;
-  titleMb: string;
+  titleSpacing?: TitleSpacing;
   children: ReactNode;
-  mb?: string;
+  spacing?: Spacing;
   required?: boolean;
   grow?: boolean;
   className?: string;
@@ -13,16 +33,28 @@ interface FieldsetProps {
 
 function Fieldset({
   title,
-  titleMb,
+  titleSpacing = '2',
   children,
-  mb,
+  spacing = '6',
   required = false,
   grow = true,
   className,
 }: FieldsetProps) {
   return (
-    <fieldset className={clsx('flex flex-col', mb, grow && 'flex-1', className)}>
-      <legend className={clsx('text-md font-medium tracking-wide', titleMb)}>
+    <fieldset
+      className={clsx(
+        'flex flex-col',
+        SPACING_MAP[spacing],
+        grow && 'flex-1',
+        className,
+      )}
+    >
+      <legend
+        className={clsx(
+          'text-md font-medium tracking-wide',
+          TITLE_SPACING_MAP[titleSpacing],
+        )}
+      >
         {title}
         {required && <span className="text-main-orange">*</span>}
       </legend>
@@ -33,7 +65,7 @@ function Fieldset({
 
 function HTML({ children }: { children: ReactNode }) {
   return (
-    <Fieldset title="내용" mb="mb-6" titleMb="mb-2" required>
+    <Fieldset title="내용" spacing="6" titleSpacing="2" required>
       {children}
     </Fieldset>
   );
@@ -41,7 +73,7 @@ function HTML({ children }: { children: ReactNode }) {
 
 function Image({ children }: { children: ReactNode }) {
   return (
-    <Fieldset title="사진" mb="mb-12" titleMb="mb-2">
+    <Fieldset title="사진" spacing="12" titleSpacing="2">
       {children}
     </Fieldset>
   );
@@ -49,7 +81,7 @@ function Image({ children }: { children: ReactNode }) {
 
 function File({ children }: { children: ReactNode }) {
   return (
-    <Fieldset title="첨부파일" mb="mb-6" titleMb="mb-3">
+    <Fieldset title="첨부파일" spacing="6" titleSpacing="3">
       {children}
     </Fieldset>
   );
@@ -57,7 +89,7 @@ function File({ children }: { children: ReactNode }) {
 
 function Title({ children }: { children: ReactNode }) {
   return (
-    <Fieldset title="제목" mb="mb-6" titleMb="mb-2" required>
+    <Fieldset title="제목" spacing="6" titleSpacing="2" required>
       {children}
     </Fieldset>
   );

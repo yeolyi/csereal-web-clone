@@ -84,7 +84,7 @@ export default function CoursesPage({
       <CourseDetailModal
         course={selectedCourse}
         open={Boolean(selectedCourse)}
-        onClose={() => setSelectedCourse(null)}
+        onOpenChange={(open) => !open && setSelectedCourse(null)}
       />
     </PageLayout>
   );
