@@ -8,6 +8,10 @@ export default function Image({ src, onError, ...props }: ImageProps) {
   const [imgSrc, setImgSrc] = useState(src);
 
   useEffect(() => {
+    // src가 변경되면 imgSrc를 리셋
+    // TODO: 이게 최선?
+    setImgSrc(src);
+
     const shouldProxy =
       import.meta.env.DEV && src && src.startsWith(DEV_FILE_BASE_URL);
     if (!shouldProxy) return;

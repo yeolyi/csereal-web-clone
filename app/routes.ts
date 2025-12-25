@@ -96,6 +96,8 @@ const getLocaleRoutes = (locale: Locale) => {
     ...prefix('/research', [
       route('/', 'routes/research/index.tsx'),
       route('/groups', 'routes/research/groups/index.tsx'),
+      route('/groups/create', 'routes/research/groups/create.tsx'),
+      route('/groups/edit', 'routes/research/groups/edit.tsx'),
       route('/centers', 'routes/research/centers/index.tsx'),
       route('/labs', 'routes/research/labs/index.tsx'),
       route('/labs/:id', 'routes/research/labs/$id.tsx'),

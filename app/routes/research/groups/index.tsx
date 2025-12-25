@@ -1,7 +1,17 @@
 import type { Route } from '.react-router/types/app/routes/research/groups/+types/index';
-import { Link, type LoaderFunctionArgs } from 'react-router';
+import { useState } from 'react';
+import {
+  Link,
+  type LoaderFunctionArgs,
+  useNavigate,
+  useRevalidator,
+} from 'react-router';
+import { toast } from 'sonner';
+import AlertDialog from '~/components/common/AlertDialog';
+import Button from '~/components/common/Button';
 import HTMLViewer from '~/components/common/HTMLViewer';
 import Image from '~/components/common/Image';
+import LoginVisible from '~/components/common/LoginVisible';
 import SelectionList from '~/components/common/SelectionList';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
@@ -9,6 +19,7 @@ import { useLanguage } from '~/hooks/useLanguage';
 import { useSelectionList } from '~/hooks/useSelectionList';
 import { useResearchSubNav } from '~/hooks/useSubNav';
 import type { ResearchGroupsResponse } from '~/types/api/v2/research/groups';
+import { fetchJson, fetchOk } from '~/utils/fetch';
 import { getLocaleFromPathname } from '~/utils/string';
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -35,6 +46,8 @@ export default function ResearchGroupsPage({
     연구실: 'Labs',
   });
   const subNav = useResearchSubNav();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const revalidator = useRevalidator();
 
   const { selectedItem: item, selectionItems: items } = useSelectionList({
     items: groups,
@@ -42,6 +55,26 @@ export default function ResearchGroupsPage({
   });
 
   const labsPath = localizedPath('/research/labs');
+
+  const handleDelete = async () => {
+    if (!item) return;
+
+    try {
+      // 상세 정보를 가져와서 ko, en ID를 얻음
+      const data = await fetchJson<{ ko: { id: number }; en: { id: number } }>(
+        `${BASE_URL}/v2/research/${item.id}`,
+      );
+
+      await fetchOk(`/api/v2/research/${data.ko.id}/${data.en.id}`, {
+        method: 'DELETE',
+      });
+
+      toast.success('연구 스트림을 삭제했습니다.');
+      revalidator.revalidate();
+    } catch {
+      toast.error('삭제에 실패했습니다.');
+    }
+  };
 
   return (
     <PageLayout
@@ -55,10 +88,45 @@ export default function ResearchGroupsPage({
       padding="none"
     >
       <div className="px-7 sm:pl-[100px] sm:pr-[320px]">
+        <LoginVisible allow="ROLE_STAFF">
+          <div className="mt-11 text-right">
+            <Button
+              as="link"
+              to={localizedPath('/research/groups/create')}
+              variant="solid"
+              tone="brand"
+              size="md"
+            >
+              연구 스트림 추가
+            </Button>
+          </div>
+        </LoginVisible>
         <SelectionList items={items} />
       </div>
       {item && (
         <div className="flex flex-col bg-neutral-100 px-7 pb-9 pt-8 sm:pb-[100px] sm:pl-[100px] sm:pr-[320px] sm:pt-[50px]">
+          <LoginVisible allow="ROLE_STAFF">
+            <div className="mb-7 flex justify-end gap-3">
+              <Button
+                as="button"
+                onClick={() => setShowDeleteDialog(true)}
+                variant="outline"
+                tone="neutral"
+                size="md"
+              >
+                삭제
+              </Button>
+              <Button
+                as="link"
+                to={localizedPath(`/research/groups/edit?id=${item.id}`)}
+                variant="outline"
+                tone="neutral"
+                size="md"
+              >
+                편집
+              </Button>
+            </div>
+          </LoginVisible>
           <h2 className="mb-6 ml-1 whitespace-nowrap text-base font-bold leading-loose sm:mx-0 sm:mb-[18px] sm:text-[24px]">
             {item.name} {t('스트림')}
           </h2>
@@ -96,6 +164,13 @@ export default function ResearchGroupsPage({
           </div>
         </div>
       )}
+      <AlertDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        description="이 연구 스트림을 삭제하시겠습니까?"
+        confirmText="삭제"
+        onConfirm={handleDelete}
+      />
     </PageLayout>
   );
 }
