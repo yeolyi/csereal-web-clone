@@ -2,7 +2,7 @@ import { useId } from 'react';
 
 interface CheckboxProps {
   id?: string;
-  label: string;
+  label?: string;
   name?: string;
   value?: string;
   checked: boolean;
@@ -23,8 +23,8 @@ export default function Checkbox({
 }: CheckboxProps) {
   const generatedId = useId();
   const inputId = id ?? generatedId;
-  const iconName = checked ? 'check_box' : 'check_box_outline_blank';
 
+  // label이 있는 경우
   return (
     <label
       htmlFor={inputId}
@@ -38,7 +38,7 @@ export default function Checkbox({
           'group-hover:text-neutral-600 group-active:text-main-orange'
         } ${checked && 'text-neutral-600'}`}
       >
-        {iconName}
+        {checked ? 'check_box' : 'check_box_outline_blank'}
       </span>
       <span
         className={`text-md tracking-wide text-neutral-600 ${
