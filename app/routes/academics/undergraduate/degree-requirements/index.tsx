@@ -1,6 +1,9 @@
-import type { Route } from '.react-router/types/app/routes/academics/undergraduate/+types/degree-requirements';
+import type { Route } from '.react-router/types/app/routes/academics/undergraduate/degree-requirements/+types/index';
+import { Link } from 'react-router';
 import Attachments from '~/components/common/Attachments';
+import Button from '~/components/common/Button';
 import HTMLViewer from '~/components/common/HTMLViewer';
+import LoginVisible from '~/components/common/LoginVisible';
 import Node from '~/components/common/Nodes';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
@@ -39,6 +42,13 @@ export default function DegreeRequirementsPage({
       breadcrumb={breadcrumb}
       subNav={subNav}
     >
+      <LoginVisible allow="ROLE_STAFF">
+        <div className="mb-8 flex justify-end">
+          <Button variant="outline" tone="neutral" as="link" to="edit">
+            편집
+          </Button>
+        </div>
+      </LoginVisible>
       <Attachments files={loaderData.attachments} />
       <div className="mb-4 mt-6 flex w-[200px] flex-col">
         <h3 className="mb-2 pl-3 text-lg font-bold">

@@ -147,7 +147,11 @@ const getLocaleRoutes = (locale: Locale) => {
         ),
         route(
           '/degree-requirements',
-          'routes/academics/undergraduate/degree-requirements.tsx',
+          'routes/academics/undergraduate/degree-requirements/index.tsx',
+        ),
+        route(
+          '/degree-requirements/edit',
+          'routes/academics/undergraduate/degree-requirements/edit.tsx',
         ),
         route(
           '/course-changes',
