@@ -1,4 +1,4 @@
-import type { Route } from '.react-router/types/app/routes/academics/undergraduate/guide/+types/edit';
+import type { Route } from '.react-router/types/app/routes/academics/$studentType/guide/+types/edit';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -6,6 +6,7 @@ import Fieldset from '~/components/common/form/Fieldset';
 import Form from '~/components/common/form/Form';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
+import { useLanguage } from '~/hooks/useLanguage';
 import type { Guide } from '~/types/api/v2/academics/guide';
 import type { EditorFile } from '~/types/form';
 import { fetchJson, fetchOk } from '~/utils/fetch';
@@ -16,16 +17,26 @@ interface GuideFormData {
   file: EditorFile[];
 }
 
-export async function loader() {
-  return fetchJson<Guide>(`${BASE_URL}/v2/academics/undergraduate/guide`);
+export async function loader({ params }: Route.LoaderArgs) {
+  const { studentType } = params;
+  return fetchJson<Guide>(`${BASE_URL}/v2/academics/${studentType}/guide`);
 }
 
-export default function UndergraduateGuideEditPage({
+export default function GuideEditPage({
   loaderData,
+  params,
 }: Route.ComponentProps) {
+  const { studentType } = params;
+  const { t } = useLanguage({
+    '수정에 성공했습니다.': 'Successfully updated.',
+    '수정에 실패했습니다.': 'Failed to update.',
+    '대학원 안내 수정': 'Edit Graduate Guide',
+    '학부 안내 수정': 'Edit Undergraduate Guide',
+  });
+
   const defaultValues = {
     description: loaderData.description,
-    file: loaderData.attachments.map((file) => ({
+    file: loaderData.attachments.map((file: any) => ({
       type: 'UPLOADED_FILE' as const,
       file,
     })),
@@ -37,6 +48,9 @@ export default function UndergraduateGuideEditPage({
   });
 
   const navigate = useNavigate();
+
+  const isGraduate = studentType === 'graduate';
+  const title = isGraduate ? t('대학원 안내 수정') : t('학부 안내 수정');
 
   const onSubmit = async (data: GuideFormData) => {
     const deleteIds = getDeleteIds({
@@ -52,20 +66,20 @@ export default function UndergraduateGuideEditPage({
     formData.appendIfLocal('newAttachments', data.file);
 
     try {
-      await fetchOk(`${BASE_URL}/v2/academics/undergraduate/guide`, {
+      await fetchOk(`${BASE_URL}/v2/academics/${studentType}/guide`, {
         method: 'PUT',
         body: formData,
       });
 
-      navigate('/academics/undergraduate/guide');
-      toast.success('수정에 성공했습니다.');
+      navigate(`/academics/${studentType}/guide`);
+      toast.success(t('수정에 성공했습니다.'));
     } catch {
-      toast.error('수정에 실패했습니다.');
+      toast.error(t('수정에 실패했습니다.'));
     }
   };
 
   return (
-    <PageLayout titleSize="xl" title="학부 안내 수정">
+    <PageLayout titleSize="xl" title={title}>
       <FormProvider {...methods}>
         <Form>
           <Fieldset.HTML>
@@ -75,7 +89,7 @@ export default function UndergraduateGuideEditPage({
             <Form.File name="file" />
           </Fieldset.File>
           <Form.Action
-            onCancel={() => navigate('/academics/undergraduate/guide')}
+            onCancel={() => navigate(`/academics/${studentType}/guide`)}
             onSubmit={methods.handleSubmit(onSubmit)}
           />
         </Form>

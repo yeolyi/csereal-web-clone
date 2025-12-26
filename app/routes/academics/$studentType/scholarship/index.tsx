@@ -53,6 +53,19 @@ export default function ScholarshipPage({
         scholarships={loaderData.scholarships}
         studentType={studentType as StudentType}
       />
+      <LoginVisible allow="ROLE_STAFF">
+        <div className="mt-3">
+          <Button
+            variant="outline"
+            tone="brand"
+            as="link"
+            to="create"
+            iconLeft="add"
+          >
+            장학금 추가
+          </Button>
+        </div>
+      </LoginVisible>
     </PageLayout>
   );
 }

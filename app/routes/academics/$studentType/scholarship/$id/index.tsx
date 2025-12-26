@@ -1,4 +1,4 @@
-import type { Route } from '.react-router/types/app/routes/academics/$studentType/scholarship/+types/$id';
+import type { Route } from '.react-router/types/app/routes/academics/$studentType/scholarship/$id/+types/index';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -10,8 +10,6 @@ import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useAcademicsSubNav } from '~/hooks/useSubNav';
-import type { StudentType } from '~/types/api/v2/academics';
-import type { ScholarshipWithLanguage } from '~/types/api/v2/academics/scholarship';
 import { fetchJson, fetchOk } from '~/utils/fetch';
 
 export async function loader({ params }: Route.LoaderArgs) {

@@ -126,9 +126,6 @@ const getLocaleRoutes = (locale: Locale) => {
     ...prefix('/academics', [
       route('/', 'routes/academics/index.tsx'),
       ...prefix('/undergraduate', [
-        route('/guide', 'routes/academics/undergraduate/guide/index.tsx'),
-        route('/guide/edit', 'routes/academics/undergraduate/guide/edit.tsx'),
-        route('/courses', 'routes/academics/undergraduate/courses.tsx'),
         route(
           '/curriculum',
           'routes/academics/undergraduate/curriculum/index.tsx',
@@ -153,20 +150,32 @@ const getLocaleRoutes = (locale: Locale) => {
           '/degree-requirements/edit',
           'routes/academics/undergraduate/degree-requirements/edit.tsx',
         ),
-        route(
-          '/course-changes',
-          'routes/academics/undergraduate/course-changes.tsx',
-        ),
       ]),
-      ...prefix('/graduate', [
-        route('/guide', 'routes/academics/graduate/guide/index.tsx'),
-        route('/guide/edit', 'routes/academics/graduate/guide/edit.tsx'),
-        route('/courses', 'routes/academics/graduate/courses.tsx'),
-        route(
-          '/course-changes',
-          'routes/academics/graduate/course-changes.tsx',
-        ),
-      ]),
+      // Dynamic routes for courses, guide, course-changes, scholarship (must be after specific routes)
+      route(
+        '/:studentType/courses',
+        'routes/academics/$studentType/courses.tsx',
+      ),
+      route(
+        '/:studentType/guide',
+        'routes/academics/$studentType/guide/index.tsx',
+      ),
+      route(
+        '/:studentType/guide/edit',
+        'routes/academics/$studentType/guide/edit.tsx',
+      ),
+      route(
+        '/:studentType/course-changes',
+        'routes/academics/$studentType/course-changes.tsx',
+      ),
+      route(
+        '/:studentType/course-changes/create',
+        'routes/academics/$studentType/course-changes/create.tsx',
+      ),
+      route(
+        '/:studentType/course-changes/edit/:year',
+        'routes/academics/$studentType/course-changes/edit/$year.tsx',
+      ),
       // Dynamic routes for scholarship (must be after specific routes)
       route(
         '/:studentType/scholarship',
@@ -177,8 +186,16 @@ const getLocaleRoutes = (locale: Locale) => {
         'routes/academics/$studentType/scholarship/edit.tsx',
       ),
       route(
+        '/:studentType/scholarship/create',
+        'routes/academics/$studentType/scholarship/create.tsx',
+      ),
+      route(
+        '/:studentType/scholarship/:id/edit',
+        'routes/academics/$studentType/scholarship/$id/edit.tsx',
+      ),
+      route(
         '/:studentType/scholarship/:id',
-        'routes/academics/$studentType/scholarship/$id.tsx',
+        'routes/academics/$studentType/scholarship/$id/index.tsx',
       ),
     ]),
     ...prefix('/reservations', [
