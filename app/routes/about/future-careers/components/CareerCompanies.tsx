@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 import { toast } from 'sonner';
-import Button from '~/components/common/Button';
-import LoginVisible from '~/components/common/LoginVisible';
+import Button from '~/components/ui/Button';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import { useLanguage } from '~/hooks/useLanguage';
 import {
   CareerCompanyEditor,

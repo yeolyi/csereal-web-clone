@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
-import Button from '~/components/common/Button';
+import Button from '~/components/ui/Button';
 import { useLanguage } from '~/hooks/useLanguage';
 
 const translations = {

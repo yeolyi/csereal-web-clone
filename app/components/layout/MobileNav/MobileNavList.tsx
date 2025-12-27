@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import Button from '~/components/common/Button';
+import Button from '~/components/ui/Button';
 import type { NavItem } from '~/constants/navigation';
 import { navigationTree } from '~/constants/navigation';
 import { useLanguage } from '~/hooks/useLanguage';

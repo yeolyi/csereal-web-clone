@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Button from '~/components/common/Button';
-import Dropdown from '~/components/common/Dropdown';
-import LoginVisible from '~/components/common/LoginVisible';
+import Button from '~/components/ui/Button';
+import Dropdown from '~/components/ui/Dropdown';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { YearStat } from '~/types/api/v2/about/future-careers';
 

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import Fieldset from '~/components/common/form/Fieldset';
-import Form from '~/components/common/form/Form';
-import LanguagePicker from '~/components/common/form/LanguagePicker';
+import Fieldset from '~/components/form/Fieldset';
+import Form from '~/components/form/Form';
+import LanguagePicker from '~/components/form/LanguagePicker';
 import type { Locale } from '~/types/i18n';
 
 export interface ScholarshipFormData {

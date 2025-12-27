@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from 'react-router';
-import { Tag } from '~/components/common/Tag';
+import { Tag } from '~/components/ui/Tag';
 import { useLanguage } from '~/hooks/useLanguage';
 
 interface SelectedTagsProps {

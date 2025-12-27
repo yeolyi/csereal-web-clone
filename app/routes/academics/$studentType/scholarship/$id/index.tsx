@@ -2,10 +2,10 @@ import type { Route } from '.react-router/types/app/routes/academics/$studentTyp
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
-import AlertDialog from '~/components/common/AlertDialog';
-import Button from '~/components/common/Button';
-import HTMLViewer from '~/components/common/HTMLViewer';
-import LoginVisible from '~/components/common/LoginVisible';
+import AlertDialog from '~/components/ui/AlertDialog';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';

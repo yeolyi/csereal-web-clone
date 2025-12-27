@@ -1,10 +1,10 @@
 import type { Route } from '.react-router/types/app/routes/research/labs/$id/+types/index';
 import type { LoaderFunctionArgs } from 'react-router';
 import { Link } from 'react-router';
-import Button from '~/components/common/Button';
-import CornerFoldedRectangle from '~/components/common/CornerFoldedRectangle';
-import HTMLViewer from '~/components/common/HTMLViewer';
-import LoginVisible from '~/components/common/LoginVisible';
+import Button from '~/components/ui/Button';
+import CornerFoldedRectangle from '~/components/ui/CornerFoldedRectangle';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { COLOR_THEME } from '~/constants/color';

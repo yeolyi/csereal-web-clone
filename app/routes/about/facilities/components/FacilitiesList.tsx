@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useRevalidator } from 'react-router';
 import { toast } from 'sonner';
-import AlertDialog from '~/components/common/AlertDialog';
-import Button from '~/components/common/Button';
-import HTMLViewer from '~/components/common/HTMLViewer';
-import Image from '~/components/common/Image';
-import LoginVisible from '~/components/common/LoginVisible';
+import AlertDialog from '~/components/ui/AlertDialog';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import Image from '~/components/ui/Image';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { Facility } from '~/types/api/v2/about/facilities';
 import { fetchOk } from '~/utils/fetch';

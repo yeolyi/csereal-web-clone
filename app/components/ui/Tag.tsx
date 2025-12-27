@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Link } from 'react-router';
-import Button from '~/components/common/Button';
+import Button from '~/components/ui/Button';
 
 type TagVariant = 'outline' | 'solid' | 'muted';
 type TagSize = 'sm' | 'md';

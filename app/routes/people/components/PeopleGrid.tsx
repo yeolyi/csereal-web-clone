@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import Image from '~/components/common/Image';
+import Image from '~/components/ui/Image';
 
 interface PeopleGridProps {
   items: PeopleCardProps[];

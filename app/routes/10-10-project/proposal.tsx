@@ -1,4 +1,4 @@
-import HTMLViewer from '~/components/common/HTMLViewer';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import PageLayout from '~/components/layout/PageLayout';
 import { useLanguage } from '~/hooks/useLanguage';
 

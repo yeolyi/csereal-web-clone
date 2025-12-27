@@ -1,7 +1,8 @@
+import type { MouseEvent } from 'react';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import AlertDialog from '../AlertDialog';
-import Button from '../Button';
+import AlertDialog from '~/components/ui/AlertDialog';
+import Button from '~/components/ui/Button';
 
 interface Props {
   onCancel: () => void;
@@ -30,7 +31,7 @@ export default function Action({
           variant="outline"
           tone="neutral"
           disabled={isSubmitting}
-          onClick={(e) => {
+          onClick={(e: MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             if (isDirty) {
               setShowCancelDialog(true);
@@ -46,7 +47,7 @@ export default function Action({
             variant="solid"
             tone="inverse"
             disabled={isSubmitting}
-            onClick={(e) => {
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
               setShowDeleteDialog(true);
             }}

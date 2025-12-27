@@ -4,11 +4,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import type { LoaderFunctionArgs } from 'react-router';
 import { useNavigate, useSearchParams } from 'react-router';
 import { toast } from 'sonner';
-import Fieldset from '~/components/common/form/Fieldset';
-import Form from '~/components/common/form/Form';
+import Fieldset from '~/components/form/Fieldset';
+import Form from '~/components/form/Form';
 import LanguagePicker, {
   type Language,
-} from '~/components/common/form/LanguagePicker';
+} from '~/components/form/LanguagePicker';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';

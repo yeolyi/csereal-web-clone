@@ -1,5 +1,5 @@
 import type { Route } from '.react-router/types/app/routes/main/+types';
-import Image from '~/components/common/Image';
+import Image from '~/components/ui/Image';
 import Header from '~/components/layout/Header';
 import { BASE_URL } from '~/constants/api';
 import type { MainResponse } from '~/types/api/v2';

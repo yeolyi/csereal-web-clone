@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import Node from '~/components/common/Nodes';
+import Node from '~/components/ui/Nodes';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { Faculty } from '~/types/api/v2/professor';
 

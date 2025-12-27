@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
-import Checkbox from '~/components/common/Checkbox';
+import Checkbox from '~/components/ui/Checkbox';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { ImportantPreview, SlidePreview } from '~/types/api/v2/admin';
 

@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { Link } from 'react-router';
-import Button from '~/components/common/Button';
-import Dialog from '~/components/common/Dialog';
-import Form from '~/components/common/form/Form';
+import Button from '~/components/ui/Button';
+import Dialog from '~/components/ui/Dialog';
+import Form from '~/components/form/Form';
 import { useLanguage } from '~/hooks/useLanguage';
 import useReservationForm from '~/routes/reservations/hooks/useReservationForm';
 

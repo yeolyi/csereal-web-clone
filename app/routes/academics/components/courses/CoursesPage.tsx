@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router';
-import Button from '~/components/common/Button';
-import LoginVisible from '~/components/common/LoginVisible';
+import Button from '~/components/ui/Button';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { useLanguage } from '~/hooks/useLanguage';
 import useIsMobile from '~/hooks/useResponsive';

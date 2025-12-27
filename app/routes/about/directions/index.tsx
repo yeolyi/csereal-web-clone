@@ -1,9 +1,9 @@
 import type { Route } from '.react-router/types/app/routes/about/directions/+types/index';
 import { Link } from 'react-router';
-import Button from '~/components/common/Button';
-import HTMLViewer from '~/components/common/HTMLViewer';
-import LoginVisible from '~/components/common/LoginVisible';
-import SelectionList from '~/components/common/SelectionList';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import SelectionList from '~/components/feature/selection/SelectionList';
 import footerTranslations from '~/components/layout/Footer/translations.json';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';

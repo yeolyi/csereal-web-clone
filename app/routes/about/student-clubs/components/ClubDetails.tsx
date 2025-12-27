@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useRevalidator } from 'react-router';
 import { toast } from 'sonner';
-import AlertDialog from '~/components/common/AlertDialog';
-import Button from '~/components/common/Button';
-import HTMLViewer from '~/components/common/HTMLViewer';
-import LoginVisible from '~/components/common/LoginVisible';
-import SelectionTitle from '~/components/common/SelectionTitle';
+import AlertDialog from '~/components/ui/AlertDialog';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import SelectionTitle from '~/components/feature/selection/SelectionTitle';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { Club } from '~/types/api/v2/about/student-clubs';
 import { fetchOk } from '~/utils/fetch';

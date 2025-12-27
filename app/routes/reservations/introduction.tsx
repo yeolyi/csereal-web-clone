@@ -1,6 +1,6 @@
-import HTMLViewer from '~/components/common/HTMLViewer';
-import SelectionList from '~/components/common/SelectionList';
-import SelectionTitle from '~/components/common/SelectionTitle';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import SelectionList from '~/components/feature/selection/SelectionList';
+import SelectionTitle from '~/components/feature/selection/SelectionTitle';
 import PageLayout from '~/components/layout/PageLayout';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useSelectionList } from '~/hooks/useSelectionList';

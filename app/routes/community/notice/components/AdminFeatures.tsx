@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useRevalidator } from 'react-router';
 import { toast } from 'sonner';
-import AlertDialog from '~/components/common/AlertDialog';
-import Button from '~/components/common/Button';
+import AlertDialog from '~/components/ui/AlertDialog';
+import Button from '~/components/ui/Button';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { fetchOk } from '~/utils/fetch';

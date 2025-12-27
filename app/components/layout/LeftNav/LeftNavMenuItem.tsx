@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import Node from '~/components/common/Nodes';
+import Node from '~/components/ui/Nodes';
 import type { NavItem } from '~/constants/navigation';
 import { useLanguage } from '~/hooks/useLanguage';
 import commonTranslations from '~/translations.json';

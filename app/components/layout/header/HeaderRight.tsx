@@ -1,5 +1,5 @@
-import Button from '~/components/common/Button';
-import LoginVisible from '~/components/common/LoginVisible';
+import Button from '~/components/ui/Button';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import HeaderSearchBar from '~/components/layout/Header/HeaderSearchBar';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useStore } from '~/store';

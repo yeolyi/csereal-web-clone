@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Node from '~/components/common/Nodes';
+import Node from '~/components/ui/Nodes';
 import { useLanguage } from '~/hooks/useLanguage';
 import { SEARCH_TRANSLATIONS } from '../constants';
 

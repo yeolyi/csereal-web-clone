@@ -2,10 +2,10 @@ import type { Route } from '.react-router/types/app/routes/community/notice/+typ
 import { useState } from 'react';
 import type { LoaderFunctionArgs } from 'react-router';
 import { useSearchParams } from 'react-router';
-import LoginVisible from '~/components/common/LoginVisible';
-import Pagination from '~/components/common/Pagination';
-import SearchBox from '~/components/common/SearchBox';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import SearchBox from '~/components/feature/SearchBox';
 import PageLayout from '~/components/layout/PageLayout';
+import Pagination from '~/components/ui/Pagination';
 import { BASE_URL } from '~/constants/api';
 import { NOTICE_TAGS } from '~/constants/tag';
 import { useLanguage } from '~/hooks/useLanguage';

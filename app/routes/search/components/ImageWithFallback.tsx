@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Image from '~/components/common/Image';
+import Image from '~/components/ui/Image';
 import SnuLogo from '~/components/layout/LeftNav/assets/SNU_Logo.svg?react';
 
 interface ImageWithFallbackProps {

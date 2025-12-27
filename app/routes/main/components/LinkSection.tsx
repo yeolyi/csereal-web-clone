@@ -1,4 +1,4 @@
-import LinkRow from '~/components/common/LinkRow';
+import LinkRow from '~/components/ui/LinkRow';
 import { useLanguage } from '~/hooks/useLanguage';
 
 export default function LinkSection() {

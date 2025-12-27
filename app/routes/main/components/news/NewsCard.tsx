@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
-import Image from '~/components/common/Image';
+import Image from '~/components/ui/Image';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { MainNews } from '~/types/api/v2';
 import { CARD_WIDTH_TAILWIND } from './constants';

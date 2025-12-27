@@ -1,11 +1,11 @@
 import type { Route } from '.react-router/types/app/routes/community/news/+types/index';
 import type { LoaderFunctionArgs } from 'react-router';
 import { useSearchParams } from 'react-router';
-import Button from '~/components/common/Button';
-import LoginVisible from '~/components/common/LoginVisible';
-import Pagination from '~/components/common/Pagination';
-import SearchBox from '~/components/common/SearchBox';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import SearchBox from '~/components/feature/SearchBox';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
+import Pagination from '~/components/ui/Pagination';
 import { BASE_URL } from '~/constants/api';
 import { NEWS_TAGS } from '~/constants/tag';
 import { useLanguage } from '~/hooks/useLanguage';

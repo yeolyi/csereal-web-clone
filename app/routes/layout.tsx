@@ -2,7 +2,7 @@ import type { Route } from '.react-router/types/app/routes/+types/layout';
 import { useEffect } from 'react';
 import { isRouteErrorResponse, Outlet, useNavigate } from 'react-router';
 import { Toaster } from 'sonner';
-import ErrorState from '~/components/common/ErrorState';
+import ErrorState from '~/components/ui/ErrorState';
 import Header from '~/components/layout/Header';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';

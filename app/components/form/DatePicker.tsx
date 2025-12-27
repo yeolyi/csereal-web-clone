@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { useReducer, useRef } from 'react';
 import { useController } from 'react-hook-form';
-import Calendar from '~/components/common/Calendar';
+import Calendar from '~/components/ui/Calendar';
 import { useClickOutside } from '~/hooks/useClickOutside';
 
 interface DateProps {

@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
-import Button from '~/components/common/Button';
-import Node from '~/components/common/Nodes';
+import Button from '~/components/ui/Button';
+import Node from '~/components/ui/Nodes';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { BreadcrumbItem } from './index';
 

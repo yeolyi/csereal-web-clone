@@ -1,5 +1,5 @@
 import type { Route } from '.react-router/types/app/routes/+types/internal';
-import HTMLViewer from '~/components/common/HTMLViewer';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 

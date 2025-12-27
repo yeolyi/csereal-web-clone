@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useNavigate, useSearchParams } from 'react-router';
-import Node from '~/components/common/Nodes';
+import Node from '~/components/ui/Nodes';
 import Input from './Input';
 import SelectedTags from './SelectedTags';
 import TagCheckBoxes from './TagCheckboxes';

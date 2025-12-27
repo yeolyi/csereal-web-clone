@@ -1,11 +1,11 @@
 import { useReducer, useState } from 'react';
 import { Link, useLocation, useRevalidator } from 'react-router';
 import { toast } from 'sonner';
-import AlertDialog from '~/components/common/AlertDialog';
-import Attachments from '~/components/common/Attachments';
-import Button from '~/components/common/Button';
-import HTMLViewer from '~/components/common/HTMLViewer';
-import LoginVisible from '~/components/common/LoginVisible';
+import AlertDialog from '~/components/ui/AlertDialog';
+import Attachments from '~/components/ui/Attachments';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { TimelineContent } from '~/types/api/v2/academics';
 import { fetchOk } from '~/utils/fetch';

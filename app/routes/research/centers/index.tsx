@@ -2,12 +2,12 @@ import type { Route } from '.react-router/types/app/routes/research/centers/+typ
 import { useState } from 'react';
 import { type LoaderFunctionArgs, useRevalidator } from 'react-router';
 import { toast } from 'sonner';
-import AlertDialog from '~/components/common/AlertDialog';
-import Button from '~/components/common/Button';
-import HTMLViewer from '~/components/common/HTMLViewer';
-import LoginVisible from '~/components/common/LoginVisible';
-import Node from '~/components/common/Nodes';
-import SelectionList from '~/components/common/SelectionList';
+import AlertDialog from '~/components/ui/AlertDialog';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import Node from '~/components/ui/Nodes';
+import SelectionList from '~/components/feature/selection/SelectionList';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';

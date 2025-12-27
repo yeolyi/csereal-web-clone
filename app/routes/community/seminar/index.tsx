@@ -2,9 +2,9 @@ import type { Route } from '.react-router/types/app/routes/community/seminar/+ty
 import { Fragment } from 'react';
 import type { LoaderFunctionArgs } from 'react-router';
 import { useSearchParams } from 'react-router';
-import Button from '~/components/common/Button';
-import LoginVisible from '~/components/common/LoginVisible';
-import Pagination from '~/components/common/Pagination';
+import Button from '~/components/ui/Button';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import Pagination from '~/components/ui/Pagination';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';

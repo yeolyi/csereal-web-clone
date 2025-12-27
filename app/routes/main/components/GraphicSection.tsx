@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import Image from '~/components/common/Image';
+import Image from '~/components/ui/Image';
 import backgroundImg from '../assets/background.png';
 import DownArrowIcon from '../assets/down_arrow.svg?react';
 import mainGraphicImg from '../assets/mainGraphic.png';

@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { Link, useSearchParams } from 'react-router';
-import Image from '~/components/common/Image';
-import { Tag } from '~/components/common/Tag';
+import Image from '~/components/ui/Image';
+import { Tag } from '~/components/ui/Tag';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { NewsPreview } from '~/types/api/v2/news';
 

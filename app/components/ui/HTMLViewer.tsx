@@ -1,7 +1,7 @@
 import './assets/suneditor-contents.css';
 
 import { Autolinker } from 'autolinker';
-import Image from '~/components/common/Image';
+import Image from '~/components/ui/Image';
 import useIsMobile from '~/hooks/useResponsive';
 import { type Falsy, isNotFalsy } from '~/types/utils';
 

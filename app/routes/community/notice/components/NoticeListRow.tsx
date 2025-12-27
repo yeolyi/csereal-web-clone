@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { Link, useSearchParams } from 'react-router';
-import Checkbox from '~/components/common/Checkbox';
+import Checkbox from '~/components/ui/Checkbox';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { NoticePreview } from '~/types/api/v2/notice';
 import ClipIcon from '../assets/clip.svg?react';

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import CornerFoldedRectangle from "~/components/common/CornerFoldedRectangle";
+import CornerFoldedRectangle from "~/components/ui/CornerFoldedRectangle";
 import { COLOR_THEME } from "~/constants/color";
 import type { SelectionListItem } from "~/hooks/useSelectionList";
 

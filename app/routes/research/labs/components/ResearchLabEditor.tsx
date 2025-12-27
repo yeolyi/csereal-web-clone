@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import Fieldset from '~/components/common/form/Fieldset';
-import Form from '~/components/common/form/Form';
+import Fieldset from '~/components/form/Fieldset';
+import Form from '~/components/form/Form';
 import LanguagePicker, {
   type Language,
-} from '~/components/common/form/LanguagePicker';
+} from '~/components/form/LanguagePicker';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { SimpleFaculty } from '~/types/api/v2/professor';
 import type { ResearchGroup } from '~/types/api/v2/research/groups';

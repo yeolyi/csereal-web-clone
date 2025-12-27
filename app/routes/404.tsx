@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router';
-import ErrorState from '~/components/common/ErrorState';
+import ErrorState from '~/components/ui/ErrorState';
 import Header from '~/components/layout/Header';
 import { useLanguage } from '~/hooks/useLanguage';
 

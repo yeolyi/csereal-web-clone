@@ -1,6 +1,6 @@
 import type { Route } from '.react-router/types/app/routes/admin/+types/index';
 import type { LoaderFunctionArgs } from 'react-router';
-import SelectionList from '~/components/common/SelectionList';
+import SelectionList from '~/components/feature/selection/SelectionList';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useSelectionList } from '~/hooks/useSelectionList';

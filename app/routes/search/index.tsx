@@ -1,5 +1,5 @@
 import type { Route } from '.react-router/types/app/routes/search/+types/index';
-import SearchBox from '~/components/common/SearchBox';
+import SearchBox from '~/components/feature/SearchBox';
 import PageLayout from '~/components/layout/PageLayout';
 import { useLanguage } from '~/hooks/useLanguage';
 import { getLocaleFromPathname } from '~/utils/string';

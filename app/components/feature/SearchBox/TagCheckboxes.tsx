@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from 'react-router';
-import Checkbox from '~/components/common/Checkbox';
+import Checkbox from '~/components/ui/Checkbox';
 import { useLanguage } from '~/hooks/useLanguage';
 
 interface TagFilterProps {

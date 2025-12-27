@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useRevalidator, useSearchParams } from 'react-router';
 import { toast } from 'sonner';
-import AlertDialog from '~/components/common/AlertDialog';
-import Button from '~/components/common/Button';
-import Pagination from '~/components/common/Pagination';
+import AlertDialog from '~/components/ui/AlertDialog';
+import Button from '~/components/ui/Button';
+import Pagination from '~/components/ui/Pagination';
 import { BASE_URL } from '~/constants/api';
 import { useSetToggle } from '~/hooks/useSetToggle';
 import type { ImportantPreview } from '~/types/api/v2/admin';

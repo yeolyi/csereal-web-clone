@@ -1,8 +1,8 @@
 import type { Route } from '.react-router/types/app/routes/people/faculty/+types';
 import { useState } from 'react';
 import type { LoaderFunctionArgs } from 'react-router';
-import Button from '~/components/common/Button';
-import LoginVisible from '~/components/common/LoginVisible';
+import Button from '~/components/ui/Button';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';

@@ -1,4 +1,4 @@
-import CategoryPage from '~/components/common/CategoryPage';
+import CategoryPage from '~/components/feature/category/CategoryPage';
 
 export default function AboutPage() {
   return (

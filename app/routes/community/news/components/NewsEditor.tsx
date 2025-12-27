@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import Fieldset from '~/components/common/form/Fieldset';
-import Form from '~/components/common/form/Form';
+import Fieldset from '~/components/form/Fieldset';
+import Form from '~/components/form/Form';
 import { NEWS_TAGS } from '~/constants/tag';
 import type { EditorFile, EditorImage } from '~/types/form';
 

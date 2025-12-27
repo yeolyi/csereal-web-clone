@@ -1,6 +1,6 @@
 import type { Route } from '.react-router/types/app/routes/reservations/$roomType/+types/$roomName';
 import dayjs from 'dayjs';
-import LoginVisible from '~/components/common/LoginVisible';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useNavItem } from '~/hooks/useNavItem';

@@ -6,9 +6,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import Button from '~/components/common/Button';
-import Calendar from '~/components/common/Calendar';
-import LoginVisible from '~/components/common/LoginVisible';
+import Button from '~/components/ui/Button';
+import Calendar from '~/components/ui/Calendar';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import { useClickOutside } from '~/hooks/useClickOutside';
 import useSelectedDate from '~/routes/reservations/hooks/useSelectedDate';
 import AddReservationModal from './AddReservationModal';

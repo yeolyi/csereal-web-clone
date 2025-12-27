@@ -4,8 +4,7 @@
 /* blue color #c7deff , #80bdff , #3f9dff , #4592ff, #407dd1, #3288ff */
 /* red color #b94a48 , #f2dede , #eed3d7, #d9534f */
 
-/** biome-ignore-all lint/a11y/useGenericFontNames: TODO */
-/** biome-ignore-all lint/complexity/noImportantStyles: 내 파일 아님 */
+/** biome-ignore-all lint: 내 파일 아님 */
 
 /** --- suneditor main */
 .sun-editor {

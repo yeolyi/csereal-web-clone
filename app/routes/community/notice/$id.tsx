@@ -2,12 +2,12 @@ import type { Route } from '.react-router/types/app/routes/community/notice/+typ
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import type { LoaderFunctionArgs } from 'react-router';
-import Attachments from '~/components/common/Attachments';
-import Button from '~/components/common/Button';
-import HTMLViewer from '~/components/common/HTMLViewer';
-import LoginVisible from '~/components/common/LoginVisible';
-import Node from '~/components/common/Nodes';
-import { Tag } from '~/components/common/Tag';
+import Attachments from '~/components/ui/Attachments';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import Node from '~/components/ui/Nodes';
+import { Tag } from '~/components/ui/Tag';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
