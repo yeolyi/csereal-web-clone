@@ -10,7 +10,6 @@ import LanguagePicker, {
 } from '~/components/form/LanguagePicker';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
-import { useLanguage } from '~/hooks/useLanguage';
 import type { AdmissionsResponse } from '~/types/api/v2/admissions';
 import { fetchJson, fetchOk } from '~/utils/fetch';
 
@@ -84,7 +83,6 @@ export async function loader({ params }: Route.LoaderArgs) {
 export default function AdmissionsEdit({ loaderData }: Route.ComponentProps) {
   const { ko, en, mainType, postType } = loaderData;
   const navigate = useNavigate();
-  const { locale } = useLanguage({});
   const [language, setLanguage] = useState<Language>('ko');
 
   const config = ADMISSIONS_PAGES[mainType][postType];
@@ -96,7 +94,7 @@ export default function AdmissionsEdit({ loaderData }: Route.ComponentProps) {
   });
 
   const onCancel = () => {
-    navigate(`/${locale}/admissions/${mainType}/${postType}`);
+    navigate(`/admissions/${mainType}/${postType}`);
   };
 
   const onSubmit = methods.handleSubmit(async ({ ko, en }) => {
@@ -107,7 +105,7 @@ export default function AdmissionsEdit({ loaderData }: Route.ComponentProps) {
         body: JSON.stringify({ ko, en }),
       });
       toast.success(successMessage);
-      navigate(`/${locale}/admissions/${mainType}/${postType}`);
+      navigate(`/admissions/${mainType}/${postType}`);
     } catch {
       toast.error('수정에 실패했습니다.');
     }
