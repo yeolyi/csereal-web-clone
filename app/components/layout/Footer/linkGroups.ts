@@ -12,6 +12,7 @@ export type LinkGroupProps = {
   groupName: string;
   links: Links;
   width: string;
+  mode?: 'light' | 'dark';
 };
 
 const aboutLinks = [

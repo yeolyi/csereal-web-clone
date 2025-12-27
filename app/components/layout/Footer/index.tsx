@@ -4,8 +4,8 @@ import {
   type LinkGroupProps,
 } from '~/components/layout/Footer/linkGroups';
 import { useLanguage } from '~/hooks/useLanguage';
+import { useNavItem } from '~/hooks/useNavItem';
 import commonTranslations from '~/translations.json';
-import useFooterDesignMode from '../../../hooks/useFooterDesignMode';
 import SnuEngineeringIcon from './assets/SNU_Engineering.svg?react';
 import SnuLogoWithText from './assets/SNU_Logo_with_Text.svg?react';
 import footerOnlyTranslations from './translations.json';
@@ -13,8 +13,11 @@ import footerOnlyTranslations from './translations.json';
 const footerTranslations = { ...commonTranslations, ...footerOnlyTranslations };
 
 export default function Footer() {
-  const mode = useFooterDesignMode();
-  const { locale } = useLanguage(footerTranslations);
+  const { locale, pathWithoutLocale } = useLanguage(footerTranslations);
+  const { topLevelItem } = useNavItem();
+
+  // Main page or navigationTree의 top-level 페이지들은 dark mode
+  const mode = pathWithoutLocale === '/' || topLevelItem ? 'dark' : 'light';
   const topBg =
     mode === 'light' ? 'bg-neutral-50' : 'bg-[#262728] sm:bg-neutral-900';
   const bottomBg = mode === 'light' ? 'bg-neutral-100' : 'bg-[rgb(30,30,30)]';
@@ -27,7 +30,7 @@ export default function Footer() {
         className={`${topBg} flex flex-wrap gap-y-8 px-6 py-9 sm:px-15 sm:py-10`}
       >
         {getLinkGroups(locale).map((group) => (
-          <LinkGroup key={group.groupName} {...group} />
+          <LinkGroup key={group.groupName} {...group} mode={mode} />
         ))}
       </div>
       <div
@@ -40,8 +43,12 @@ export default function Footer() {
   );
 }
 
-function LinkGroup({ groupName, links, width }: LinkGroupProps) {
-  const mode = useFooterDesignMode();
+function LinkGroup({
+  groupName,
+  links,
+  width,
+  mode = 'light',
+}: LinkGroupProps) {
   const { t } = useLanguage(footerTranslations);
 
   const titleColor =
