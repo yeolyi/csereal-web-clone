@@ -34,15 +34,7 @@ export default function StaffPage({
   const items = staffList.map((staff) => toCard(staff, localizedPath));
 
   return (
-    <PageLayout
-      title={t('행정직원')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('구성원'), path: '/people' },
-        { name: t('행정직원'), path: '/people/staff' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('행정직원')} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-7 flex justify-end">
           <Button

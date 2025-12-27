@@ -32,10 +32,6 @@ export default function GreetingsPage({ loaderData }: Route.ComponentProps) {
     <PageLayout
       title={t('학부장 인사말')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('학부장 인사말'), path: '/about/greetings' },
-      ]}
       subNav={subNav}
       padding="none"
     >

@@ -19,12 +19,6 @@ export default function AdmissionsPageContent({
   const { activeItem } = useNavItem();
   const subNav = useAdmissionsSubNav();
   const title = activeItem ? tUnsafe(activeItem.key) : t('입학');
-  const breadcrumb = activeItem?.path
-    ? [
-        { name: t('입학'), path: '/admissions' },
-        { name: tUnsafe(activeItem.key), path: activeItem.path },
-      ]
-    : [{ name: t('입학'), path: '/admissions' }];
   const wrapperClass = layout === 'extraBottom' ? 'pb-16 sm:pb-[220px]' : '';
 
   // activeItem.path가 있으면 자동으로 editPath 생성
@@ -34,7 +28,6 @@ export default function AdmissionsPageContent({
     <PageLayout
       title={title}
       titleSize="xl"
-      breadcrumb={breadcrumb}
       subNav={subNav}
       padding={layout === 'extraBottom' ? 'noBottom' : 'default'}
     >

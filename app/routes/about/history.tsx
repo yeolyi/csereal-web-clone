@@ -28,16 +28,7 @@ export default function HistoryPage({ loaderData }: Route.ComponentProps) {
   const subNav = useAboutSubNav();
 
   return (
-    <PageLayout
-      title={t('연혁')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('연혁'), path: '/about/history' },
-      ]}
-      subNav={subNav}
-      padding="none"
-    >
+    <PageLayout title={t('연혁')} titleSize="xl" subNav={subNav} padding="none">
       <ContentSection tone="white" padding="subNav">
         <LoginVisible allow="ROLE_STAFF">
           <div className="mb-8 text-right">

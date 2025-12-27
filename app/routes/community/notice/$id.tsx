@@ -55,10 +55,6 @@ export default function NoticeDetailPage({
     <PageLayout
       title={t('공지사항')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('소식'), path: '/community' },
-        { name: t('공지사항'), path: '/community/notice' },
-      ]}
       subNav={subNav}
       padding="none"
     >

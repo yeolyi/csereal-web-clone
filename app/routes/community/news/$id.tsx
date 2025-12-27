@@ -51,10 +51,6 @@ export default function NewsDetailPage({
     <PageLayout
       title={t('새 소식')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('소식'), path: '/community' },
-        { name: t('새 소식'), path: '/community/news' },
-      ]}
       subNav={subNav}
       padding="none"
     >

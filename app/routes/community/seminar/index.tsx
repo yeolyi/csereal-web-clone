@@ -49,15 +49,7 @@ export default function SeminarPage({
   const totalPages = Math.ceil(data.total / POSTS_COUNT_PER_PAGE);
 
   return (
-    <PageLayout
-      title={t('세미나')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('소식'), path: '/community' },
-        { name: t('세미나'), path: '/community/seminar' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('세미나')} titleSize="xl" subNav={subNav}>
       <div className="flex flex-row items-center gap-6">
         <SeminarSearchBar />
       </div>

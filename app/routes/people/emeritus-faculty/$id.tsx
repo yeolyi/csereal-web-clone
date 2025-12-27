@@ -68,10 +68,6 @@ export default function EmeritusFacultyDetailPage({
       title={faculty.name}
       subtitle={faculty.academicRank}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('구성원'), path: '/people' },
-        { name: t('역대 교수진'), path: '/people/emeritus-faculty' },
-      ]}
     >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-9 text-right">

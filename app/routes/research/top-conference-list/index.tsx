@@ -40,18 +40,7 @@ export default function TopConferenceListPage({
     .format(locale === 'en' ? 'MMM D, YYYY' : 'YYYY. M. D');
 
   return (
-    <PageLayout
-      title={t('Top Conference List')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('연구·교육'), path: '/research' },
-        {
-          name: t('Top Conference List'),
-          path: '/research/top-conference-list',
-        },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('Top Conference List')} titleSize="xl" subNav={subNav}>
       <div className="flex flex-col text-neutral-950">
         <h3 className="mb-5 text-base font-bold leading-8">
           {t('서울대학교 공과대학 컴퓨터공학부')} Top Conference List

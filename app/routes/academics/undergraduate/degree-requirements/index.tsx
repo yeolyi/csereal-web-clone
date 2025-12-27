@@ -26,22 +26,8 @@ export default function DegreeRequirementsPage({
   });
   const subNav = useAcademicsSubNav();
   const title = t('졸업 규정');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: t('학부'), path: '/academics/undergraduate' },
-    {
-      name: t('졸업 규정'),
-      path: '/academics/undergraduate/degree-requirements',
-    },
-  ];
-
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 flex justify-end">
           <Button variant="outline" tone="neutral" as="link" to="edit">

@@ -37,10 +37,6 @@ export default function Overview({ loaderData }: Route.ComponentProps) {
   return (
     <PageLayout
       title={t('학부 소개')}
-      breadcrumb={[
-        { name: t('소개'), path: '/about' },
-        { name: t('학부 소개'), path: '/about/overview' },
-      ]}
       titleSize="xl"
       padding="none"
       subNav={{

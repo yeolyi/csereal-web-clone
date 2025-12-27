@@ -48,15 +48,7 @@ export default function StaffDetailPage({
   ];
 
   return (
-    <PageLayout
-      title={staff.name}
-      subtitle={staff.role}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('구성원'), path: '/people' },
-        { name: t('행정직원'), path: '/people/staff' },
-      ]}
-    >
+    <PageLayout title={staff.name} subtitle={staff.role} titleSize="xl">
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-9 text-right">
           <Button

@@ -114,14 +114,6 @@ export default function CareerStatEditPage({
     <PageLayout
       title={`${loaderData.year}년 졸업생 진로 현황 편집`}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('졸업생 진로'), path: '/about/future-careers' },
-        {
-          name: `${loaderData.year}년 졸업생 진로 현황 편집`,
-          path: `/about/future-careers/stat/edit?year=${loaderData.year}`,
-        },
-      ]}
       subNav={subNav}
     >
       <FormProvider {...formMethods}>

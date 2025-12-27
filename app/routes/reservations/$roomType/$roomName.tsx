@@ -63,12 +63,6 @@ export default function RoomReservationPage({
   if (!activeItem) return null;
 
   const title = activeItem ? tUnsafe(activeItem.key) : t('시설 예약');
-
-  const breadcrumb = [
-    { name: t('시설 예약'), path: '/reservations' },
-    { name: tUnsafe(activeItem.key), path: activeItem.path },
-  ];
-
   const props: ReservationCalendarProps = isMobile
     ? {
         reservations: mobileReservations,
@@ -84,12 +78,7 @@ export default function RoomReservationPage({
   const isStaffOnlyRoom = STAFF_ONLY_ROOM_ID.includes(roomId);
 
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       {isStaffOnlyRoom ? (
         <LoginVisible allow="ROLE_STAFF" fallback={<NonStaffFallback />}>
           <ReservationCalendar {...props} />

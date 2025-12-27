@@ -50,15 +50,7 @@ export default function NewsPage({ loaderData: data }: Route.ComponentProps) {
   const totalPages = Math.ceil(data.total / POST_LIMIT);
 
   return (
-    <PageLayout
-      title={t('새 소식')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('커뮤니티'), path: '/community' },
-        { name: t('새 소식'), path: '/community/news' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('새 소식')} titleSize="xl" subNav={subNav}>
       <SearchBox tags={NEWS_TAGS} />
       <NewsList posts={data.searchList} />
       <Pagination page={pageNum} totalPages={totalPages} />

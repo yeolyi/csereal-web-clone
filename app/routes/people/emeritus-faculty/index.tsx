@@ -36,15 +36,7 @@ export default function EmeritusFacultyPage({
   const items = loaderData.map((faculty) => toCard(faculty, localizedPath));
 
   return (
-    <PageLayout
-      title={t('역대 교수진')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('구성원'), path: '/people' },
-        { name: t('역대 교수진'), path: '/people/emeritus-faculty' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('역대 교수진')} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-7 flex justify-end">
           <Button

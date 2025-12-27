@@ -64,10 +64,6 @@ export default function SeminarDetailPage({
     <PageLayout
       title={t('세미나')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('소식'), path: '/community' },
-        { name: t('세미나'), path: '/community/seminar' },
-      ]}
       subNav={subNav}
       padding="none"
     >

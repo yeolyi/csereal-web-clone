@@ -37,10 +37,6 @@ export default function StudentClubsPage({
     <PageLayout
       title={t('동아리 소개')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('동아리 소개'), path: '/about/student-clubs' },
-      ]}
       subNav={subNav}
       padding="noTop"
     >

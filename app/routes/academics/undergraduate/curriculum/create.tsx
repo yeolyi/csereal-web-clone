@@ -16,15 +16,6 @@ export default function CurriculumCreatePage() {
   const navigate = useNavigate();
 
   const title = t('전공 이수 표준 형태 추가');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: t('학부'), path: '/academics/undergraduate' },
-    {
-      name: t('전공 이수 표준 형태'),
-      path: '/academics/undergraduate/curriculum',
-    },
-  ];
-
   const onSubmit = async (data: TimelineFormData) => {
     const formData = new FormData2();
     formData.appendJson('request', {
@@ -47,12 +38,7 @@ export default function CurriculumCreatePage() {
   };
 
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <TimelineEditor
         onSubmit={onSubmit}
         cancelPath="/academics/undergraduate/curriculum"

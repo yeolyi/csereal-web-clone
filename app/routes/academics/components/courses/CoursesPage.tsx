@@ -39,15 +39,6 @@ export default function CoursesPage({
   const subNav = useAcademicsSubNav();
   const title = t('교과과정');
   const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: studentLabel, path: `/academics/${studentType}` },
-    {
-      name: t('교과과정'),
-      path: `/academics/${studentType}/courses`,
-    },
-  ];
-
   const isMobile = useIsMobile();
   const [searchParams] = useSearchParams();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -62,12 +53,7 @@ export default function CoursesPage({
   const sortedCourses = getSortedCourses(courses, effectiveSortOption);
 
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 ml-auto flex justify-end">
           <Button

@@ -145,15 +145,7 @@ export default function TenTenProposalPage() {
 `;
 
   return (
-    <PageLayout
-      title={t('Proposal')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('10-10 Project'), path: '/10-10-project' },
-        { name: t('Proposal'), path: '/10-10-project/proposal' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('Proposal')} titleSize="xl" subNav={subNav}>
       <HTMLViewer html={htmlContent} />
     </PageLayout>
   );

@@ -67,15 +67,7 @@ export default function NoticePage({ loaderData: data }: Route.ComponentProps) {
   const totalPages = Math.ceil(data.total / POST_LIMIT);
 
   return (
-    <PageLayout
-      title={t('공지사항')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('소식'), path: '/community' },
-        { name: t('공지사항'), path: '/community/notice' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('공지사항')} titleSize="xl" subNav={subNav}>
       <SearchBox tags={NOTICE_TAGS} disabled={isEditMode} />
 
       {data.searchList.length === 0 ? (

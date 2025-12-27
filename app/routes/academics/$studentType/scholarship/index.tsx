@@ -28,19 +28,8 @@ export default function ScholarshipPage({
 
   const title = t('장학 제도');
   const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
-  const breadcrumb = [
-    { path: '/academics', name: t('학사 및 교과') },
-    { name: studentLabel },
-    { path: `/academics/${studentType}/scholarship`, name: t('장학 제도') },
-  ];
-
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 flex justify-end">
           <Button variant="outline" tone="neutral" as="link" to="edit">

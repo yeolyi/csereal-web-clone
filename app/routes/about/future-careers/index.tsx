@@ -37,10 +37,6 @@ export default function FutureCareersPage({
     <PageLayout
       title={t('졸업생 진로')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('졸업생 진로'), path: '/about/future-careers' },
-      ]}
       subNav={subNav}
       padding="none"
     >

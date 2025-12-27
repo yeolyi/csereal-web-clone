@@ -20,15 +20,7 @@ export default function FacultyRecruitmentPage({
   const subNav = useCommunitySubNav();
 
   return (
-    <PageLayout
-      title={t('신임교수초빙')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('소식'), path: '/community' },
-        { name: t('신임교수초빙'), path: '/community/faculty-recruitment' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('신임교수초빙')} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 text-right">
           <Button

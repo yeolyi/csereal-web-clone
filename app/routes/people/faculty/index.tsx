@@ -73,15 +73,7 @@ export default function FacultyPage({
   );
 
   return (
-    <PageLayout
-      title={t('교수진')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('구성원'), path: '/people' },
-        { name: t('교수진'), path: '/people/faculty' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('교수진')} titleSize="xl" subNav={subNav}>
       <div className="mb-7 flex items-center justify-between">
         <div className="flex gap-2">
           <Button

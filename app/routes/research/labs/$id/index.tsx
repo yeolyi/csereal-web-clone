@@ -60,15 +60,7 @@ export default function ResearchLabDetailPage({
   );
 
   return (
-    <PageLayout
-      title={lab.name}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('연구·교육'), path: '/research' },
-        { name: t('연구실 목록'), path: '/research/labs' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={lab.name} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-9 text-right">
           <Button

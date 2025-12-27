@@ -27,15 +27,7 @@ export default function FacilitiesPage({
   const subNav = useAboutSubNav();
 
   return (
-    <PageLayout
-      title={t('시설 안내')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('시설 안내'), path: '/about/facilities' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('시설 안내')} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-7 text-right">
           <Button

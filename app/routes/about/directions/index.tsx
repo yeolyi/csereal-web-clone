@@ -46,10 +46,6 @@ export default function DirectionsPage({
     <PageLayout
       title={t('찾아오는 길')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('찾아오는 길'), path: '/about/directions' },
-      ]}
       subNav={subNav}
       padding="noTop"
     >

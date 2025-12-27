@@ -95,7 +95,7 @@ export function isAncestorNavItem(
 }
 
 // 특정 항목까지의 경로(루트→타겟)를 찾음
-function findPathToItem(
+export function findPathToItem(
   items: NavItem[],
   target: NavItem,
   acc: NavItem[] = [],

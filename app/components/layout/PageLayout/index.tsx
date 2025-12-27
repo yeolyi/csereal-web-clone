@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useBreadcrumb } from '~/hooks/useBreadcrumb';
 import Header from '../Header';
 import PageTitle from './PageTitle';
 import SubNavbar, { type SubNavItem } from './SubNavbar';
@@ -43,6 +44,9 @@ export default function PageLayout({
   subNav,
   children,
 }: PageLayoutProps) {
+  const generatedBreadcrumb = useBreadcrumb();
+  const finalBreadcrumb = breadcrumb ?? generatedBreadcrumb;
+
   const paddingClass =
     padding === 'none'
       ? 'p-0'
@@ -55,11 +59,11 @@ export default function PageLayout({
   return (
     <div className="flex grow flex-col bg-neutral-900">
       <Header />
-      {(title || breadcrumb) && (
+      {(title || finalBreadcrumb.length > 0) && (
         <PageTitle
           title={title}
           subtitle={subtitle}
-          breadcrumb={breadcrumb}
+          breadcrumb={finalBreadcrumb}
           titleSize={titleSize}
           margin={titleMargin}
         />

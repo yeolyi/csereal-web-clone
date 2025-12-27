@@ -27,23 +27,9 @@ export default function GeneralStudiesRequirementsPage({
       'This is the distribution table of required liberal arts credits by area for CSE undergraduates. Students should refer to the table below when planning their coursework.',
   });
   const subNav = useAcademicsSubNav();
-  const title = t('필수 교양 과목');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: t('학부'), path: '/academics/undergraduate' },
-    {
-      name: t('필수 교양 과목'),
-      path: '/academics/undergraduate/general-studies-requirements',
-    },
-  ];
 
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={t('필수 교양 과목')} titleSize="xl" subNav={subNav}>
       <p className="mb-10 bg-neutral-100 px-6 py-5 text-md leading-loose">
         {t(OVERVIEW)}
       </p>

@@ -19,22 +19,8 @@ export default function UndergraduateCurriculumPage({
   const { t } = useLanguage({ 학번: 'Student ID' });
   const subNav = useAcademicsSubNav();
   const title = t('전공 이수 표준 형태');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: t('학부'), path: '/academics/undergraduate' },
-    {
-      name: t('전공 이수 표준 형태'),
-      path: '/academics/undergraduate/curriculum',
-    },
-  ];
-
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <TimelineViewer
         contents={loaderData}
         title={{ text: t('전공 이수 표준 형태'), unit: t('학번') }}

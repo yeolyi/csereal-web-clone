@@ -85,19 +85,7 @@ export default function CareerStatCreatePage() {
   };
 
   return (
-    <PageLayout
-      title="졸업생 진로 현황 추가"
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('졸업생 진로'), path: '/about/future-careers' },
-        {
-          name: '졸업생 진로 현황 추가',
-          path: '/about/future-careers/stat/create',
-        },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title="졸업생 진로 현황 추가" titleSize="xl" subNav={subNav}>
       <FormProvider {...formMethods}>
         <Form>
           <Fieldset title="연도" spacing="6" required>

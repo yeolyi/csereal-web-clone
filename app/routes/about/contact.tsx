@@ -36,10 +36,6 @@ export default function ContactPage({
     <PageLayout
       title={t('연락처')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('학부 소개'), path: '/about/overview' },
-        { name: t('연락처'), path: '/about/contact' },
-      ]}
       subNav={subNav}
       padding="none"
     >

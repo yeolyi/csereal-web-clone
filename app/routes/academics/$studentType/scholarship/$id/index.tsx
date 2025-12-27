@@ -42,13 +42,6 @@ export default function ScholarshipDetailPage({
   const shortTitle = name.length > 20 ? name.replace(/\([^)]*\)/g, '') : name;
 
   const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
-  const breadcrumb = [
-    { path: '/academics', name: t('학사 및 교과') },
-    { name: studentLabel },
-    { path: `/academics/${studentType}/scholarship`, name: t('장학 제도') },
-    { path: `/academics/${studentType}/scholarship/${id}`, name: shortTitle },
-  ];
-
   const handleDelete = async () => {
     try {
       await fetchOk(`${BASE_URL}/v2/academics/scholarship/${id}`, {
@@ -62,12 +55,7 @@ export default function ScholarshipDetailPage({
   };
 
   return (
-    <PageLayout
-      title={shortTitle}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={shortTitle} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 flex justify-end gap-3">
           <Button

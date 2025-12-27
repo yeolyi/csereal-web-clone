@@ -80,10 +80,6 @@ export default function ResearchGroupsPage({
     <PageLayout
       title={t('연구·교육 스트림')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('연구·교육'), path: '/research' },
-        { name: t('연구·교육 스트림'), path: '/research/groups' },
-      ]}
       subNav={subNav}
       padding="none"
     >

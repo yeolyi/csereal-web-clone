@@ -26,19 +26,8 @@ export default function GuidePage({
   const isGraduate = studentType === 'graduate';
   const title = isGraduate ? t('대학원 안내') : t('학부 안내');
   const studentLabel = isGraduate ? t('대학원') : t('학부');
-  const breadcrumb = [
-    { path: '/academics', name: t('학사 및 교과') },
-    { name: studentLabel },
-    { path: `/academics/${studentType}/guide`, name: title },
-  ];
-
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 text-right">
           <Button

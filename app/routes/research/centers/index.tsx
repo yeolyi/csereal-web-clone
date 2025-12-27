@@ -72,10 +72,6 @@ export default function ResearchCentersPage({
     <PageLayout
       title={t('연구 센터')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('연구·교육'), path: '/research' },
-        { name: t('연구 센터'), path: '/research/centers' },
-      ]}
       subNav={subNav}
       padding="none"
     >

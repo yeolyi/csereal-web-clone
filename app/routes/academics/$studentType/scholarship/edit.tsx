@@ -46,15 +46,6 @@ export default function ScholarshipEditPage({
   const subNav = useAcademicsSubNav();
   const title = t('장학 제도');
   const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: studentLabel, path: `/academics/${studentType}` },
-    {
-      name: t('장학 제도'),
-      path: `/academics/${studentType}/scholarship`,
-    },
-  ];
-
   const onCancel = () => navigate(`/academics/${studentType}/scholarship`);
 
   const onSubmit = async (content: ScholarshipGuideFormData) => {
@@ -72,12 +63,7 @@ export default function ScholarshipEditPage({
   };
 
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <FormProvider {...formMethods}>
         <Form>
           <Fieldset.HTML>

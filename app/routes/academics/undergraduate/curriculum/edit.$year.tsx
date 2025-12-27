@@ -35,15 +35,6 @@ export default function CurriculumEditPage({
   const navigate = useNavigate();
 
   const title = t('전공 이수 표준 형태 편집');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: t('학부'), path: '/academics/undergraduate' },
-    {
-      name: t('전공 이수 표준 형태'),
-      path: '/academics/undergraduate/curriculum',
-    },
-  ];
-
   const defaultValues: TimelineFormData = {
     year: initContent.year,
     description: initContent.description,
@@ -83,12 +74,7 @@ export default function CurriculumEditPage({
   };
 
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <TimelineEditor
         onSubmit={onSubmit}
         cancelPath="/academics/undergraduate/curriculum"

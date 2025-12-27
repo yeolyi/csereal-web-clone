@@ -67,13 +67,6 @@ export default function TenTenParticipantsPage() {
     <PageLayout
       title={t('Participants(Professors)')}
       titleSize="xl"
-      breadcrumb={[
-        { name: t('10-10 Project'), path: '/10-10-project' },
-        {
-          name: t('Participants(Professors)'),
-          path: '/10-10-project/participants',
-        },
-      ]}
       subNav={subNav}
     >
       <HTMLViewer html={htmlContent} />

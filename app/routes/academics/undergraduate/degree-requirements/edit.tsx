@@ -52,15 +52,6 @@ export default function DegreeRequirementsEditPage({
   const navigate = useNavigate();
   const subNav = useAcademicsSubNav();
   const title = t('졸업 규정');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: t('학부'), path: '/academics/undergraduate' },
-    {
-      name: t('졸업 규정'),
-      path: '/academics/undergraduate/degree-requirements',
-    },
-  ];
-
   const onCancel = () =>
     navigate('/academics/undergraduate/degree-requirements');
 
@@ -93,12 +84,7 @@ export default function DegreeRequirementsEditPage({
   };
 
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <FormProvider {...formMethods}>
         <Form>
           <Fieldset.HTML>

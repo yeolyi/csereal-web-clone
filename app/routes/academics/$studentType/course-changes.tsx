@@ -24,22 +24,8 @@ export default function CourseChangesPage({
 
   const title = t('교과목 변경 내역');
   const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
-  const breadcrumb = [
-    { name: t('학사 및 교과'), path: '/academics' },
-    { name: studentLabel, path: `/academics/${studentType}` },
-    {
-      name: t('교과목 변경 내역'),
-      path: `/academics/${studentType}/course-changes`,
-    },
-  ];
-
   return (
-    <PageLayout
-      title={title}
-      titleSize="xl"
-      breadcrumb={breadcrumb}
-      subNav={subNav}
-    >
+    <PageLayout title={title} titleSize="xl" subNav={subNav}>
       <TimelineViewer
         contents={loaderData}
         title={{ text: t('교과목 변경 내역'), unit: t('학년도') }}

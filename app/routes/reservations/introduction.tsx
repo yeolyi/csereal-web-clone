@@ -29,15 +29,7 @@ export default function ReservationsIntroductionPage() {
   const selectedName = selectedItem ?? NAMES[0];
 
   return (
-    <PageLayout
-      title={t('시설 예약 안내')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('시설 예약'), path: '/reservations' },
-        { name: t('시설 예약 안내'), path: '/reservations/introduction' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('시설 예약 안내')} titleSize="xl" subNav={subNav}>
       <SelectionList items={items} />
       <SelectionTitle title={selectedName} animateKey={selectedName} />
       <HTMLViewer html={HTML_CONTENTS[selectedName]} />

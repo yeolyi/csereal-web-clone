@@ -42,15 +42,7 @@ export default function TenTenManagerPage() {
 `;
 
   return (
-    <PageLayout
-      title={t('Manager')}
-      titleSize="xl"
-      breadcrumb={[
-        { name: t('10-10 Project'), path: '/10-10-project' },
-        { name: t('Manager'), path: '/10-10-project/manager' },
-      ]}
-      subNav={subNav}
-    >
+    <PageLayout title={t('Manager')} titleSize="xl" subNav={subNav}>
       <HTMLViewer html={htmlContent} />
     </PageLayout>
   );
