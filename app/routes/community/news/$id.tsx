@@ -31,8 +31,12 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const pageNum = url.searchParams.get('pageNum');
   if (pageNum) searchParams.append('pageNum', pageNum);
 
+  const cookie = request.headers.get('cookie');
+  const headers: HeadersInit = cookie ? { Cookie: cookie } : {};
+
   const response = await fetch(
     `${BASE_URL}/v2/news/${id}?${searchParams.toString()}`,
+    { headers },
   );
 
   if (!response.ok) {

@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
-import { useLanguage } from '~/hooks/useLanguage';
 import { isLocalFile } from '~/types/form';
 import { fetchOk } from '~/utils/fetch';
 import { FormData2 } from '~/utils/form';
@@ -10,10 +9,9 @@ import NewsEditor, { type NewsFormData } from './components/NewsEditor';
 
 export default function NewsCreatePage() {
   const navigate = useNavigate();
-  const { locale } = useLanguage({});
 
   const onCancel = () => {
-    navigate(`/${locale}/community/news`);
+    navigate('/community/news');
   };
 
   const onSubmit = async (content: NewsFormData) => {
@@ -38,13 +36,14 @@ export default function NewsCreatePage() {
     );
 
     try {
-      await fetchOk(`${BASE_URL}/v2/news`, {
+      const response = await fetchOk(`${BASE_URL}/v2/news`, {
         method: 'POST',
         body: formData,
       });
 
+      const { id } = await response.json();
       toast.success('새소식을 게시했습니다.');
-      navigate(`/${locale}/community/news`);
+      navigate(`/community/news/${id}`);
     } catch {
       toast.error('게시에 실패했습니다.');
     }

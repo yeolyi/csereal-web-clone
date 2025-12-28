@@ -131,6 +131,7 @@ export default function NewsEditor({
         <Form.Action
           onCancel={onCancel}
           onSubmit={handleSubmit(onSubmit)}
+          submitLabel="게시하기"
           onDelete={onDelete}
         />
       </Form>

@@ -148,14 +148,23 @@ export async function selectRadio(page: Page, label: string) {
  * @param page Playwright Page 객체
  * @param fieldsetName 필드셋 이름 (예: "시작 날짜", "종료 날짜")
  * @param date 선택할 날짜 (Date 객체)
+ * @note 테스트에서는 현재 월의 날짜(오늘, 내일, 어제 등)를 사용하여 월 전환이 필요 없도록 함
  */
 export async function selectDate(page: Page, fieldsetName: string, date: Date) {
   const fieldset = page.getByRole('group', { name: fieldsetName });
   // 캘린더 버튼 클릭
   await fieldset.locator('button').first().click();
-  // 날짜 선택 (일자 버튼 클릭)
+
+  // 캘린더가 열릴 때까지 대기
+  await page.locator('.custom-calendar').waitFor({ state: 'visible' });
+
+  // 날짜 선택 (rdp-day_button 클릭)
   const day = date.getDate();
-  await page.getByRole('button', { name: day.toString(), exact: true }).click();
+  // react-day-picker v9의 구조: button.rdp-day_button
+  await page
+    .locator('.custom-calendar button.rdp-day_button')
+    .filter({ hasText: new RegExp(`^${day}$`) })
+    .click();
 }
 
 /**

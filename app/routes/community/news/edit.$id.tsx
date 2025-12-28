@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
-import { useLanguage } from '~/hooks/useLanguage';
 import type { News } from '~/types/api/v2/news';
 import { isLocalFile } from '~/types/form';
 import { fetchJson, fetchOk } from '~/utils/fetch';
@@ -20,7 +19,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function NewsEditPage({ loaderData }: Route.ComponentProps) {
   const { id, data } = loaderData;
   const navigate = useNavigate();
-  const { locale } = useLanguage({});
 
   const defaultValues: NewsFormData = {
     title: data.title,
@@ -41,7 +39,7 @@ export default function NewsEditPage({ loaderData }: Route.ComponentProps) {
   };
 
   const onCancel = () => {
-    navigate(`/${locale}/community/news/${id}`);
+    navigate(`/community/news/${id}`);
   };
 
   const onSubmit = async (content: NewsFormData) => {
@@ -79,7 +77,7 @@ export default function NewsEditPage({ loaderData }: Route.ComponentProps) {
       });
 
       toast.success('새소식을 수정했습니다.');
-      navigate(`/${locale}/community/news/${id}`);
+      navigate(`/community/news/${id}`);
     } catch {
       toast.error('수정에 실패했습니다.');
     }
@@ -92,7 +90,7 @@ export default function NewsEditPage({ loaderData }: Route.ComponentProps) {
       });
 
       toast.success('새소식을 삭제했습니다.');
-      navigate(`/${locale}/community/news`);
+      navigate('/community/news');
     } catch {
       toast.error('삭제에 실패했습니다.');
     }
