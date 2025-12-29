@@ -21,6 +21,19 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as TopConferenceListResponse;
 }
 
+const META = {
+  ko: {
+    title: 'Top Conference List',
+    description:
+      '서울대학교 컴퓨터공학부가 선정한 주요 국제 학술대회 목록입니다. 컴퓨터과학 분야의 최고 수준 컨퍼런스 정보를 제공합니다.',
+  },
+  en: {
+    title: 'Top Conference List',
+    description:
+      'List of top international conferences selected by the Department of Computer Science and Engineering at Seoul National University. Find information about premier conferences in computer science.',
+  },
+};
+
 export default function TopConferenceListPage({
   loaderData,
 }: Route.ComponentProps) {
@@ -33,6 +46,7 @@ export default function TopConferenceListPage({
     작성자: 'Author',
   });
   const subNav = useResearchSubNav();
+  const meta = META[locale];
   const { modifiedAt, author, conferenceList } = loaderData;
 
   const dateStr = dayjs(modifiedAt)
@@ -40,7 +54,13 @@ export default function TopConferenceListPage({
     .format(locale === 'en' ? 'MMM D, YYYY' : 'YYYY. M. D');
 
   return (
-    <PageLayout title={t('Top Conference List')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('Top Conference List')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <div className="flex flex-col text-neutral-950">
         <h3 className="mb-5 text-base font-bold leading-8">
           {t('서울대학교 공과대학 컴퓨터공학부')} Top Conference List

@@ -24,9 +24,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as AboutContent;
 }
 
+const META = {
+  ko: {
+    title: '학부장 인사말',
+    description:
+      '서울대학교 컴퓨터공학부 학부장의 인사말입니다. 학부의 비전과 발전 방향을 소개합니다.',
+  },
+  en: {
+    title: 'Greetings',
+    description:
+      'Greetings from the chair of the Department of Computer Science and Engineering at Seoul National University.',
+  },
+};
+
 export default function GreetingsPage({ loaderData }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage();
+  const { t, localizedPath, locale } = useLanguage();
   const subNav = useAboutSubNav();
+  const meta = META[locale];
 
   return (
     <PageLayout
@@ -34,6 +48,8 @@ export default function GreetingsPage({ loaderData }: Route.ComponentProps) {
       titleSize="xl"
       subNav={subNav}
       padding="none"
+      pageTitle={meta.title}
+      pageDescription={meta.description}
     >
       <ContentSection tone="white" padding="subNav">
         <LoginVisible allow="ROLE_STAFF">

@@ -7,13 +7,13 @@ import {
   useRevalidator,
 } from 'react-router';
 import { toast } from 'sonner';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import SelectionList from '~/components/feature/selection/SelectionList';
+import PageLayout from '~/components/layout/PageLayout';
 import AlertDialog from '~/components/ui/AlertDialog';
 import Button from '~/components/ui/Button';
 import HTMLViewer from '~/components/ui/HTMLViewer';
 import Image from '~/components/ui/Image';
-import LoginVisible from '~/components/feature/auth/LoginVisible';
-import SelectionList from '~/components/feature/selection/SelectionList';
-import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useSelectionList } from '~/hooks/useSelectionList';
@@ -37,15 +37,29 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as ResearchGroupsResponse;
 }
 
+const META = {
+  ko: {
+    title: '연구·교육 스트림',
+    description:
+      '서울대학교 컴퓨터공학부의 연구·교육 스트림을 소개합니다. 각 스트림별 연구 분야와 소속 연구실 정보를 확인하실 수 있습니다.',
+  },
+  en: {
+    title: 'Research Streams',
+    description:
+      'Research and education streams of the Department of Computer Science and Engineering at Seoul National University. Explore research areas and affiliated labs for each stream.',
+  },
+};
+
 export default function ResearchGroupsPage({
   loaderData: groups,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     '연구 스트림은 존재하지 않습니다.': 'Research stream does not exist.',
     스트림: 'Stream',
     연구실: 'Labs',
   });
   const subNav = useResearchSubNav();
+  const meta = META[locale];
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const revalidator = useRevalidator();
 
@@ -82,6 +96,8 @@ export default function ResearchGroupsPage({
       titleSize="xl"
       subNav={subNav}
       padding="none"
+      pageTitle={meta.title}
+      pageDescription={meta.description}
     >
       <div className="px-7 sm:pl-[100px] sm:pr-[320px]">
         <LoginVisible allow="ROLE_STAFF">

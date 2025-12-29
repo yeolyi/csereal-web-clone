@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router';
-import Button from '~/components/ui/Button';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
 import { useLanguage } from '~/hooks/useLanguage';
 import useIsMobile from '~/hooks/useResponsive';
 import { useAcademicsSubNav } from '~/hooks/useSubNav';
@@ -30,15 +30,43 @@ const classificationToIndexMap: { [key in Classification]: number } = {
   교양: 2,
 };
 
+const META = {
+  undergraduate: {
+    ko: {
+      title: '교과과정',
+      description:
+        '서울대학교 컴퓨터공학부 학부 교과과정을 안내합니다. 전공필수, 전공선택, 교양 과목 등의 정보를 확인하실 수 있습니다.',
+    },
+    en: {
+      title: 'Courses',
+      description:
+        'Undergraduate courses at the Department of Computer Science and Engineering, Seoul National University. Find information on required courses, elective courses, and liberal education courses.',
+    },
+  },
+  graduate: {
+    ko: {
+      title: '교과과정',
+      description:
+        '서울대학교 컴퓨터공학부 대학원 교과과정을 안내합니다. 석사 및 박사 과정의 전공 과목 정보를 확인하실 수 있습니다.',
+    },
+    en: {
+      title: 'Courses',
+      description:
+        'Graduate courses at the Department of Computer Science and Engineering, Seoul National University. Find information on courses for masters and doctoral programs.',
+    },
+  },
+};
+
 export default function CoursesPage({
   courses,
   studentType,
   hideSortOption,
 }: CoursesPageProps) {
-  const { t, isEnglish } = useLanguage(courseTranslations);
+  const { t, isEnglish, locale } = useLanguage(courseTranslations);
   const subNav = useAcademicsSubNav();
   const title = t('교과과정');
   const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
+  const meta = META[studentType][locale];
   const isMobile = useIsMobile();
   const [searchParams] = useSearchParams();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -53,7 +81,13 @@ export default function CoursesPage({
   const sortedCourses = getSortedCourses(courses, effectiveSortOption);
 
   return (
-    <PageLayout title={title} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={title}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 ml-auto flex justify-end">
           <Button

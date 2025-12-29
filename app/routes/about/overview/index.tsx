@@ -1,11 +1,11 @@
 import type { Route } from '.react-router/types/app/routes/about/overview/+types/index';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import ContentSection from '~/components/feature/content/ContentSection';
+import PageLayout from '~/components/layout/PageLayout';
 import Attachments from '~/components/ui/Attachments';
 import Button from '~/components/ui/Button';
-import ContentSection from '~/components/feature/content/ContentSection';
 import HTMLViewer from '~/components/ui/HTMLViewer';
 import Image from '~/components/ui/Image';
-import LoginVisible from '~/components/feature/auth/LoginVisible';
-import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import commonTranslations from '~/translations.json';
@@ -27,18 +27,35 @@ export async function loader({ request }: Route.LoaderArgs) {
   return (await response.json()) as AboutContent;
 }
 
+const META = {
+  ko: {
+    title: '학부 소개',
+    description:
+      '서울대학교 컴퓨터공학부는 정보화 사회의 핵심 학문으로서 컴퓨터 하드웨어와 소프트웨어 기술 연구 및 인력 양성의 구심체입니다. 첨단 컴퓨터 기술 연구와 이를 통한 인력 양성을 선도합니다.',
+  },
+  en: {
+    title: 'About',
+    description:
+      'The Department of Computer Science and Engineering at Seoul National University is a hub for research and education in computing technology, leading advanced computer technology research and talent cultivation.',
+  },
+};
+
 export default function Overview({ loaderData }: Route.ComponentProps) {
   const { description, attachments, imageURL } = loaderData;
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     ...commonTranslations,
     '학부 소개 책자': 'Department Brochure',
   });
+
+  const meta = META[locale];
 
   return (
     <PageLayout
       title={t('학부 소개')}
       titleSize="xl"
       padding="none"
+      pageTitle={meta.title}
+      pageDescription={meta.description}
       subNav={{
         title: t('소개'),
         titlePath: '/about/overview',

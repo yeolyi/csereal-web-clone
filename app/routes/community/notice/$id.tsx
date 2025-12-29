@@ -15,6 +15,7 @@ import { useCommunitySubNav } from '~/hooks/useSubNav';
 import PostFooter from '~/routes/community/components/PostFooter';
 import type { Notice } from '~/types/api/v2/notice';
 import { fetchOk } from '~/utils/fetch';
+import { stripHtml, truncateDescription } from '~/utils/metadata';
 import { getLocaleFromPathname } from '~/utils/string';
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
@@ -57,6 +58,16 @@ export default function NoticeDetailPage({
   const subNav = useCommunitySubNav();
   const navigate = useNavigate();
 
+  // 동적 메타데이터 생성
+  const pageTitle =
+    locale === 'en' ? `${notice.title} | Notice` : `${notice.title} | 공지사항`;
+
+  const pageDescription = notice.description
+    ? truncateDescription(stripHtml(notice.description))
+    : locale === 'en'
+      ? 'Notice details from the Department of Computer Science and Engineering at Seoul National University.'
+      : '서울대학교 컴퓨터공학부 공지사항 상세 내용입니다.';
+
   const handleDelete = async () => {
     try {
       await fetchOk(`${BASE_URL}/v2/notice/${notice.id}`, {
@@ -75,6 +86,8 @@ export default function NoticeDetailPage({
       titleSize="xl"
       subNav={subNav}
       padding="none"
+      pageTitle={pageTitle}
+      pageDescription={pageDescription}
     >
       <div className="flex flex-col gap-4 px-5 py-9 sm:pl-[100px] sm:pr-[340px]">
         <h2 className="text-[1.25rem] font-semibold leading-[1.4]">

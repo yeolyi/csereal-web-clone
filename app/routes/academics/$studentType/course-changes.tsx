@@ -14,18 +14,52 @@ export async function loader({ params }: Route.LoaderArgs) {
   );
 }
 
+const META = {
+  undergraduate: {
+    ko: {
+      title: '교과목 변경 내역',
+      description:
+        '서울대학교 컴퓨터공학부 학부 교과목 변경 내역을 안내합니다. 학년도별 교과목 개설, 폐지, 변경 사항을 확인하실 수 있습니다.',
+    },
+    en: {
+      title: 'Course Changes',
+      description:
+        'Course change history for the undergraduate program at the Department of Computer Science and Engineering, Seoul National University. Find information on course additions, removals, and modifications by academic year.',
+    },
+  },
+  graduate: {
+    ko: {
+      title: '교과목 변경 내역',
+      description:
+        '서울대학교 컴퓨터공학부 대학원 교과목 변경 내역을 안내합니다. 학년도별 교과목 개설, 폐지, 변경 사항을 확인하실 수 있습니다.',
+    },
+    en: {
+      title: 'Course Changes',
+      description:
+        'Course change history for the graduate program at the Department of Computer Science and Engineering, Seoul National University. Find information on course additions, removals, and modifications by academic year.',
+    },
+  },
+};
+
 export default function CourseChangesPage({
   loaderData,
   params,
 }: Route.ComponentProps) {
   const { studentType } = params;
-  const { t } = useLanguage({ 학년도: 'Academic Year' });
+  const { t, locale } = useLanguage({ 학년도: 'Academic Year' });
   const subNav = useAcademicsSubNav();
 
   const title = t('교과목 변경 내역');
-  const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
+  const meta = META[studentType as 'undergraduate' | 'graduate'][locale];
+
   return (
-    <PageLayout title={title} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={title}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <TimelineViewer
         contents={loaderData}
         title={{ text: t('교과목 변경 내역'), unit: t('학년도') }}

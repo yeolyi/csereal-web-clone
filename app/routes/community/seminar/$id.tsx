@@ -16,6 +16,7 @@ import { useCommunitySubNav } from '~/hooks/useSubNav';
 import PostFooter from '~/routes/community/components/PostFooter';
 import type { Seminar } from '~/types/api/v2/seminar';
 import { fetchOk } from '~/utils/fetch';
+import { stripHtml, truncateDescription } from '~/utils/metadata';
 import { getLocaleFromPathname } from '~/utils/string';
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
@@ -62,6 +63,18 @@ export default function SeminarDetailPage({
   const subNav = useCommunitySubNav();
   const navigate = useNavigate();
 
+  // 동적 메타데이터 생성
+  const pageTitle =
+    locale === 'en'
+      ? `${seminar.title} | Seminar`
+      : `${seminar.title} | 세미나`;
+
+  const pageDescription = seminar.introduction
+    ? truncateDescription(stripHtml(seminar.introduction))
+    : locale === 'en'
+      ? 'Seminar information from the Department of Computer Science and Engineering at Seoul National University.'
+      : '서울대학교 컴퓨터공학부 세미나 정보입니다.';
+
   const handleDelete = async () => {
     try {
       await fetchOk(`${BASE_URL}/v2/seminar/${seminar.id}`, {
@@ -78,6 +91,8 @@ export default function SeminarDetailPage({
     <PageLayout
       title={t('세미나')}
       titleSize="xl"
+      pageTitle={pageTitle}
+      pageDescription={pageDescription}
       subNav={subNav}
       padding="none"
     >

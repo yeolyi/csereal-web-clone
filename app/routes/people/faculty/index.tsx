@@ -1,9 +1,9 @@
 import type { Route } from '.react-router/types/app/routes/people/faculty/+types';
 import { useState } from 'react';
 import type { LoaderFunctionArgs } from 'react-router';
-import Button from '~/components/ui/Button';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { usePeopleSubNav } from '~/hooks/useSubNav';
@@ -27,10 +27,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as FacultyList;
 }
 
+const META = {
+  ko: {
+    title: '교수진',
+    description:
+      '서울대학교 컴퓨터공학부 교수진을 소개합니다. 다양한 컴퓨터 과학 및 공학 분야에서 활발히 연구하는 세계적 수준의 교수진을 만나보세요.',
+  },
+  en: {
+    title: 'Faculty',
+    description:
+      'Meet the faculty members of the Department of Computer Science and Engineering at Seoul National University. Explore our world-class professors conducting cutting-edge research.',
+  },
+};
+
 export default function FacultyPage({
   loaderData: data,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     교수진: 'Faculty',
     구성원: 'People',
     객원교수: 'Visiting Professors',
@@ -38,6 +51,7 @@ export default function FacultyPage({
     소속순: 'Department',
   });
   const subNav = usePeopleSubNav();
+  const meta = META[locale];
   const [sortType, setSortType] = useState<SortType>('name');
 
   const sortProfessors = (professors: SimpleFaculty[]) => {
@@ -73,7 +87,13 @@ export default function FacultyPage({
   );
 
   return (
-    <PageLayout title={t('교수진')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('교수진')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <div className="mb-7 flex items-center justify-between">
         <div className="flex gap-2">
           <Button

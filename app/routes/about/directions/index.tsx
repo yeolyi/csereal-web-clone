@@ -1,11 +1,11 @@
 import type { Route } from '.react-router/types/app/routes/about/directions/+types/index';
 import { Link } from 'react-router';
-import Button from '~/components/ui/Button';
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
 import SelectionList from '~/components/feature/selection/SelectionList';
 import footerTranslations from '~/components/layout/Footer/translations.json';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useSelectionList } from '~/hooks/useSelectionList';
@@ -21,6 +21,19 @@ export async function loader() {
   return (await response.json()) as DirectionsResponse;
 }
 
+const META = {
+  ko: {
+    title: '찾아오는 길',
+    description:
+      '서울대학교 컴퓨터공학부로 오시는 길을 안내합니다. 관악 캠퍼스 301동(신공학관1)에 위치하고 있으며, 대중교통 및 자가용 이용 방법을 확인하실 수 있습니다.',
+  },
+  en: {
+    title: 'Directions',
+    description:
+      'Directions to the Department of Computer Science and Engineering at Seoul National University. Located in Building 301 (Engineering Building 1) on the Gwanak campus.',
+  },
+};
+
 export default function DirectionsPage({
   loaderData: directions,
 }: Route.ComponentProps) {
@@ -33,6 +46,7 @@ export default function DirectionsPage({
       'The Department of Computer Science and Engineering is located in Building 301 (Engineering Building 1) on the Gwanak campus of Seoul National University.',
   });
   const subNav = useAboutSubNav();
+  const meta = META[locale];
 
   const { selectedItem: selectedDirection, selectionItems } = useSelectionList({
     items: directions,
@@ -48,6 +62,8 @@ export default function DirectionsPage({
       titleSize="xl"
       subNav={subNav}
       padding="noTop"
+      pageTitle={meta.title}
+      pageDescription={meta.description}
     >
       <div className="mb-12 pt-7 sm:pt-11">
         <p className="mb-8 text-md leading-[200%] text-neutral-700">

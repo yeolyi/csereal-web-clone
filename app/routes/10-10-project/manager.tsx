@@ -1,9 +1,22 @@
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import PageLayout from '~/components/layout/PageLayout';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { useLanguage } from '~/hooks/useLanguage';
 
+const META = {
+  ko: {
+    title: 'Manager',
+    description:
+      '서울대학교 컴퓨터공학부 10-10 Project Manager 안내입니다. 프로젝트 총괄 책임자 정보를 확인하실 수 있습니다.',
+  },
+  en: {
+    title: 'Manager',
+    description:
+      '10-10 Project Manager information for the Department of Computer Science and Engineering, Seoul National University.',
+  },
+};
+
 export default function TenTenManagerPage() {
-  const { t, localizedPath } = useLanguage();
+  const { t, localizedPath, locale } = useLanguage();
 
   const subNav = {
     title: t('10-10 Project'),
@@ -41,8 +54,16 @@ export default function TenTenManagerPage() {
 </p>
 `;
 
+  const meta = META[locale];
+
   return (
-    <PageLayout title={t('Manager')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('Manager')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <HTMLViewer html={htmlContent} />
     </PageLayout>
   );

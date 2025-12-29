@@ -1,16 +1,17 @@
 import type { Route } from '.react-router/types/app/routes/research/labs/$id/+types/index';
 import type { LoaderFunctionArgs } from 'react-router';
 import { Link } from 'react-router';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import PageLayout from '~/components/layout/PageLayout';
 import Button from '~/components/ui/Button';
 import CornerFoldedRectangle from '~/components/ui/CornerFoldedRectangle';
 import HTMLViewer from '~/components/ui/HTMLViewer';
-import LoginVisible from '~/components/feature/auth/LoginVisible';
-import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { COLOR_THEME } from '~/constants/color';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useResearchSubNav } from '~/hooks/useSubNav';
 import type { ResearchLabWithLanguage } from '~/types/api/v2/research/labs';
+import { stripHtml, truncateDescription } from '~/utils/metadata';
 import { encodeParam, getLocaleFromPathname } from '~/utils/string';
 import PentagonLong from '../assets/pentagon_long.svg?react';
 import PentagonShort from '../assets/pentagon_short.svg?react';
@@ -37,7 +38,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function ResearchLabDetailPage({
   loaderData: lab,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     '연구실 목록': 'Laboratories',
     연구·교육: 'Research & Edu',
     스트림: 'Stream',
@@ -46,6 +47,17 @@ export default function ResearchLabDetailPage({
     전화: 'Tel',
   });
   const subNav = useResearchSubNav();
+
+  // 메타데이터 생성
+  const pageTitle =
+    locale === 'en' ? `${lab.name} | Research Lab` : `${lab.name} | 연구실`;
+
+  const professorNames = lab.professors.map((p) => p.name).join(', ');
+  const pageDescription = lab.description
+    ? truncateDescription(stripHtml(lab.description))
+    : locale === 'en'
+      ? `${lab.name} research laboratory${professorNames ? ` - Professor: ${professorNames}` : ''}`
+      : `${lab.name} 연구실${professorNames ? ` - 교수: ${professorNames}` : ''}`;
 
   const researchLabInfo = (
     <LabSummary
@@ -60,7 +72,13 @@ export default function ResearchLabDetailPage({
   );
 
   return (
-    <PageLayout title={lab.name} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={lab.name}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={pageTitle}
+      pageDescription={pageDescription}
+    >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-9 text-right">
           <Button

@@ -1,8 +1,8 @@
 import type { Route } from '.react-router/types/app/routes/people/emeritus-faculty/+types/$id';
 import type { LoaderFunctionArgs } from 'react-router';
-import Button from '~/components/ui/Button';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import PeopleContactList from '~/routes/people/components/PeopleContactList';
@@ -30,7 +30,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 export default function EmeritusFacultyDetailPage({
   loaderData: faculty,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     '역대 교수진': 'Emeritus Faculty',
     구성원: 'People',
     연락처: 'Contact',
@@ -41,6 +41,18 @@ export default function EmeritusFacultyDetailPage({
     '연구 분야': 'Research Areas',
     '재직 기간': 'Service Period',
   });
+
+  // 동적 메타데이터 생성
+  const pageTitle =
+    locale === 'en'
+      ? `${faculty.name} | Emeritus Faculty`
+      : `${faculty.name} | 명예교수`;
+
+  const researchAreasText = faculty.researchAreas.join(', ');
+  const pageDescription =
+    locale === 'en'
+      ? `${faculty.name}, ${faculty.academicRank}${researchAreasText ? ` - Research Areas: ${researchAreasText}` : ''}`
+      : `${faculty.name} ${faculty.academicRank}${researchAreasText ? ` - 연구 분야: ${researchAreasText}` : ''}`;
 
   const contactItems = [];
 
@@ -68,6 +80,8 @@ export default function EmeritusFacultyDetailPage({
       title={faculty.name}
       subtitle={faculty.academicRank}
       titleSize="xl"
+      pageTitle={pageTitle}
+      pageDescription={pageDescription}
     >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-9 text-right">

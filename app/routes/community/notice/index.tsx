@@ -46,14 +46,28 @@ export async function loader({ request }: LoaderFunctionArgs) {
   );
 }
 
+const META = {
+  ko: {
+    title: '공지사항',
+    description:
+      '서울대학교 컴퓨터공학부의 공지사항을 확인하세요. 학사, 장학, 채용, 행사 등 학부의 주요 소식과 공지를 제공합니다.',
+  },
+  en: {
+    title: 'Notice',
+    description:
+      'Check the notices from the Department of Computer Science and Engineering at Seoul National University. Find academic, scholarship, recruitment, and event announcements.',
+  },
+};
+
 export default function NoticePage({ loaderData: data }: Route.ComponentProps) {
   const [searchParams] = useSearchParams();
-  const { t } = useLanguage({
+  const { t, locale } = useLanguage({
     제목: 'Title',
     날짜: 'Date',
     '검색 결과가 존재하지 않습니다.': 'No search results found.',
   });
   const subNav = useCommunitySubNav();
+  const meta = META[locale];
 
   const [isEditMode, setIsEditMode] = useState(false);
   const {
@@ -71,7 +85,13 @@ export default function NoticePage({ loaderData: data }: Route.ComponentProps) {
   const totalPages = Math.ceil(data.total / POST_LIMIT);
 
   return (
-    <PageLayout title={t('공지사항')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('공지사항')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <SearchBox tags={NOTICE_TAGS} disabled={isEditMode} />
 
       {data.searchList.length === 0 ? (

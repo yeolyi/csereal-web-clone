@@ -1,8 +1,8 @@
 import type { Route } from '.react-router/types/app/routes/people/faculty/+types/$id';
 import type { LoaderFunctionArgs } from 'react-router';
-import Button from '~/components/ui/Button';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import PeopleInfoList from '~/routes/people/components/PeopleInfoList';
@@ -28,13 +28,23 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 export default function FacultyDetailPage({
   loaderData: faculty,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     학력: 'Education',
     '연구 분야': 'Research Areas',
     경력: 'Career',
     교수진: 'Faculty',
     구성원: 'People',
   });
+
+  // 동적 메타데이터 생성
+  const pageTitle =
+    locale === 'en' ? `${faculty.name} | Faculty` : `${faculty.name} | 교수진`;
+
+  const researchAreasText = faculty.researchAreas.join(', ');
+  const pageDescription =
+    locale === 'en'
+      ? `${faculty.name}, ${faculty.academicRank}${researchAreasText ? ` - Research Areas: ${researchAreasText}` : ''}`
+      : `${faculty.name} ${faculty.academicRank}${researchAreasText ? ` - 연구 분야: ${researchAreasText}` : ''}`;
 
   const contactItems = [
     { icon: 'distance', label: faculty.office },
@@ -53,6 +63,8 @@ export default function FacultyDetailPage({
       title={faculty.name}
       subtitle={faculty.academicRank}
       titleSize="xl"
+      pageTitle={pageTitle}
+      pageDescription={pageDescription}
     >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-9 text-right">

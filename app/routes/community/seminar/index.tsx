@@ -34,22 +34,42 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as SeminarPreviewList;
 }
 
+const META = {
+  ko: {
+    title: '세미나',
+    description:
+      '서울대학교 컴퓨터공학부의 세미나 일정과 정보를 확인하세요. 국내외 저명한 연구자들의 강연과 최신 연구 동향을 만나보실 수 있습니다.',
+  },
+  en: {
+    title: 'Seminars',
+    description:
+      'Check the seminar schedule from the Department of Computer Science and Engineering at Seoul National University. Attend lectures by renowned researchers and learn about the latest research trends.',
+  },
+};
+
 export default function SeminarPage({
   loaderData: data,
 }: Route.ComponentProps) {
   const [searchParams] = useSearchParams();
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     세미나: 'Seminars',
     소식: 'Community',
     '검색 결과가 존재하지 않습니다.': 'No search results found.',
   });
   const subNav = useCommunitySubNav();
+  const meta = META[locale];
 
   const pageNum = Math.max(1, parseInt(searchParams.get('pageNum') || '1', 10));
   const totalPages = Math.ceil(data.total / POSTS_COUNT_PER_PAGE);
 
   return (
-    <PageLayout title={t('세미나')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('세미나')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <div className="flex flex-row items-center gap-6">
         <SeminarSearchBar />
       </div>

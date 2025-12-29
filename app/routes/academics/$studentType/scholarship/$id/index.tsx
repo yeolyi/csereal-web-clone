@@ -2,15 +2,16 @@ import type { Route } from '.react-router/types/app/routes/academics/$studentTyp
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import PageLayout from '~/components/layout/PageLayout';
 import AlertDialog from '~/components/ui/AlertDialog';
 import Button from '~/components/ui/Button';
 import HTMLViewer from '~/components/ui/HTMLViewer';
-import LoginVisible from '~/components/feature/auth/LoginVisible';
-import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useAcademicsSubNav } from '~/hooks/useSubNav';
 import { fetchJson, fetchOk } from '~/utils/fetch';
+import { stripHtml, truncateDescription } from '~/utils/metadata';
 
 export async function loader({ params }: Route.LoaderArgs) {
   const { id } = params;
@@ -42,6 +43,19 @@ export default function ScholarshipDetailPage({
   const shortTitle = name.length > 20 ? name.replace(/\([^)]*\)/g, '') : name;
 
   const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
+
+  // 메타데이터 생성
+  const pageTitle =
+    locale === 'en'
+      ? `${name} | ${studentType === 'graduate' ? 'Graduate' : 'Undergraduate'} Scholarship`
+      : `${name} | ${studentLabel} 장학금`;
+
+  const pageDescription = scholarship.description
+    ? truncateDescription(stripHtml(scholarship.description))
+    : locale === 'en'
+      ? `${name} scholarship information for ${studentType === 'graduate' ? 'graduate' : 'undergraduate'} students at the Department of CSE, SNU.`
+      : `서울대학교 컴퓨터공학부 ${studentLabel} ${name} 장학금 안내입니다.`;
+
   const handleDelete = async () => {
     try {
       await fetchOk(`${BASE_URL}/v2/academics/scholarship/${id}`, {
@@ -55,7 +69,13 @@ export default function ScholarshipDetailPage({
   };
 
   return (
-    <PageLayout title={shortTitle} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={shortTitle}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={pageTitle}
+      pageDescription={pageDescription}
+    >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 flex justify-end gap-3">
           <Button

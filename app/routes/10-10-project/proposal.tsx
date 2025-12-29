@@ -1,9 +1,22 @@
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import PageLayout from '~/components/layout/PageLayout';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { useLanguage } from '~/hooks/useLanguage';
 
+const META = {
+  ko: {
+    title: 'Proposal',
+    description:
+      '서울대학교 컴퓨터공학부 10-10 Project 제안서입니다. 향후 5년 내 세계적 수준의 컴퓨터공학부로 도약하기 위한 전략과 실행 계획을 담고 있습니다.',
+  },
+  en: {
+    title: 'Proposal',
+    description:
+      '10-10 Project proposal for the Department of Computer Science and Engineering, Seoul National University. Outlines strategies to become a world-leading department.',
+  },
+};
+
 export default function TenTenProposalPage() {
-  const { t, localizedPath } = useLanguage();
+  const { t, localizedPath, locale } = useLanguage();
 
   const subNav = {
     title: t('10-10 Project'),
@@ -144,8 +157,16 @@ export default function TenTenProposalPage() {
 </p>
 `;
 
+  const meta = META[locale];
+
   return (
-    <PageLayout title={t('Proposal')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('Proposal')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <HTMLViewer html={htmlContent} />
     </PageLayout>
   );

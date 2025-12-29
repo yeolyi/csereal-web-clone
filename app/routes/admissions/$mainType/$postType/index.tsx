@@ -43,6 +43,15 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
 export default function AdmissionsPage({
   loaderData: { description, layout },
+  params,
 }: Route.ComponentProps) {
-  return <AdmissionsPageContent description={description} layout={layout} />;
+  const { mainType, postType } = params;
+  return (
+    <AdmissionsPageContent
+      description={description}
+      layout={layout}
+      mainType={mainType}
+      postType={postType}
+    />
+  );
 }

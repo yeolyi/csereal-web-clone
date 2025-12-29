@@ -51,7 +51,7 @@ echo "📦 Navigating to project directory..."
 cd ~/csereal-web-v2
 
 echo "🔄 Pulling latest changes from git..."
-git pull
+git pull --rebase
 
 echo "🛑 Stopping existing container (if running)..."
 docker stop csereal-web-v2 2>/dev/null || echo "No running container found"

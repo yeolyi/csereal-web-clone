@@ -38,19 +38,39 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as NewsPreviewList;
 }
 
+const META = {
+  ko: {
+    title: '새 소식',
+    description:
+      '서울대학교 컴퓨터공학부의 새 소식을 확인하세요. 학부 행사, 연구 성과, 수상 소식, 학생 활동 등 다양한 뉴스를 제공합니다.',
+  },
+  en: {
+    title: 'News',
+    description:
+      'Check the latest news from the Department of Computer Science and Engineering at Seoul National University. Find updates on events, research achievements, awards, and student activities.',
+  },
+};
+
 export default function NewsPage({ loaderData: data }: Route.ComponentProps) {
   const [searchParams] = useSearchParams();
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     '새 소식': 'News',
     커뮤니티: 'Community',
   });
   const subNav = useCommunitySubNav();
+  const meta = META[locale];
 
   const pageNum = parseInt(searchParams.get('pageNum') || '1', 10);
   const totalPages = Math.ceil(data.total / POST_LIMIT);
 
   return (
-    <PageLayout title={t('새 소식')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('새 소식')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <SearchBox tags={NEWS_TAGS} />
       <NewsList posts={data.searchList} />
       <Pagination page={pageNum} totalPages={totalPages} />

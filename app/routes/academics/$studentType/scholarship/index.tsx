@@ -1,8 +1,8 @@
 import type { Route } from '.react-router/types/app/routes/academics/$studentType/scholarship/+types/index';
-import Button from '~/components/ui/Button';
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useAcademicsSubNav } from '~/hooks/useSubNav';
@@ -18,18 +18,53 @@ export async function loader({ params }: Route.LoaderArgs) {
   );
 }
 
+const META = {
+  undergraduate: {
+    ko: {
+      title: '장학 제도',
+      description:
+        '서울대학교 컴퓨터공학부 학부생을 위한 장학 제도를 안내합니다. 다양한 장학금 종류와 지원 자격, 신청 방법을 확인하실 수 있습니다.',
+    },
+    en: {
+      title: 'Scholarships',
+      description:
+        'Scholarship programs for undergraduate students at the Department of Computer Science and Engineering, Seoul National University. Find information on various scholarships, eligibility, and application procedures.',
+    },
+  },
+  graduate: {
+    ko: {
+      title: '장학 제도',
+      description:
+        '서울대학교 컴퓨터공학부 대학원생을 위한 장학 제도를 안내합니다. 다양한 장학금 종류와 지원 자격, 신청 방법을 확인하실 수 있습니다.',
+    },
+    en: {
+      title: 'Scholarships',
+      description:
+        'Scholarship programs for graduate students at the Department of Computer Science and Engineering, Seoul National University. Find information on various scholarships, eligibility, and application procedures.',
+    },
+  },
+};
+
 export default function ScholarshipPage({
   loaderData,
   params,
 }: Route.ComponentProps) {
   const { studentType } = params;
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const subNav = useAcademicsSubNav();
 
   const title = t('장학 제도');
   const studentLabel = studentType === 'graduate' ? t('대학원') : t('학부');
+  const meta = META[studentType as 'undergraduate' | 'graduate'][locale];
+
   return (
-    <PageLayout title={title} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={title}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-8 flex justify-end">
           <Button variant="outline" tone="neutral" as="link" to="edit">

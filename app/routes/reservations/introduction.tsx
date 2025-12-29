@@ -1,10 +1,23 @@
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import SelectionList from '~/components/feature/selection/SelectionList';
 import SelectionTitle from '~/components/feature/selection/SelectionTitle';
 import PageLayout from '~/components/layout/PageLayout';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useSelectionList } from '~/hooks/useSelectionList';
 import { useReservationsSubNav } from '~/hooks/useSubNav';
+
+const META = {
+  ko: {
+    title: '시설 예약 안내',
+    description:
+      '서울대학교 컴퓨터공학부 시설 예약 안내입니다. 세미나실, 실습실, 공과대학 강의실 예약 방법 및 규정을 확인하실 수 있습니다.',
+  },
+  en: {
+    title: 'Facility Reservation Guide',
+    description:
+      'Facility reservation guide for the Department of Computer Science and Engineering, Seoul National University. Information on seminar rooms, practice rooms, and lecture halls.',
+  },
+};
 
 const NAMES = ['세미나실 예약', '실습실 예약', '공과대학 강의실 예약'] as const;
 
@@ -18,7 +31,7 @@ const HTML_CONTENTS = {
 } as const;
 
 export default function ReservationsIntroductionPage() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const subNav = useReservationsSubNav();
 
   const { selectedItem, selectionItems: items } = useSelectionList({
@@ -27,9 +40,16 @@ export default function ReservationsIntroductionPage() {
   });
 
   const selectedName = selectedItem ?? NAMES[0];
+  const meta = META[locale];
 
   return (
-    <PageLayout title={t('시설 예약 안내')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('시설 예약 안내')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <SelectionList items={items} />
       <SelectionTitle title={selectedName} animateKey={selectedName} />
       <HTMLViewer html={HTML_CONTENTS[selectedName]} />

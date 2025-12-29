@@ -1,10 +1,10 @@
 import { useEffect, useReducer, useState } from 'react';
 import { useRevalidator } from 'react-router';
 import { toast } from 'sonner';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
 import AlertDialog from '~/components/ui/AlertDialog';
 import Button from '~/components/ui/Button';
 import Dialog from '~/components/ui/Dialog';
-import LoginVisible from '~/components/feature/auth/LoginVisible';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import type { Course } from '~/types/api/v2/academics';

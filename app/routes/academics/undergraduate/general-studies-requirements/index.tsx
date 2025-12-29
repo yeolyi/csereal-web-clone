@@ -16,10 +16,23 @@ export async function loader() {
   );
 }
 
+const META = {
+  ko: {
+    title: '필수 교양 과목',
+    description:
+      '서울대학교 컴퓨터공학부 학부생을 위한 필수 교양 과목 안내입니다. 영역별 교양 학점 배분 구조와 이수 요건을 확인하실 수 있습니다.',
+  },
+  en: {
+    title: 'General Studies Requirements',
+    description:
+      'General studies requirements for undergraduate students at the Department of Computer Science and Engineering, Seoul National University. Find credit distribution and requirements by area.',
+  },
+};
+
 export default function GeneralStudiesRequirementsPage({
   loaderData,
 }: Route.ComponentProps) {
-  const { t } = useLanguage({
+  const { t, locale } = useLanguage({
     '영역별 교양과목 학점 배분 구조표':
       'Distribution of Liberal Arts Credits by Area',
     학번: 'Student ID',
@@ -27,9 +40,16 @@ export default function GeneralStudiesRequirementsPage({
       'This is the distribution table of required liberal arts credits by area for CSE undergraduates. Students should refer to the table below when planning their coursework.',
   });
   const subNav = useAcademicsSubNav();
+  const meta = META[locale];
 
   return (
-    <PageLayout title={t('필수 교양 과목')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('필수 교양 과목')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <p className="mb-10 bg-neutral-100 px-6 py-5 text-md leading-loose">
         {t(OVERVIEW)}
       </p>

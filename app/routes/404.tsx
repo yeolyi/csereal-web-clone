@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router';
-import ErrorState from '~/components/ui/ErrorState';
 import Header from '~/components/layout/Header';
+import ErrorState from '~/components/ui/ErrorState';
 import { useLanguage } from '~/hooks/useLanguage';
 
 export default function NotFound() {

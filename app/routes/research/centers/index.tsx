@@ -2,13 +2,13 @@ import type { Route } from '.react-router/types/app/routes/research/centers/+typ
 import { useState } from 'react';
 import { type LoaderFunctionArgs, useRevalidator } from 'react-router';
 import { toast } from 'sonner';
+import LoginVisible from '~/components/feature/auth/LoginVisible';
+import SelectionList from '~/components/feature/selection/SelectionList';
+import PageLayout from '~/components/layout/PageLayout';
 import AlertDialog from '~/components/ui/AlertDialog';
 import Button from '~/components/ui/Button';
 import HTMLViewer from '~/components/ui/HTMLViewer';
-import LoginVisible from '~/components/feature/auth/LoginVisible';
 import Node from '~/components/ui/Nodes';
-import SelectionList from '~/components/feature/selection/SelectionList';
-import PageLayout from '~/components/layout/PageLayout';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useSelectionList } from '~/hooks/useSelectionList';
@@ -33,13 +33,27 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as ResearchCentersResponse;
 }
 
+const META = {
+  ko: {
+    title: '연구 센터',
+    description:
+      '서울대학교 컴퓨터공학부의 연구 센터를 소개합니다. 다양한 연구 분야의 전문 센터와 그 활동 내용을 확인하실 수 있습니다.',
+  },
+  en: {
+    title: 'Research Centers',
+    description:
+      'Research centers of the Department of Computer Science and Engineering at Seoul National University. Explore specialized centers and their research activities.',
+  },
+};
+
 export default function ResearchCentersPage({
   loaderData: centers,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     '연구 센터는 존재하지 않습니다.': 'Research center does not exist.',
   });
   const subNav = useResearchSubNav();
+  const meta = META[locale];
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const revalidator = useRevalidator();
 
@@ -74,6 +88,8 @@ export default function ResearchCentersPage({
       titleSize="xl"
       subNav={subNav}
       padding="none"
+      pageTitle={meta.title}
+      pageDescription={meta.description}
     >
       <div className="px-7 sm:pl-[100px] sm:pr-[320px]">
         <LoginVisible allow="ROLE_STAFF">

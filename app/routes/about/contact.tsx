@@ -1,10 +1,10 @@
 import type { Route } from '.react-router/types/app/routes/about/+types/contact';
 import type { LoaderFunctionArgs } from 'react-router';
-import Button from '~/components/ui/Button';
-import ContentSection from '~/components/feature/content/ContentSection';
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
+import ContentSection from '~/components/feature/content/ContentSection';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useAboutSubNav } from '~/hooks/useSubNav';
@@ -26,11 +26,25 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as ContactResponse;
 }
 
+const META = {
+  ko: {
+    title: '연락처',
+    description:
+      '서울대학교 컴퓨터공학부의 연락처 정보입니다. 학부 사무실 위치, 전화번호, 이메일 등의 정보를 확인하실 수 있습니다.',
+  },
+  en: {
+    title: 'Contact',
+    description:
+      'Contact information for the Department of Computer Science and Engineering at Seoul National University. Find office location, phone number, and email.',
+  },
+};
+
 export default function ContactPage({
   loaderData: { description, imageURL },
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({ 연락처: 'Contact' });
+  const { t, localizedPath, locale } = useLanguage({ 연락처: 'Contact' });
   const subNav = useAboutSubNav();
+  const meta = META[locale];
 
   return (
     <PageLayout
@@ -38,6 +52,8 @@ export default function ContactPage({
       titleSize="xl"
       subNav={subNav}
       padding="none"
+      pageTitle={meta.title}
+      pageDescription={meta.description}
     >
       <ContentSection tone="white" padding="subNav">
         <LoginVisible allow="ROLE_STAFF">

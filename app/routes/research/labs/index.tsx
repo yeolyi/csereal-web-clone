@@ -1,8 +1,8 @@
 import type { Route } from '.react-router/types/app/routes/research/labs/+types/index';
 import type { LoaderFunctionArgs } from 'react-router';
-import Button from '~/components/ui/Button';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import { useResearchSubNav } from '~/hooks/useSubNav';
@@ -25,10 +25,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return (await response.json()) as SimpleResearchLab[];
 }
 
+const META = {
+  ko: {
+    title: '연구실 목록',
+    description:
+      '서울대학교 컴퓨터공학부의 연구실을 소개합니다. 다양한 컴퓨터 과학 및 공학 분야의 연구실 정보와 지도교수, 연락처를 확인하실 수 있습니다.',
+  },
+  en: {
+    title: 'Laboratories',
+    description:
+      'Research laboratories of the Department of Computer Science and Engineering at Seoul National University. Find lab information, professors, and contact details.',
+  },
+};
+
 export default function ResearchLabsPage({
   loaderData: labs,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     '연구실 목록': 'Laboratories',
     연구·교육: 'Research & Edu',
     연구실: 'Lab',
@@ -39,9 +52,16 @@ export default function ResearchLabsPage({
     '소개 자료': 'Materials',
   });
   const subNav = useResearchSubNav();
+  const meta = META[locale];
 
   return (
-    <PageLayout title={t('연구실 목록')} titleSize="xl" subNav={subNav}>
+    <PageLayout
+      title={t('연구실 목록')}
+      titleSize="xl"
+      subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-9 text-right">
           <Button

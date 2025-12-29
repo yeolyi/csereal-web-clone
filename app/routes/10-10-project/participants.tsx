@@ -1,9 +1,22 @@
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import PageLayout from '~/components/layout/PageLayout';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { useLanguage } from '~/hooks/useLanguage';
 
+const META = {
+  ko: {
+    title: 'Participants (Professors)',
+    description:
+      '서울대학교 컴퓨터공학부 10-10 Project 참여 교수진을 소개합니다. 학술 우수팀, 산학 협력팀, AI팀, 인적 자원팀으로 구성되어 있습니다.',
+  },
+  en: {
+    title: 'Participants (Professors)',
+    description:
+      'Faculty participants of the 10-10 Project at the Department of Computer Science and Engineering, Seoul National University.',
+  },
+};
+
 export default function TenTenParticipantsPage() {
-  const { t, localizedPath } = useLanguage();
+  const { t, localizedPath, locale } = useLanguage();
 
   const subNav = {
     title: t('10-10 Project'),
@@ -63,11 +76,15 @@ export default function TenTenParticipantsPage() {
   )}">click here for detailed info of participants</a>
 </p>`;
 
+  const meta = META[locale];
+
   return (
     <PageLayout
       title={t('Participants(Professors)')}
       titleSize="xl"
       subNav={subNav}
+      pageTitle={meta.title}
+      pageDescription={meta.description}
     >
       <HTMLViewer html={htmlContent} />
     </PageLayout>

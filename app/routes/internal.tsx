@@ -1,6 +1,6 @@
 import type { Route } from '.react-router/types/app/routes/+types/internal';
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import PageLayout from '~/components/layout/PageLayout';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { BASE_URL } from '~/constants/api';
 
 export const loader = async () => {

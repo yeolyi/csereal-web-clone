@@ -1,14 +1,35 @@
-import HTMLViewer from '~/components/ui/HTMLViewer';
 import PageLayout from '~/components/layout/PageLayout';
+import HTMLViewer from '~/components/ui/HTMLViewer';
 import { useLanguage } from '~/hooks/useLanguage';
 
+const META = {
+  ko: {
+    title: '개인정보처리방침',
+    description:
+      '서울대학교 컴퓨터공학부 시설 예약 시스템의 개인정보처리방침입니다. 개인정보 수집 항목, 이용 목적, 보유 기간 등을 안내합니다.',
+  },
+  en: {
+    title: 'Privacy Policy',
+    description:
+      'Privacy policy for the facility reservation system at the Department of Computer Science and Engineering, Seoul National University.',
+  },
+};
+
 export default function ReservationPrivacyPolicyPage() {
-  const { t } = useLanguage({
+  const { t, locale } = useLanguage({
     개인정보처리방침: 'Privacy Policy',
   });
 
+  const meta = META[locale];
+
   return (
-    <PageLayout title={t('개인정보처리방침')} titleSize="xl" titleMargin="mb-9">
+    <PageLayout
+      title={t('개인정보처리방침')}
+      titleSize="xl"
+      titleMargin="mb-9"
+      pageTitle={meta.title}
+      pageDescription={meta.description}
+    >
       <HTMLViewer html={HTML_CONTENT} />
     </PageLayout>
   );

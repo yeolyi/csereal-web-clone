@@ -1,8 +1,8 @@
 import type { Route } from '.react-router/types/app/routes/people/staff/+types/$id';
 import type { LoaderFunctionArgs } from 'react-router';
-import Button from '~/components/ui/Button';
 import LoginVisible from '~/components/feature/auth/LoginVisible';
 import PageLayout from '~/components/layout/PageLayout';
+import Button from '~/components/ui/Button';
 import { BASE_URL } from '~/constants/api';
 import { useLanguage } from '~/hooks/useLanguage';
 import PeopleContactList from '~/routes/people/components/PeopleContactList';
@@ -27,7 +27,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 export default function StaffDetailPage({
   loaderData: staff,
 }: Route.ComponentProps) {
-  const { t, localizedPath } = useLanguage({
+  const { t, localizedPath, locale } = useLanguage({
     구성원: 'People',
     행정직원: 'Staff',
     연락처: 'Contact',
@@ -36,6 +36,15 @@ export default function StaffDetailPage({
     이메일: 'Email',
     '주요 업무': 'Tasks',
   });
+
+  // 동적 메타데이터 생성
+  const pageTitle =
+    locale === 'en' ? `${staff.name} | Staff` : `${staff.name} | 행정직원`;
+
+  const pageDescription =
+    locale === 'en'
+      ? `${staff.name}, ${staff.role} - Seoul National University Department of Computer Science and Engineering`
+      : `${staff.name} ${staff.role} - 서울대학교 컴퓨터공학부`;
 
   const contactItems = [
     { label: t('위치'), value: staff.office },
@@ -48,7 +57,13 @@ export default function StaffDetailPage({
   ];
 
   return (
-    <PageLayout title={staff.name} subtitle={staff.role} titleSize="xl">
+    <PageLayout
+      title={staff.name}
+      subtitle={staff.role}
+      titleSize="xl"
+      pageTitle={pageTitle}
+      pageDescription={pageDescription}
+    >
       <LoginVisible allow="ROLE_STAFF">
         <div className="mb-9 text-right">
           <Button

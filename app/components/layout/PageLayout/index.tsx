@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 import { useBreadcrumb } from '~/hooks/useBreadcrumb';
+import { useLanguage } from '~/hooks/useLanguage';
+import { SITE_NAME } from '~/utils/metadata';
 import Header from '../Header';
 import PageTitle from './PageTitle';
 import SubNavbar, { type SubNavItem } from './SubNavbar';
@@ -23,6 +25,8 @@ interface PageLayoutProps {
   titleMargin?: string;
   padding?: 'default' | 'none' | 'noTop' | 'noBottom';
   subNav?: SubNavConfig;
+  pageTitle?: string; // <title> 및 og:title용
+  pageDescription?: string; // meta description 및 og:description용
   children: ReactNode;
 }
 
@@ -42,10 +46,18 @@ export default function PageLayout({
   titleMargin = 'mb-6 sm:mb-11',
   padding = 'default',
   subNav,
+  pageTitle,
+  pageDescription,
   children,
 }: PageLayoutProps) {
   const generatedBreadcrumb = useBreadcrumb();
   const finalBreadcrumb = breadcrumb ?? generatedBreadcrumb;
+  const { locale } = useLanguage();
+
+  // pageTitle에 자동으로 SITE_NAME 추가
+  const fullPageTitle = pageTitle
+    ? `${pageTitle} | ${locale === 'en' ? SITE_NAME.en : SITE_NAME.ko}`
+    : undefined;
 
   const paddingClass =
     padding === 'none'
@@ -57,21 +69,38 @@ export default function PageLayout({
           : 'p-[1.75rem_1.25rem_4rem_1.25rem] sm:p-[2.75rem_360px_150px_100px]';
 
   return (
-    <div className="flex grow flex-col bg-neutral-900">
-      <Header />
-      {(title || finalBreadcrumb.length > 0) && (
-        <PageTitle
-          title={title}
-          subtitle={subtitle}
-          breadcrumb={finalBreadcrumb}
-          titleSize={titleSize}
-          margin={titleMargin}
-        />
+    <>
+      {/* React 19 메타데이터 */}
+      {fullPageTitle && (
+        <>
+          <title>{fullPageTitle}</title>
+          <meta property="og:title" content={fullPageTitle} />
+        </>
       )}
-      <div className={`relative grow bg-white ${paddingClass}`}>
-        {children}
-        {subNav && <SubNavbar {...subNav} />}
+      {pageDescription && (
+        <>
+          <meta name="description" content={pageDescription} />
+          <meta property="og:description" content={pageDescription} />
+        </>
+      )}
+
+      {/* 기존 레이아웃 */}
+      <div className="flex grow flex-col bg-neutral-900">
+        <Header />
+        {(title || finalBreadcrumb.length > 0) && (
+          <PageTitle
+            title={title}
+            subtitle={subtitle}
+            breadcrumb={finalBreadcrumb}
+            titleSize={titleSize}
+            margin={titleMargin}
+          />
+        )}
+        <div className={`relative grow bg-white ${paddingClass}`}>
+          {children}
+          {subNav && <SubNavbar {...subNav} />}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
