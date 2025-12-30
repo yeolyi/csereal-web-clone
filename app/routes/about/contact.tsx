@@ -10,6 +10,8 @@ import { useLanguage } from '~/hooks/useLanguage';
 import { useAboutSubNav } from '~/hooks/useSubNav';
 import { getLocaleFromPathname } from '~/utils/string';
 
+import './assets/contactfix.css';
+
 interface ContactResponse {
   description: string;
   imageURL: string | null;

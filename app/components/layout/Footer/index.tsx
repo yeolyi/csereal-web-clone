@@ -4,7 +4,6 @@ import {
   type LinkGroupProps,
 } from '~/components/layout/Footer/linkGroups';
 import { useLanguage } from '~/hooks/useLanguage';
-import { useNavItem } from '~/hooks/useNavItem';
 import commonTranslations from '~/translations.json';
 import SnuEngineeringIcon from './assets/SNU_Engineering.svg?react';
 import SnuLogoWithText from './assets/SNU_Logo_with_Text.svg?react';
@@ -14,10 +13,21 @@ const footerTranslations = { ...commonTranslations, ...footerOnlyTranslations };
 
 export default function Footer() {
   const { locale, pathWithoutLocale } = useLanguage(footerTranslations);
-  const { topLevelItem } = useNavItem();
 
   // Main page or navigationTree의 top-level 페이지들은 dark mode
-  const mode = pathWithoutLocale === '/' || topLevelItem ? 'dark' : 'light';
+  const mode = [
+    '/',
+    '/about',
+    '/community',
+    '/people',
+    '/research',
+    '/admissions',
+    '/academics',
+    '/reservations',
+  ].includes(pathWithoutLocale)
+    ? 'dark'
+    : 'light';
+
   const topBg =
     mode === 'light' ? 'bg-neutral-50' : 'bg-[#262728] sm:bg-neutral-900';
   const bottomBg = mode === 'light' ? 'bg-neutral-100' : 'bg-[rgb(30,30,30)]';
